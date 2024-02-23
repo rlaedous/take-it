@@ -2,6 +2,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        'main-pink': '#DDA0DD'
+      }
       //   fontSize: {
       //     "head-xl": "32px",
       //     "head-lg": "30px",

@@ -2,7 +2,9 @@ function App() {
   return (
     <>
       <div>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+        <h1 className='text-main-pink text-3xl font-bold underline'>
+          Hello world!
+        </h1>
         <div className='flex justify-between w-48 mt-5 text-xs text-gray-400'>
           <button
             type='button'
