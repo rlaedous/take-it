@@ -4,7 +4,7 @@ export default {
     extend: {
       colors: {
         'main-pink': '#DDA0DD'
-      }
+      },
       //   fontSize: {
       //     "head-xl": "32px",
       //     "head-lg": "30px",
@@ -23,6 +23,10 @@ export default {
       //     "button-sm": "16px",
       //     "button-xs": "14px",
       //   },
+
+      width: {
+        main: '1440px'
+      }
     }
   },
   plugins: []
