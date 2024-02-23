@@ -1,5 +1,5 @@
 export default {
-  content: ["./src/**/*.{html, js, tsx, jsx, ts}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       //   fontSize: {
@@ -20,7 +20,7 @@ export default {
       //     "button-sm": "16px",
       //     "button-xs": "14px",
       //   },
-    },
+    }
   },
-  plugins: [],
+  plugins: []
 };
