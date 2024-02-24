@@ -1,11 +1,11 @@
-import Home from 'pages/HomePage';
-import JoinPage from 'pages/JoinPage';
-import LoginPage from 'pages/LoginPage';
-import MyPage from 'pages/MyPage';
-import RoulettePage from 'pages/RoulettePage';
-import SurveyPage from 'pages/SurveyPage';
-import SurveyResultPage from 'pages/SurveyResultPage';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
+import JoinPage from '../pages/JoinPage';
+import LoginPage from '../pages/LoginPage';
+import MyPage from '../pages/MyPage';
+import RoulettePage from '../pages/RoulettePage';
+import SurveyPage from '../pages/SurveyPage';
+import SurveyResultPage from '../pages/SurveyResultPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export default function Router() {
   return (
@@ -17,8 +17,7 @@ export default function Router() {
         <Route element={<RoulettePage />} />
         <Route element={<SurveyPage />} />
         <Route element={<SurveyResultPage />} />
-
-        <Route element={<Home />} />
+        <Route path='/' element={<HomePage />} />
       </Routes>
     </BrowserRouter>
   );
