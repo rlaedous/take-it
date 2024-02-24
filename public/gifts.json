@@ -1,0 +1,602 @@
+[
+  {
+    "id": 0,
+    "name": "핸드폰 케이스",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 10000,
+    "isPractical": true,
+    "ages": "10s,20s,30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 1,
+    "name": "에어팟 케이스",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 10000,
+    "isPractical": true,
+    "ages": "10s,20s",
+    "imageUrl": null
+  },
+  {
+    "id": 2,
+    "name": "무드등",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 300000,
+    "isPractical": false,
+    "ages": "10s,20s",
+    "imageUrl": null
+  },
+  {
+    "id": 3,
+    "name": "담요",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 9000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 4,
+    "name": "미니 손난로",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 10000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 5,
+    "name": "잠옷",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 30000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 6,
+    "name": "필름 카메라",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인",
+    "price": 50000,
+    "isPractical": true,
+    "ages": "10s,20s",
+    "imageUrl": null
+  },
+  {
+    "id": 7,
+    "name": "카카오 인형",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 30000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 8,
+    "name": "커플 팔찌",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 10000,
+    "isPractical": false,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 9,
+    "name": "모자",
+    "toGender": "M",
+    "toWhom": "친구,연인",
+    "price": 20000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 10,
+    "name": "문화상품권",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 10000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 11,
+    "name": "각인 볼펜",
+    "toGender": "M",
+    "toWhom": "연인",
+    "price": 20000,
+    "isPractical": false,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 12,
+    "name": "후드티",
+    "toGender": "M",
+    "toWhom": "연인",
+    "price": 20000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 13,
+    "name": "손편지",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인,부모님",
+    "price": 0,
+    "isPractical": false,
+    "ages": "10s,20s,30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 14,
+    "name": "미스트 세럼",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 20000,
+    "isPractical": true,
+    "ages": "10s",
+    "imageUrl": null
+  },
+  {
+    "id": 15,
+    "name": "치킨 기프티콘",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 20000,
+    "isPractical": true,
+    "ages": "10s,20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 16,
+    "name": "스벅 기프티콘",
+    "toGender": "BOTH",
+    "toWhom": "친구",
+    "price": 5000,
+    "isPractical": true,
+    "ages": "10s,20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 17,
+    "name": "섬유 향수",
+    "toGender": "F",
+    "toWhom": "친구",
+    "price": 100000,
+    "isPractical": false,
+    "ages": "10s,20s",
+    "imageUrl": null
+  },
+  {
+    "id": 18,
+    "name": "애플워치",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 400000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 19,
+    "name": "맥북 프로",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 2000000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 20,
+    "name": "에어팟 프로",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 200000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 21,
+    "name": "아이패드 프로",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 1700000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 22,
+    "name": "크리드 향수",
+    "toGender": "M",
+    "toWhom": "연인",
+    "price": 300000,
+    "isPractical": true,
+    "ages": "30s",
+    "imageUrl": null
+  },
+  {
+    "id": 23,
+    "name": "종합 비타민",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인",
+    "price": 30000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 24,
+    "name": "조말론 향수",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 200000,
+    "isPractical": false,
+    "ages": "40s",
+    "imageUrl": null
+  },
+  {
+    "id": 25,
+    "name": "귀걸이",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 500000,
+    "isPractical": true,
+    "ages": "40s",
+    "imageUrl": null
+  },
+  {
+    "id": 26,
+    "name": "설화수 스킨로션",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 120000,
+    "isPractical": true,
+    "ages": "40s",
+    "imageUrl": null
+  },
+  {
+    "id": 27,
+    "name": "꽃다발",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 60000,
+    "isPractical": false,
+    "ages": "20s,30s,40s",
+    "imageUrl": null
+  },
+  {
+    "id": 28,
+    "name": "현금 꽃다발",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 300000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 29,
+    "name": "영양제",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 30000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 30,
+    "name": "임영웅 콘서트 티켓",
+    "toGender": "F",
+    "toWhom": "부모님",
+    "price": 150000,
+    "isPractical": false,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 31,
+    "name": "구찌 넥타이",
+    "toGender": "M",
+    "toWhom": "부모님",
+    "price": 160000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 32,
+    "name": "시계",
+    "toGender": "M",
+    "toWhom": "부모님",
+    "price": 1000000,
+    "isPractical": false,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 33,
+    "name": "벨트",
+    "toGender": "M",
+    "toWhom": "부모님",
+    "price": 100000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 34,
+    "name": "안마 의자",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 2000000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 35,
+    "name": "골프채",
+    "toGender": "M",
+    "toWhom": "부모님",
+    "price": 300000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 36,
+    "name": "홍삼",
+    "toGender": "BOTH",
+    "toWhom": "부모님,연인",
+    "price": 100000,
+    "isPractical": true,
+    "ages": "over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 37,
+    "name": "마우스",
+    "toGender": "M",
+    "toWhom": "친구",
+    "price": 35000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 38,
+    "name": "보온병",
+    "toGender": "BOTH",
+    "toWhom": "연인",
+    "price": 20000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 39,
+    "name": "배민 상품권",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인",
+    "price": 50000,
+    "isPractical": true,
+    "ages": "10s,20s,30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 40,
+    "name": "PS5",
+    "toGender": "M",
+    "toWhom": "친구",
+    "price": 500000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 41,
+    "name": "Youtube 프리미엄3개월",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인,부모님",
+    "price": 30000,
+    "isPractical": true,
+    "ages": "10s,20s,30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 42,
+    "name": "통기타",
+    "toGender": "M",
+    "toWhom": "연인",
+    "price": 200000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 43,
+    "name": "스니커즈 신발",
+    "toGender": "F",
+    "toWhom": "친구,연인",
+    "price": 50000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 44,
+    "name": "가방(백팩)",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인",
+    "price": 300000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 45,
+    "name": "필라테스 회원권",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 200000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 46,
+    "name": "아웃도어 바람막이",
+    "toGender": null,
+    "toWhom": "연인",
+    "price": 100000,
+    "isPractical": false,
+    "ages": "30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 47,
+    "name": "스파 이용권",
+    "toGender": "F",
+    "toWhom": "부모님",
+    "price": 150000,
+    "isPractical": true,
+    "ages": "40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 48,
+    "name": "가정용 혈압계",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 50000,
+    "isPractical": false,
+    "ages": "40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 49,
+    "name": "CERAGEM",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 1000000,
+    "isPractical": true,
+    "ages": "40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 50,
+    "name": "에어프라이기",
+    "toGender": "BOTH",
+    "toWhom": "부모님,연인",
+    "price": 200000,
+    "isPractical": true,
+    "ages": "30s,40s,over50s",
+    "imageUrl": null
+  },
+  {
+    "id": 51,
+    "name": "기간 지난 복권",
+    "toGender": "M",
+    "toWhom": "친구",
+    "price": 5000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 52,
+    "name": "사진첩",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 10000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 53,
+    "name": "핸드크림",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 20000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 54,
+    "name": "리얼포스 키보드",
+    "toGender": "M",
+    "toWhom": "친구",
+    "price": 400000,
+    "isPractical": true,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 55,
+    "name": "츄파츕스",
+    "toGender": "F",
+    "toWhom": "친구",
+    "price": 300,
+    "isPractical": true,
+    "ages": "20s",
+    "imageUrl": null
+  },
+  {
+    "id": 56,
+    "name": "하리보",
+    "toGender": "F",
+    "toWhom": "친구",
+    "price": 500,
+    "isPractical": true,
+    "ages": "20s",
+    "imageUrl": null
+  },
+  {
+    "id": 57,
+    "name": "아메리카노",
+    "toGender": "BOTH",
+    "toWhom": "친구,연인",
+    "price": 3000,
+    "isPractical": true,
+    "ages": "10s,20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 58,
+    "name": "레깅스",
+    "toGender": "F",
+    "toWhom": "연인",
+    "price": 20000,
+    "isPractical": false,
+    "ages": "20s,30s",
+    "imageUrl": null
+  },
+  {
+    "id": 59,
+    "name": "청소기",
+    "toGender": "BOTH",
+    "toWhom": "부모님",
+    "price": 500000,
+    "isPractical": false,
+    "ages": "30s,40s",
+    "imageUrl": null
+  }
+]
