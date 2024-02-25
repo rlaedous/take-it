@@ -1,13 +1,14 @@
 import Router from './shared/Router.jsx';
 import './App.css';
-import { QueryClient, QueryClientProvider, useQuery} from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery
+} from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { authCheckToken } from './apis/auth.js';
 
-
-
 function App() {
-
   const queryClient = new QueryClient();
 
   const fetchData = async () => {
@@ -22,7 +23,7 @@ function App() {
 
         queryClient.setQueryData(['loginStatus'], {
           isLoggedIn: true,
-          user: {accessToken, avatar, nickname, userId},
+          user: { accessToken, avatar, nickname, userId }
         });
       } catch (error) {
         console.error('Error checking token:', error);

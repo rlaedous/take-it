@@ -34,14 +34,14 @@ const LoginPage = () => {
   const registerMutation = useMutation({
     mutationFn: authRegister,
     onSuccess: (data) => {
-      alert(data.data)
-      alert("로그인 하러가")
-      setIsRegister(false)
+      alert(data.data);
+      alert('로그인 하러가');
+      setIsRegister(false);
     },
-    onError: (error)=> {
-      alert(error.request.response)
+    onError: (error) => {
+      alert(error.request.response);
     }
-  })
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ const LoginPage = () => {
         console.error('Passwords do not match');
         return;
       }
-      registerMutation.mutate({id, password, nickname})
+      registerMutation.mutate({ id, password, nickname });
     } else {
       // 로그인
       loginMutation.mutate({ id, password });
@@ -60,45 +60,53 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-      <div className='max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md'>
-        <div className='text-3xl font-extrabold text-center'>
+    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+      <div className='w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md'>
+        <div className='text-center text-3xl font-extrabold'>
           {isRegister ? 'Sign Up' : 'Log In'}
         </div>
         <form className='space-y-6' onSubmit={handleSubmit}>
           <div>
-            <label htmlFor='id' className='block text-sm font-medium text-gray-600'>
+            <label
+              htmlFor='id'
+              className='block text-sm font-medium text-gray-600'>
               ID
             </label>
             <input
+              required
               id='id'
               type='text'
-              className='mt-1 p-2 w-full border rounded-md'
+              className='mt-1 w-full rounded-md border p-2'
               value={id}
               onChange={(e) => setId(e.target.value)}
             />
           </div>
           <div>
-            <label htmlFor='password' className='block text-sm font-medium text-gray-600'>
+            <label
+              htmlFor='password'
+              className='block text-sm font-medium text-gray-600'>
               Password
             </label>
             <input
+              required
               id='password'
               type='password'
-              className='mt-1 p-2 w-full border rounded-md'
+              className='mt-1 w-full rounded-md border p-2'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           {isRegister && (
             <div>
-              <label htmlFor='password-confirm' className='block text-sm font-medium text-gray-600'>
+              <label
+                htmlFor='password-confirm'
+                className='block text-sm font-medium text-gray-600'>
                 Confirm Password
               </label>
               <input
                 id='password-confirm'
                 type='password'
-                className='mt-1 p-2 w-full border rounded-md'
+                className='mt-1 w-full rounded-md border p-2'
                 value={passwordConfirm}
                 onChange={(e) => setPasswordConfirm(e.target.value)}
               />
@@ -106,13 +114,15 @@ const LoginPage = () => {
           )}
           {isRegister && (
             <div>
-              <label htmlFor='nickname' className='block text-sm font-medium text-gray-600'>
+              <label
+                htmlFor='nickname'
+                className='block text-sm font-medium text-gray-600'>
                 Nickname
               </label>
               <input
                 id='nickname'
                 type='text'
-                className='mt-1 p-2 w-full border rounded-md'
+                className='mt-1 w-full rounded-md border p-2'
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
               />
@@ -120,15 +130,17 @@ const LoginPage = () => {
           )}
           <button
             type='submit'
-            className='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
+            className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
             {isRegister ? 'Sign Up' : 'Log In'}
           </button>
         </form>
         <div className='text-center'>
           <button
-            className='text-indigo-500 hover:underline cursor-pointer'
+            className='cursor-pointer text-indigo-500 hover:underline'
             onClick={() => setIsRegister(!isRegister)}>
-            {isRegister ? 'Already have an account? Log In' : 'Don\'t have an account? Sign Up'}
+            {isRegister
+              ? 'Already have an account? Log In'
+              : "Don't have an account? Sign Up"}
           </button>
         </div>
       </div>
