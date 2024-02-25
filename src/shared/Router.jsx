@@ -7,8 +7,19 @@ import SurveyPage from '../pages/SurveyPage';
 import SurveyResultPage from '../pages/SurveyResultPage';
 import Layout from '../components/common/layout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Router() {
+  const { data, error, isLoading } = useQuery({
+  queryKey: ['loginStatus'],
+  onSuccess: (fetchedData) => {
+    console.log('Data fetched successfully:', fetchedData);
+  },
+});
+
+console.log('Data:', data);
+console.log('Error:', error);
+console.log('Loading:', isLoading);
   return (
     <BrowserRouter>
       <Layout>
