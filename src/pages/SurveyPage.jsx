@@ -109,6 +109,13 @@ const SurveyPage = () => {
     setSelectedAnswer(null);
   };
 
+  const handleClickResult = () => {
+    const filteredGift = getfilteredGifts(transformedGifts, results);
+    if (filteredGift) {
+      dispatch(setGift(filteredGift));
+      navigate('/surveyResult'); // 결과 페이지로 이동
+    }
+  };
   return (
     <>
       <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
@@ -120,7 +127,7 @@ const SurveyPage = () => {
           <div className='my-0 flex flex-col flex-wrap items-start'>
             {currentQuestion.answers.map((answer, index) => (
               <button
-                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'bg-main border-transparent text-black' : 'bg-white text-black'}`}
+                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
                 onClick={() => {
                   handleClickAnswer(answer.value, index);
                 }}
@@ -131,7 +138,9 @@ const SurveyPage = () => {
           </div>
           <div className='absolute bottom-10'>
             {currentQuestionIdx === surveys.length - 1 ? (
-              <button className='mx-1 rounded-full border-2 border-black bg-black px-20 px-5 py-5 text-lg text-white'>
+              <button
+                onClick={handleClickResult}
+                className='mx-1 rounded-full border-2 border-black bg-black px-20 px-5 py-5 text-lg text-white'>
                 결과보기
               </button>
             ) : (
