@@ -2,7 +2,7 @@ import { Wheel } from 'react-custom-roulette';
 import { useState } from 'react';
 import JSConfetti from 'js-confetti';
 import RouletteModal from '../components/roulette/RouletteModal';
-import heart from '../assets/heart.png';
+import heart from '../assets/images/heart.png';
 
 const RoulettePage = () => {
   //룰렛 데이터.. 나온 선물들 받아와서 랜덤 10?개 정도?
@@ -48,7 +48,7 @@ const RoulettePage = () => {
   };
 
   return (
-    <div className='flex justify-center items-center h-screen'>
+    <div className='flex h-screen items-center justify-center'>
       <div className='flex flex-col items-center'>
         <Wheel
           spinDuration={0.2}
@@ -72,7 +72,7 @@ const RoulettePage = () => {
         />
         <button
           onClick={handleSpinClick}
-          className='mt-12 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg'>
+          className='mt-12 transform-gpu rounded-full bg-gradient-to-r from-pink-500 to-purple-500 px-8 py-4 font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-lg'>
           룰렛 돌리기
         </button>
       </div>
