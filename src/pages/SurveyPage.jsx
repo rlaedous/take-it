@@ -5,7 +5,7 @@ import { stringToArray } from '../utils/transformJson';
 import gifts from '/public/gifts.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGift } from '../redux/modules/giftSlice';
-import CustomButton from '../components/common/CustomButton';
+// import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
 const SurveyPage = () => {
