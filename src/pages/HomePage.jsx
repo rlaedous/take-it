@@ -10,6 +10,7 @@ const HomePage = () => {
   const clickRoulette = () => {
     navigate('/roulette');
   };
+
   return (
     <>
       <div className='w-main mx-auto flex justify-center gap-8 '>
