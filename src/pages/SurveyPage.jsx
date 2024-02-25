@@ -5,6 +5,9 @@ import { stringToArray } from '../utils/transformJson';
 import gifts from '/public/gifts.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGift } from '../redux/modules/giftSlice';
+import CustomButton from '../components/common/CustomButton';
+import { twMerge } from 'tailwind-merge';
+import { useNavigate } from 'react-router';
 const SurveyPage = () => {
   const transformedGifts = gifts.map((gift) => ({
     ...gift,
@@ -24,6 +27,14 @@ const SurveyPage = () => {
 
   const selectedGifts = useSelector((state) => state.gift);
 
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+  const [isActiveNext, setIsActiveNext] = useState(false);
+
+  const [showResult, setShowResult] = useState(false);
+
+  const navigate = useNavigate();
+
   const currentQuestion = useMemo(() => {
     const question = surveys[currentQuestionIdx];
 
@@ -37,8 +48,9 @@ const SurveyPage = () => {
     return question;
   }, [currentQuestionIdx, results]);
 
-  const handleClickAnswer = (answerVal) => {
+  const handleClickAnswer = (answerVal, idx) => {
     const key = currentQuestion.questionType;
+    setSelectedAnswer(idx);
     if (currentQuestion.questionType) {
       setResults({
         ...results,
@@ -48,12 +60,21 @@ const SurveyPage = () => {
     if (currentQuestionIdx === surveys.length - 1) {
       const filteredGift = getfilteredGifts(transformedGifts, results);
       console.log(filteredGift);
-      dispatch(setGift(filteredGift));
+      if (filteredGift) {
+        setShowResult(true);
+        dispatch(setGift(filteredGift));
+      }
     }
   };
 
   useEffect(() => {
-    console.log(selectedGifts);
+    console.log('results', results);
+  }, [results]);
+
+  useEffect(() => {
+    if (selectedGifts) {
+      console.log(selectedGifts);
+    }
   }, [selectedGifts]);
 
   const handleClickPrev = () => {
@@ -65,7 +86,19 @@ const SurveyPage = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (selectedAnswer === null) {
+      setIsActiveNext(false);
+    } else {
+      setIsActiveNext(true);
+    }
+  }, [selectedAnswer]);
   const handleClickNext = () => {
+    if (selectedAnswer === null) {
+      return;
+    }
+
     setCurrentQuestionNum((prev) => {
       if (prev < surveys.length - 1) {
         return prev + 1;
@@ -73,32 +106,65 @@ const SurveyPage = () => {
         return prev;
       }
     });
+    setSelectedAnswer(null);
   };
 
   return (
-    <div>
-      <p>survey</p>
-      <div>
-        <p>
-          {currentQuestion.order}.{currentQuestion.question}
-        </p>
-        <div>
-          {currentQuestion.answers.map((answer, index) => (
-            <button
-              onClick={() => {
-                handleClickAnswer(answer.value);
-              }}
-              key={index}>
-              {answer.name}
-            </button>
-          ))}
-        </div>
-        <div>
-          <button onClick={handleClickPrev}>이전으로</button>
-          <button onClick={handleClickNext}>다음으로</button>
+    <>
+      <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
+        <div className='flex h-full w-full flex-col items-center'>
+          <p className=' mb-5 text-4xl text-gray-400'>
+            Q{currentQuestion.order}.
+          </p>
+          <p className='pb-5 text-2xl'>{currentQuestion.question}</p>
+          <div className='my-0 flex flex-col flex-wrap items-start'>
+            {currentQuestion.answers.map((answer, index) => (
+              <button
+                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'bg-main border-transparent text-black' : 'bg-white text-black'}`}
+                onClick={() => {
+                  handleClickAnswer(answer.value, index);
+                }}
+                key={index}>
+                {answer.name}
+              </button>
+            ))}
+          </div>
+          <div className='absolute bottom-10'>
+            {currentQuestionIdx === surveys.length - 1 ? (
+              <button className='mx-1 rounded-full border-2 border-black bg-black px-20 px-5 py-5 text-lg text-white'>
+                결과보기
+              </button>
+            ) : (
+              <>
+                <button
+                  className='mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500'
+                  onClick={handleClickPrev}>
+                  이전으로
+                </button>
+                <button
+                  className={twMerge(
+                    `mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500 ${isActiveNext ? 'bg-black text-white' : 'text-gray-500'}`
+                  )}
+                  onClick={handleClickNext}>
+                  다음으로
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {showResult ? (
+        selectedGifts.length > 0 ? (
+          selectedGifts.map((gift, index) => (
+            <div key={index}>
+              {index + 1}.{gift.name}
+            </div>
+          ))
+        ) : (
+          <div>결과가 없습니다</div>
+        )
+      ) : null}
+    </>
   );
 };
 
