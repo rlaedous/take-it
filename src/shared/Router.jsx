@@ -27,12 +27,13 @@ console.log('Loading:', isLoading);
           <Route path='/login' element={<LoginPage />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route element={<JoinPage />} />
-          <Route element={<RoulettePage />} />
+          <Route path='/roulette' element={<RoulettePage />} />
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
           <Route path='/' element={<MainPage />} />
         </Routes>
       </Layout>
+
     </BrowserRouter>
   );
 }
