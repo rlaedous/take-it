@@ -5,7 +5,7 @@ import { stringToArray } from '../utils/transformJson';
 import gifts from '/public/gifts.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGift } from '../redux/modules/giftSlice';
-import CustomButton from '../components/common/CustomButton';
+// import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
 const SurveyPage = () => {
@@ -120,7 +120,7 @@ const SurveyPage = () => {
           <div className='my-0 flex flex-col flex-wrap items-start'>
             {currentQuestion.answers.map((answer, index) => (
               <button
-                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'bg-main border-transparent text-black' : 'bg-white text-black'}`}
+                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
                 onClick={() => {
                   handleClickAnswer(answer.value, index);
                 }}
