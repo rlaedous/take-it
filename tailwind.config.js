@@ -4,6 +4,9 @@ export default {
     extend: {
       maxWidth: {
         main: '1440px'
+      },
+      colors: {
+        main: '#DDA0DD'
       }
     }
   },
