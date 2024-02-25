@@ -5,6 +5,7 @@ export default {
       colors: {
         'main-pink': '#DDA0DD'
       },
+
       //   fontSize: {
       //     "head-xl": "32px",
       //     "head-lg": "30px",
