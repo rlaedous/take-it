@@ -8,10 +8,10 @@ const Footer = () => {
   };
 
   return (
-    <div className='h-[70px] bg-main'>
-      <div onClick={handleClick} className='flex items-center '>
+    <div className='flex h-[70px] items-center justify-center bg-main'>
+      <div onClick={handleClick} className='flex items-center'>
         <img src={notion} alt='notion' className='w-[50px] cursor-pointer' />
-        <span>7조:말 걸면 진짜 울어요</span>
+        <span className='ml-2'>7조:말 걸면 진짜 울어요</span>
       </div>
     </div>
   );
