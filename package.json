@@ -13,11 +13,9 @@
     "@material-tailwind/react": "^2.1.9",
     "@reduxjs/toolkit": "^2.2.1",
     "@supabase/supabase-js": "^2.39.7",
-<<<<<<< HEAD
-    "@tanstack/react-query": "^5.22.2",
-=======
+
     "@tanstack/react-query": "^5.24.1",
->>>>>>> 1c8e514782b11b5489b67be3023b7a7b96ab58eb
+
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^11.0.6",
