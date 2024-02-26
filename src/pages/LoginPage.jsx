@@ -24,6 +24,9 @@ const LoginPage = () => {
       });
       console.log(data.data);
       localStorage.setItem('accessToken', data.data.accessToken);
+      localStorage.setItem('avatar', data.data.avatar);
+      localStorage.setItem('id', data.data.userId);
+      localStorage.setItem('nickname', data.data.nickname);
       navigate('/');
     },
     onError: (error) => {
