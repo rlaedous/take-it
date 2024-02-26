@@ -139,7 +139,7 @@ const SurveyPage = () => {
           <div className='my-0 flex flex-col flex-wrap items-start'>
             {currentQuestion.answers.map((answer, index) => (
               <button
-                className={`mx-auto my-4 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswers[currentQuestionIdx] === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
+                className={`mx-auto my-4 rounded-full border-2 border-gray-300 px-40 py-6 text-lg transition-transform duration-300 hover:scale-105 ${selectedAnswers[currentQuestionIdx] === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
                 onClick={() => {
                   handleClickAnswer(answer.value, index);
                 }}
