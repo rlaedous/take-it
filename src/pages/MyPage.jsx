@@ -4,8 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 const MyPage = () => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['loginStatus'],
-    queryFn: authCheckToken
+    queryKey: ['loginStatus']
+    // queryFn: authCheckToken
   });
   console.log('data', data);
 
