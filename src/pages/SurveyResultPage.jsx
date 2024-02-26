@@ -15,18 +15,19 @@ const SurveyResultPage = () => {
   const [isResultSaved, setIsResultSaved] = useState(false);
   useEffect(() => {
     if (selectedGifts === null) {
-      alert('설문조사페이지로 이동');
       navigate('/survey'); // 선택된 선물이 없으면 /survey 페이지로 이동
     }
   }, [selectedGifts, navigate]);
   const handleResultSave = async () => {
     try {
       if (!isResultSaved) {
+        const currentTime = new Date();
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
             selectedGifts,
-            userId: data.user.id
+            userId: data.user.id,
+            createdAt: currentTime.toISOString()
           }
         );
         console.log(response.data);

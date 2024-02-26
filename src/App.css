@@ -14,5 +14,10 @@ section > .mainContent {
   background: red;
 }
 
-.surveyResultBox {
+.homepage-container:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+.homepage-container:hover > div > span {
+  color: purple;
 }
