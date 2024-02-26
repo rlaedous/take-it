@@ -2,16 +2,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import arrow from '../../assets/images/arrow.png';
 import logo from '../../assets/images/takeit_logo.png';
 import { useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const Header = () => {
-  const isLoggined = localStorage.getItem('accessToken');
-  const nickname = localStorage.getItem('nickname');
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const menuRef = useRef(null);
 
-  const nickname = localStorage.getItem('nickname');
-  const token = localStorage.getItem('accessToken');
+  const { data } = useQuery({
+    queryKey: ['loginStatus']
+  });
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -57,13 +57,13 @@ const Header = () => {
         />
       </div>
       <div>
-        {isLoggined ? (
+        {data ? (
           <>
             <div
               ref={menuRef}
               onClick={handleInfoClick}
               className={`${isOpen ? 'bg-white' : ''} relative flex w-[200px] cursor-pointer justify-around rounded-t-md py-2`}>
-              <span className='text-xl font-bold'>{nickname}</span>
+              <span className='text-xl font-bold'>{data.user.nickname}</span>
               {isOpen && (
                 <div className='absolute top-11 w-[100%] rounded-b-md bg-white shadow-md'>
                   <div>

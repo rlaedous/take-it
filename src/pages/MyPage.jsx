@@ -14,9 +14,6 @@ const MyPage = () => {
   console.log(data);
 
   const nickname = localStorage.getItem('nickname');
-  // const token = localStorage.getItem('accessToken');
-  // const avatar = localStorage.getItem('avatar');
-  // const id = localStorage.getItem('id');
 
   const [isEditing, setIsEditing] = useState(false);
   const [newNickname, setNewNickname] = useState();
