@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
 
 const SurveyResultPage = () => {
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
@@ -8,17 +10,27 @@ const SurveyResultPage = () => {
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
+  const navigate = useNavigate();
+  const [isResultSaved, setIsResultSaved] = useState(false);
+  useEffect(() => {
+    if (selectedGifts === 0) {
+      navigate('/survey'); // 선택된 선물이 없으면 /survey 페이지로 이동
+    }
+  }, [selectedGifts, navigate]);
   const handleResultSave = async () => {
     try {
-      const response = await axios.post(
-        'https://tungsten-flossy-van.glitch.me/surveyResults',
-        {
-          selectedGifts,
-          userId: data.user.id
-        }
-      );
-      console.log(response.data);
-      return response.data;
+      if (!isResultSaved) {
+        const response = await axios.post(
+          'https://tungsten-flossy-van.glitch.me/surveyResults',
+          {
+            selectedGifts,
+            userId: data.user.id
+          }
+        );
+        console.log(response.data);
+        setIsResultSaved(true); // 결과 저장 후 상태 업데이트
+        return response.data;
+      }
     } catch (error) {
       console.log(error);
     }
