@@ -61,10 +61,11 @@ const SurveyResultPage = () => {
         )}
       </div>
       {selectedGifts && (
-        <div className='mx-auto my-8  w-1/2'>
+        <div className='mx-auto my-8  w-1/2 font-bold'>
           {`#${results.gender === 'F' ? '여자' : '남자'} 
  #${results.age.replace('s', '대')}
  #${results.whom}선물
+ #${results.isT === 'false' ? '감성적' : '실용적'}
  `}
         </div>
       )}
