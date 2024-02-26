@@ -5,14 +5,16 @@ import { useEffect } from 'react';
 import { authCheckToken } from './apis/auth.js';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  staleTime: 1000 * 60
+});
 function App() {
-  //새로고침시 로그아웃을 막는 함수
+  // 새로고침시 로그아웃을 막는 함수
   const fetchData = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const avatar = localStorage.getItem('avatar');
     const nickname = localStorage.getItem('nickname');
-    const userId = localStorage.getItem('userId');
+    const id = localStorage.getItem('id');
 
     if (accessToken) {
       try {
@@ -20,7 +22,7 @@ function App() {
 
         queryClient.setQueryData(['loginStatus'], {
           isLoggedIn: true,
-          user: { accessToken, avatar, nickname, userId }
+          user: { accessToken, avatar, nickname, id }
         });
       } catch (error) {
         console.error('Error checking token:', error);
@@ -31,9 +33,9 @@ function App() {
   };
 
   // 컴포넌트가 마운트될 때 fetchData 함수 실행
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

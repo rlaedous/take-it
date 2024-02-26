@@ -12,26 +12,33 @@ import { authCheckToken } from '../apis/auth';
 import BarChart from '../components/BarChart';
 
 export default function Router() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['loginStatus'],
-    queryFn: async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      const userData = await authCheckToken(accessToken);
-      return { isLoggedIn: true, user: userData.data };
-    },
-    onSuccess: (fetchedData) => {
-      console.log('Data fetched successfully:', fetchedData);
-    },
-    onError: (error) => {
-      console.error('Error occurred:', error);
-      alert('토큰없음 다시하셈;;');
-      localStorage.clear();
-    }
-  });
+  // const userAuth = async () => {
+  //   const accessToken = localStorage.getItem('accessToken');
+  //   const userData = await authCheckToken(accessToken);
+  //   return { isLoggedIn: true, user: userData.data };
+  // };
 
-  console.log('Data:', data);
-  console.log('Error:', error);
-  console.log('Loading:', isLoading);
+  // const { data, error, isLoading } = useQuery({
+  //   queryKey: ['loginStatus'],
+  //   queryFn: userAuth,
+  //   onSuccess: () => {
+  //     console.log('되라고 좀');
+  //   },
+  //   onError: (error) => {
+  //     console.error('Error occurred:', error);
+  //     alert('토큰없음 다시하셈;;');
+  //     localStorage.clear();
+  //   }
+  // });
+
+  //글로벌 state 화 시키기
+
+  //느낀점 rtk 를 같이 사용할 수 있다는 사실을 망각하고 있었다.
+  //굳이굳이 돌아서 쿼리만 쓸 필요가 있나,,,,,,,,
+
+  // console.log('Data:', data);
+  // console.log('Error:', error);
+  // console.log('Loading:', isLoading);
 
   return (
     <BrowserRouter>
