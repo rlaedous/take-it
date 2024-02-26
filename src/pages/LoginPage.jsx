@@ -17,7 +17,10 @@ const LoginPage = () => {
     onSuccess: (data) => {
       queryClient.setQueryData(['loginStatus'], {
         isLoggedIn: true,
-        user: data.data
+        user: {
+          ...data.data,
+          id: data.data.userId
+        }
       });
       console.log(data.data);
       localStorage.setItem('accessToken', data.data.accessToken);

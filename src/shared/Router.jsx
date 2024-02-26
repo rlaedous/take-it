@@ -11,15 +11,17 @@ import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 
 export default function Router() {
+  const userAuth = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const userData = await authCheckToken(accessToken);
+    return { isLoggedIn: true, user: userData.data };
+  };
+
   const { data, error, isLoading } = useQuery({
     queryKey: ['loginStatus'],
-    queryFn: async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      const userData = await authCheckToken(accessToken);
-      return { isLoggedIn: true, user: userData.data };
-    },
-    onSuccess: (fetchedData) => {
-      console.log('Data fetched successfully:', fetchedData);
+    queryFn: userAuth,
+    onSuccess: () => {
+      console.log('되라고 좀');
     },
     onError: (error) => {
       console.error('Error occurred:', error);
@@ -27,6 +29,11 @@ export default function Router() {
       localStorage.clear();
     }
   });
+
+  //글로벌 state 화 시키기
+
+  //느낀점 rtk 를 같이 사용할 수 있다는 사실을 망각하고 있었다.
+  //굳이굳이 돌아서 쿼리만 쓸 필요가 있나,,,,,,,,
 
   console.log('Data:', data);
   console.log('Error:', error);
