@@ -13,3 +13,6 @@ section > .mainContent {
   transform: rotateY(180deg);
   background: red;
 }
+
+.surveyResultBox {
+}
