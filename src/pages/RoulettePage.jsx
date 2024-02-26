@@ -53,7 +53,7 @@ const RoulettePage = () => {
       name: gift.name,
       imageUrl: gift.imageUrl
     }));
-  }, []); // 이 배열을 통해 useMemo가 어떤 변화에 반응해야 하는지 지정합니다. 여기서는 빈 배열을 전달하여 초기화할 때만 실행되도록 합니다.
+  }, []);
 
   const handleSpinClick = () => {
     if (!mustSpin) {
