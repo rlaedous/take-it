@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 import { profileChange } from '../apis/auth';
-import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router';
+import useFetchData from '../utils/useFetchData';
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  const fetchData = useFetchData();
   const { data, error, isLoading } = useQuery({
-    queryKey: ['loginStatus'],
-    queryFn: async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      const userData = await authCheckToken(accessToken);
-      console.log('data', data);
-      console.log('userData', userData);
+    queryKey: ['loginStatus']
+    // queryFn: async () => {
+    //   const accessToken = localStorage.getItem('accessToken');
+    //   const userData = await authCheckToken(accessToken);
+    //   console.log('data', data);
+    //   console.log('userData', userData);
 
-      return { isLoggedIn: true, user: userData.data };
-    }
+    //   return { isLoggedIn: true, user: userData.data };
+    // }
   });
   const queryClient = useQueryClient();
   // const { mutate: mutateToProfile } = useMutation({
@@ -62,10 +65,13 @@ const MyPage = () => {
     }
 
     try {
-      // mutateToProfile(formData);
-      profileChange(formData);
+      localStorage.setItem('nickname', newNickname);
 
-      queryClient.removeQueries(['loginStatus']);
+      await profileChange(formData);
+      navigate('/');
+      alert('변경이 완료되었습니다.');
+      fetchData();
+      // await queryClient.invalidateQueries(['loginStatus']);
     } catch (error) {
       console.error(error);
     }
@@ -90,7 +96,7 @@ const MyPage = () => {
     <div className='flex h-screen items-center justify-center'>
       <div className='rounded-lg bg-gray-500 p-4'>
         <h1 className='mb-4 text-4xl font-bold'>마이페이지</h1>
-        {data && data.user ? (
+        {data ? (
           <>
             <p className='mb-2 text-lg'>유저 아이디: {data.user.id}</p>
 
