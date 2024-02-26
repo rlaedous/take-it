@@ -132,14 +132,14 @@ const SurveyPage = () => {
       <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
         <div className='flex h-full w-full flex-col items-center'>
           <ProgressBar progress={progress} />
-          <p className=' mb-5 text-4xl text-gray-400'>
+          <p className=' mb-5 mt-3 text-4xl text-gray-400'>
             Q{currentQuestion.order}.
           </p>
           <p className='pb-5 text-2xl'>{currentQuestion.question}</p>
           <div className='my-0 flex flex-col flex-wrap items-start'>
             {currentQuestion.answers.map((answer, index) => (
               <button
-                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswers[currentQuestionIdx] === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
+                className={`mx-auto my-4 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswers[currentQuestionIdx] === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
                 onClick={() => {
                   handleClickAnswer(answer.value, index);
                 }}
