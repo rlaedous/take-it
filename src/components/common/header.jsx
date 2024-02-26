@@ -35,7 +35,7 @@ const Header = () => {
     }, 200);
   };
   return (
-    <div className='color-main flex h-[70px] items-center justify-between px-4'>
+    <div className='flex h-[70px] items-center justify-between bg-main px-4'>
       <div>로고</div>
       <div>
         {isLoggedIn ? (
