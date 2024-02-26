@@ -23,3 +23,20 @@ export const authCheckToken = async (token) => {
   });
   return response;
 };
+
+export const profileChange = async (formData) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+    const { data } = await authAPI.patch(`/profile`, formData, {
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    console.log('server-data:', data);
+    return data;
+  } catch (error) {
+    console.error('error-profileChange', error.response?.data || error.message);
+    throw error;
+  }
+};
