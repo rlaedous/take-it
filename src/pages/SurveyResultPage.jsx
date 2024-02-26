@@ -8,7 +8,6 @@ const SurveyResultPage = () => {
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
-  //죄송합니다 사퇴하겠습니다...
   const handleResultSave = async () => {
     try {
       const response = await axios.post(
