@@ -99,7 +99,7 @@ const RoulettePage = () => {
           }}
           backgroundColors={['#FAF7FA', '#F2CBF2', '#DDA0DD']}
           outerBorderColor='#020000'
-          outerBorderWidth={16}
+          outerBorderWidth={10}
           innerBorderColor='#020000'
           innerBorderWidth={8}
           radiusLineColor='#020000'

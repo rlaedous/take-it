@@ -36,10 +36,9 @@ const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
           <motion.img
             src={giftImg}
             alt='GiftImg'
-            className='mx-auto mb-4'
-            style={{ width: '170px', height: 'auto' }}
+            className='w-150 mx-auto mb-4 h-auto cursor-pointer'
             whileHover={{
-              scale: 1.1
+              scale: 1.09
             }}
             animate={{
               rotate: [-3, 3, -3],
@@ -51,15 +50,11 @@ const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
             onTap={() => setIsClicked(true)} // 이미지 클릭 시 동작
           />
         ) : (
-          // URL에서 가져온 이미지 표시
           <>
             <motion.img
               src={prizeImageUrl}
               alt='SelectedGiftImg'
-              className='mx-auto mb-4'
-              style={{ width: '300px', height: 'auto', rotate: 0 }}
-              initial={{ opacity: 0 }} // 초기 투명도 설정
-              animate={{ opacity: 2 }} // 나타나는 애니메이션
+              className='w-300 h-quto mx-auto mb-4 rotate-0'
             />
             <p className='mb-4 text-center'>랜덤 선물: {prize}</p>
           </>
