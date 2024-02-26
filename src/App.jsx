@@ -1,16 +1,12 @@
 import Router from './shared/Router.jsx';
 import './App.css';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { authCheckToken } from './apis/auth.js';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+const queryClient = new QueryClient();
 function App() {
-  const queryClient = new QueryClient();
-
   const fetchData = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const avatar = localStorage.getItem('avatar');
@@ -27,6 +23,8 @@ function App() {
         });
       } catch (error) {
         console.error('Error checking token:', error);
+        localStorage.clear();
+        alert('로그인 토큰이 만료되었습니다. 다시 로그인해주세요');
       }
     }
   };
@@ -39,6 +37,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

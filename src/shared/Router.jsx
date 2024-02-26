@@ -11,15 +11,15 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function Router() {
   const { data, error, isLoading } = useQuery({
-  queryKey: ['loginStatus'],
-  onSuccess: (fetchedData) => {
-    console.log('Data fetched successfully:', fetchedData);
-  },
-});
+    queryKey: ['loginStatus'],
+    onSuccess: (fetchedData) => {
+      console.log('Data fetched successfully:', fetchedData);
+    }
+  });
 
-console.log('Data:', data);
-console.log('Error:', error);
-console.log('Loading:', isLoading);
+  console.log('Data:', data);
+  console.log('Error:', error);
+  console.log('Loading:', isLoading);
   return (
     <BrowserRouter>
       <Layout>
@@ -33,7 +33,6 @@ console.log('Loading:', isLoading);
           <Route path='/' element={<MainPage />} />
         </Routes>
       </Layout>
-
     </BrowserRouter>
   );
 }
