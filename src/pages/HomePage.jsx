@@ -4,16 +4,22 @@ import roulette from '../assets/images/roulette.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+
   const clickSurvey = () => {
     navigate('/survey');
   };
   const clickRoulette = () => {
-    navigate('/roulette');
+    if (accessToken) {
+      navigate('/roulette');
+    } else {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
   };
-
   return (
     <>
-      <div className='w-main mx-auto flex justify-center gap-8 '>
+      <div className='mx-auto mt-10 flex max-w-main justify-center gap-8'>
         <div
           onClick={clickSurvey}
           className='flex h-[600px] w-[480px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
