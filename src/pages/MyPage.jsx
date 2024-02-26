@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 // import { authCheckToken } from '../apis/auth';
-
-import React from 'react';
 const MyPage = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['loginStatus']

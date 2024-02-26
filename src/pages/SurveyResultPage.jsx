@@ -1,13 +1,23 @@
 import { useSelector } from 'react-redux';
-import { authAPI } from '../apis/auth';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const SurveyResultPage = () => {
-  const selectedGifts = useSelector((state) => state.gift);
+  const selectedGifts = useSelector((state) => state.surveyResult.gifts);
+  const results = useSelector((state) => state.surveyResult.surveyResult);
+  const { data } = useQuery({
+    queryKey: ['loginStatus']
+  });
   const handleResultSave = async () => {
     try {
-      const response = await authAPI.post('/result', {
-        selectedGifts
-      });
+      const response = await axios.post(
+        'https://tungsten-flossy-van.glitch.me/surveyResults',
+        {
+          selectedGifts,
+          userId: data.user.id
+        }
+      );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -16,9 +26,6 @@ const SurveyResultPage = () => {
   return (
     <div className='mx-auto max-w-main'>
       <h3 className='my-3 text-center text-2xl font-bold'>너가 줄 선물은</h3>
-      <div className='mx-auto my-8 h-[100px] w-1/2 border border-black'>
-        추천설명
-      </div>
       <div className='surveyResultBox flex gap-4'>
         {selectedGifts.length > 0 ? (
           selectedGifts.map((gift, index) => (
@@ -38,6 +45,13 @@ const SurveyResultPage = () => {
           <div>결과가 없습니다</div>
         )}
       </div>
+      <div className='mx-auto my-8 h-[100px] w-1/2 border border-black'>
+        {`#${results.gender === 'F' ? '여자' : '남자'} 
+        #${results.age.replace('s', '대')}
+        #${results.whom}선물
+        `}
+      </div>
+
       <button onClick={handleResultSave}>결과 저장</button>
     </div>
   );
