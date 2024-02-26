@@ -39,9 +39,9 @@ const SurveyResultPage = () => {
     }
   };
   return (
-    <div className='mx-auto max-w-main'>
+    <div className='mx-auto max-w-main text-center'>
       <h3 className='my-3 text-center text-2xl font-bold'>너가 줄 선물은</h3>
-      <div className='surveyResultBox flex gap-4'>
+      <div className='surveyResultBox flex justify-center gap-4'>
         {selectedGifts && selectedGifts.length ? (
           selectedGifts.map((gift, index) => (
             <div
@@ -52,7 +52,7 @@ const SurveyResultPage = () => {
                 <p className='mx-auto flex h-[300px] w-2/3 items-center overflow-hidden bg-gray-50'>
                   <img src={gift.imageUrl} className='rounded-2xl' alt='사진' />
                 </p>
-                <span className='my-4 block text-center'>{gift.name}</span>
+                <span className='mt-4 block text-center'>{gift.name}</span>
               </div>
             </div>
           ))
@@ -61,7 +61,7 @@ const SurveyResultPage = () => {
         )}
       </div>
       {selectedGifts && (
-        <div className='mx-auto my-8 h-[100px] w-1/2 border border-black'>
+        <div className='mx-auto my-8  w-1/2'>
           {`#${results.gender === 'F' ? '여자' : '남자'} 
  #${results.age.replace('s', '대')}
  #${results.whom}선물
@@ -69,7 +69,10 @@ const SurveyResultPage = () => {
         </div>
       )}
 
-      <button onClick={handleResultSave} disabled={isResultSaved}>
+      <button
+        className='rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
+        onClick={handleResultSave}
+        disabled={isResultSaved}>
         {isResultSaved === true ? '저장 완료!' : '결과 저장'}
       </button>
     </div>
