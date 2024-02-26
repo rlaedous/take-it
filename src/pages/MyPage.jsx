@@ -1,7 +1,9 @@
+
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 import { profileChange } from '../apis/auth';
+
 
 const MyPage = () => {
   const { data, error, isLoading } = useQuery({
