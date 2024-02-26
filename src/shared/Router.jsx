@@ -9,6 +9,7 @@ import Layout from '../components/common/layout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
+import BarChart from '../components/BarChart';
 
 export default function Router() {
   const { data, error, isLoading } = useQuery({
@@ -43,6 +44,7 @@ export default function Router() {
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
           <Route path='/' element={<MainPage />} />
+          <Route path='/chart' element={<BarChart />} />
         </Routes>
       </Layout>
     </BrowserRouter>

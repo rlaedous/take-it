@@ -10,8 +10,7 @@ import { useMemo } from 'react';
 const RoulettePage = () => {
   const [mustSpin, setMustSpin] = useState(false); //룰렛회전
   const [prizeNumber, setPrizeNumber] = useState(0); //회전멈추면 선택항목 저장
-  const [prize, setPrize] = useState(''); // 모달에 전달할 prize 업데이트
-  const [imgUrl, setImgUrl] = useState(); // 모달에 전달할 prize 업데이트
+
   const jsConfetti = new JSConfetti();
   const [isOpen, setIsOpen] = useState(false);
   /*뽑은 선물 저장하려고만든 state
@@ -93,8 +92,8 @@ const RoulettePage = () => {
           onStopSpinning={() => {
             setMustSpin(false);
             handleConfetti();
-            setPrize(data[prizeNumber].option);
-            setImgUrl(data[prizeNumber].imageUrl);
+            //setPrize(data[prizeNumber].option);
+            //setImgUrl(data[prizeNumber].imageUrl);
             setIsOpen(true);
             //alert(data[prizeNumber].option + '이 당첨되셨습니다');
           }}
@@ -115,9 +114,9 @@ const RoulettePage = () => {
       </div>
       <RouletteModal
         isOpen={isOpen}
-        prize={prize}
+        prize={data[prizeNumber].option}
         closeModal={closeModal}
-        prizeImageUrl={imgUrl}
+        prizeImageUrl={data[prizeNumber].imageUrl}
       />
     </div>
   );

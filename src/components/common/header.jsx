@@ -15,6 +15,7 @@ const Header = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       handleMenuOnblur();
