@@ -9,6 +9,9 @@ const Header = () => {
   const navigate = useNavigate();
   const menuRef = useRef(null);
 
+  const nickname = localStorage.getItem('nickname');
+  const token = localStorage.getItem('accessToken');
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {

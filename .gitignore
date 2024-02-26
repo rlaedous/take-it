@@ -22,12 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-# Hide environment variable file
-.env
-.env.local
-=======
 
 # Environment variables
 .env
->>>>>>> 1c8e514782b11b5489b67be3023b7a7b96ab58eb

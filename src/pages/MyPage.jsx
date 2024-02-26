@@ -1,22 +1,25 @@
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 import { profileChange } from '../apis/auth';
-
+import { useNavigate } from 'react-router';
+import useFetchData from '../utils/useFetchData';
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  const fetchData = useFetchData();
   const { data, error, isLoading } = useQuery({
-    queryKey: ['loginStatus'],
-    queryFn: async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      const userData = await authCheckToken(accessToken);
-      return { isLoggedIn: true, user: userData.data };
-    }
+    queryKey: ['loginStatus']
   });
+  console.log(data);
+
+  const nickname = localStorage.getItem('nickname');
+  // const token = localStorage.getItem('accessToken');
+  // const avatar = localStorage.getItem('avatar');
+  // const id = localStorage.getItem('id');
 
   const [isEditing, setIsEditing] = useState(false);
-  const [newNickname, setNewNickname] = useState(data?.user?.nickname || '');
+  const [newNickname, setNewNickname] = useState();
 
   const handleNicknameChange = (e) => {
     setNewNickname(e.target.value);
@@ -34,8 +37,13 @@ const MyPage = () => {
       console.log('newNickname', newNickname);
     }
     try {
+      localStorage.setItem('nickname', newNickname);
+
       await profileChange(formData);
-      await queryClient.invalidateQueries(['loginStatus']);
+      navigate('/');
+      alert('변경이 완료되었습니다.');
+      fetchData();
+      // await queryClient.invalidateQueries(['loginStatus']);
     } catch (error) {
       console.error(error);
     }
@@ -46,20 +54,20 @@ const MyPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return (
-      <div>
-        <p>Error fetching user data</p>
-        <p>Error details: {error.message}</p>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div>
+  //       <p>Error fetching user data</p>
+  //       <p>Error details: {error.message}</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className='flex h-screen items-center justify-center'>
       <div className='rounded-lg bg-gray-500 p-4'>
         <h1 className='mb-4 text-4xl font-bold'>마이페이지</h1>
-        {data && data.user ? (
+        {data ? (
           <>
             <p className='mb-2 text-lg'>유저 아이디: {data.user.id}</p>
             {isEditing ? (
@@ -75,7 +83,7 @@ const MyPage = () => {
                 />
               </div>
             ) : (
-              <p className='mb-2 text-lg'>닉네임: {data.user.nickname}</p>
+              <p className='mb-2 text-lg'>닉네임: {nickname}</p>
             )}
             <div className='flex'>
               {isEditing ? (
