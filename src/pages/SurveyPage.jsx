@@ -8,6 +8,8 @@ import { setGift, setSurveyResult } from '../redux/modules/surveyResultSlice';
 // import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
+import ProgressBar from '../components/common/ProgressBar';
+
 const SurveyPage = () => {
   const transformedGifts = gifts.map((gift) => ({
     ...gift,
@@ -60,6 +62,9 @@ const SurveyPage = () => {
     const updatedSelectedAnswers = [...selectedAnswers];
     updatedSelectedAnswers[currentQuestionIdx] = idx; //
     setSelectedAnswers(updatedSelectedAnswers);
+    if (currentQuestionIdx === surveys.length - 1) {
+      increaseProgress();
+    }
   };
 
   useEffect(() => {
@@ -102,6 +107,7 @@ const SurveyPage = () => {
       }
     });
     setCurrentSelectedAnswer(null);
+    increaseProgress();
   };
 
   useEffect(() => {
@@ -115,10 +121,17 @@ const SurveyPage = () => {
       //navigate('/surveyResult'); // 결과 페이지로 이동
     }
   };
+  const [progress, setProgress] = useState(0);
+  const increaseProgress = () => {
+    if (progress < 100) {
+      setProgress(progress + 100 / surveys.length);
+    }
+  };
   return (
     <>
       <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
         <div className='flex h-full w-full flex-col items-center'>
+          <ProgressBar progress={progress} />
           <p className=' mb-5 text-4xl text-gray-400'>
             Q{currentQuestion.order}.
           </p>
