@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gift from '../modules/giftSlice';
+import surveyResult from '../modules/surveyResultSlice';
 const store = configureStore({
-  reducer: { gift }
+  reducer: { surveyResult }
 });
 export default store;

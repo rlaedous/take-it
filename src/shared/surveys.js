@@ -1,16 +1,7 @@
 export const surveys = [
   {
     order: 1,
-    question: '성별 뭐임?',
-    answers: [
-      { name: '남자', value: 'M' },
-      { name: '여자', value: 'F' }
-    ],
-    questionType: 'gender'
-  },
-  {
-    order: 2,
-    question: '누가 받음?',
+    question: '누구한테 줄 거임?',
     answers: [
       { name: '친구', value: '친구' },
       { name: '부모님', value: '부모님' },
@@ -18,6 +9,16 @@ export const surveys = [
     ],
     questionType: 'whom'
   },
+  {
+    order: 2,
+    question: '성별 뭐임?',
+    answers: [
+      { name: '남자', value: 'M' },
+      { name: '여자', value: 'F' }
+    ],
+    questionType: 'gender'
+  },
+
   {
     order: 3,
     question: '몇 살임?',
