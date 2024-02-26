@@ -4,6 +4,8 @@ import JSConfetti from 'js-confetti';
 import RouletteModal from '../components/roulette/RouletteModal';
 import heart from '../assets/images/heart.png';
 import gifts from '/public/gifts.json';
+import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 
 const RoulettePage = () => {
   const [mustSpin, setMustSpin] = useState(false); //룰렛회전
@@ -44,15 +46,14 @@ const RoulettePage = () => {
     return selected;
   };
 
-  const generateRouletteData = () => {
+  const data = useMemo(() => {
     const randomGifts = selectRandomGifts();
     return randomGifts.map((gift) => ({
-      option: gift.name, // 선물의 이름을 옵션으로 설정합니다.
+      option: gift.name,
       name: gift.name,
-      imageUrl: gift.imageUrl // 선물의 이미지 URL을 설정합니다.
+      imageUrl: gift.imageUrl
     }));
-  };
-  const data = generateRouletteData(); //wheel안의 데이터에 랜덤선물설정
+  }, []);
 
   const handleSpinClick = () => {
     if (!mustSpin) {
