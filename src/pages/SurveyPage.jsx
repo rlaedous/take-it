@@ -4,7 +4,7 @@ import { getfilteredGifts } from '../utils/filterGift';
 import { stringToArray } from '../utils/transformJson';
 import gifts from '/public/gifts.json';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGift } from '../redux/modules/giftSlice';
+import { setGift, setSurveyResult } from '../redux/modules/surveyResultSlice';
 // import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
@@ -16,7 +16,7 @@ const SurveyPage = () => {
   }));
 
   const [currentQuestionIdx, setCurrentQuestionNum] = useState(0);
-  const [results, setResults] = useState({
+  const [result, setResult] = useState({
     gender: 'ㅇㅇ',
     whom: '',
     age: '',
@@ -25,20 +25,18 @@ const SurveyPage = () => {
   });
   const dispatch = useDispatch();
 
-  const selectedGifts = useSelector((state) => state.gift);
+  const selectedGifts = useSelector((state) => state.surveyResult);
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const [isActiveNext, setIsActiveNext] = useState(false);
-
-  const [showResult, setShowResult] = useState(false);
 
   const navigate = useNavigate();
 
   const currentQuestion = useMemo(() => {
     const question = surveys[currentQuestionIdx];
 
-    if (question.questionType === 'age' && results.whom === '부모님') {
+    if (question.questionType === 'age' && result.whom === '부모님') {
       return {
         ...question,
         answers: question.answers.slice(3, 5)
@@ -46,30 +44,22 @@ const SurveyPage = () => {
     }
 
     return question;
-  }, [currentQuestionIdx, results]);
+  }, [currentQuestionIdx, result]);
 
   const handleClickAnswer = (answerVal, idx) => {
     const key = currentQuestion.questionType;
     setSelectedAnswer(idx);
     if (currentQuestion.questionType) {
-      setResults({
-        ...results,
+      setResult({
+        ...result,
         [key]: answerVal
       });
-    }
-    if (currentQuestionIdx === surveys.length - 1) {
-      const filteredGift = getfilteredGifts(transformedGifts, results);
-      console.log(filteredGift);
-      if (filteredGift) {
-        setShowResult(true);
-        dispatch(setGift(filteredGift));
-      }
     }
   };
 
   useEffect(() => {
-    console.log('results', results);
-  }, [results]);
+    console.log('results', result);
+  }, [result]);
 
   useEffect(() => {
     if (selectedGifts) {
@@ -110,9 +100,10 @@ const SurveyPage = () => {
   };
 
   const handleClickResult = () => {
-    const filteredGift = getfilteredGifts(transformedGifts, results);
+    const filteredGift = getfilteredGifts(transformedGifts, result);
     if (filteredGift) {
       dispatch(setGift(filteredGift));
+      dispatch(setSurveyResult(result));
       navigate('/surveyResult'); // 결과 페이지로 이동
     }
   };
@@ -140,7 +131,7 @@ const SurveyPage = () => {
             {currentQuestionIdx === surveys.length - 1 ? (
               <button
                 onClick={handleClickResult}
-                className='mx-1 rounded-full border-2 border-black bg-black px-20 px-5 py-5 text-lg text-white'>
+                className='mx-1 rounded-full border-2 border-black bg-black px-20 py-5 text-lg text-white'>
                 결과보기
               </button>
             ) : (
@@ -162,17 +153,6 @@ const SurveyPage = () => {
           </div>
         </div>
       </div>
-      {showResult ? (
-        selectedGifts.length > 0 ? (
-          selectedGifts.map((gift, index) => (
-            <div key={index}>
-              {index + 1}.{gift.name}
-            </div>
-          ))
-        ) : (
-          <div>결과가 없습니다</div>
-        )
-      ) : null}
     </>
   );
 };
