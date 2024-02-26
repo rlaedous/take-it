@@ -15,15 +15,12 @@ const LoginPage = () => {
   const loginMutation = useMutation({
     mutationFn: authLogin,
     onSuccess: (data) => {
-      queryClient.setQueryData('loginStatus', {
+      queryClient.setQueryData(['loginStatus'], {
         isLoggedIn: true,
         user: data.data
       });
       console.log(data.data);
       localStorage.setItem('accessToken', data.data.accessToken);
-      localStorage.setItem('avatar', data.data.avatar);
-      localStorage.setItem('userId', data.data.userId);
-      localStorage.setItem('nickname', data.data.nickname);
       navigate('/');
     },
     onError: (error) => {
@@ -34,7 +31,7 @@ const LoginPage = () => {
   const registerMutation = useMutation({
     mutationFn: authRegister,
     onSuccess: (data) => {
-      alert(data.data);
+      alert(data);
       alert('로그인 하러가');
       setIsRegister(false);
     },
