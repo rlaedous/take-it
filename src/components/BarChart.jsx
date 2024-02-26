@@ -35,14 +35,12 @@ const BarChart = () => {
             }
           });
         }
-
-        return data;
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  });
+  }, []);
 
   return (
     <div>
