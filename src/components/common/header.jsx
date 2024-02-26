@@ -1,13 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import arrow from '../../assets/images/arrow.png';
+import logo from '../../assets/images/takeit_logo.png';
 import { useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isLoggedIn = localStorage.getItem('accessToken');
-  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
   const menuRef = useRef(null);
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
@@ -26,24 +27,27 @@ const Header = () => {
     navigate('/mypage');
     setIsOpen(!isOpen);
   };
-  const handleLogout = () => {
-    localStorage.clear();
-  };
+  const handleLogout = () => {};
   const handleMenuOnblur = () => {
     setTimeout(() => {
       setIsOpen(false);
     }, 200);
   };
+  const { data } = useQuery({
+    queryKey: ['loginStatus']
+  });
   return (
     <div className='flex h-[70px] items-center justify-between bg-main px-4'>
-      <div>로고</div>
+      <div className='w-[200px]'>
+        <img src={logo} alt='로고' className='cursor-pointer' />
+      </div>
       <div>
-        {isLoggedIn ? (
+        {data ? (
           <>
             <div
               ref={menuRef}
               className={`${isOpen ? 'bg-white' : ''} relative flex w-[200px] justify-around rounded-t-md py-2`}>
-              <span className='text-xl font-bold'>{userId}</span>
+              <span className='text-xl font-bold'>{data.user.nickname}</span>
               {isOpen && (
                 <div className='absolute top-11 w-[100%] rounded-b-md bg-white shadow-md'>
                   <div>

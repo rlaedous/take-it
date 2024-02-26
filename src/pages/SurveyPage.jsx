@@ -118,7 +118,7 @@ const SurveyPage = () => {
     if (filteredGift) {
       dispatch(setGift(filteredGift));
       dispatch(setSurveyResult(result));
-      //navigate('/surveyResult'); // 결과 페이지로 이동
+      navigate('/surveyResult'); // 결과 페이지로 이동
     }
   };
   const [progress, setProgress] = useState(0);

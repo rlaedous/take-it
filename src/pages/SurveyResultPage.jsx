@@ -1,20 +1,24 @@
 import { useSelector } from 'react-redux';
-import { authAPI } from '../apis/auth';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const SurveyResultPage = () => {
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
-
-  console.log(selectedGifts);
-  console.log(results);
+  const { data } = useQuery({
+    queryKey: ['loginStatus']
+  });
+  //죄송합니다 사퇴하겠습니다...
   const handleResultSave = async () => {
     try {
-      const response = await authAPI.post(
+      const response = await axios.post(
         'https://tungsten-flossy-van.glitch.me/surveyResults',
         {
-          selectedGifts
+          selectedGifts,
+          userId: data.user.id
         }
       );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
