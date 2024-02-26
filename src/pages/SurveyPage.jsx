@@ -8,6 +8,8 @@ import { setGift, setSurveyResult } from '../redux/modules/surveyResultSlice';
 // import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
+import ProgressBar from '../components/common/ProgressBar';
+
 const SurveyPage = () => {
   const transformedGifts = gifts.map((gift) => ({
     ...gift,
@@ -27,9 +29,11 @@ const SurveyPage = () => {
 
   const selectedGifts = useSelector((state) => state.surveyResult);
 
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [currentSelectedAnswer, setCurrentSelectedAnswer] = useState(null);
 
   const [isActiveNext, setIsActiveNext] = useState(false);
+
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   const navigate = useNavigate();
 
@@ -48,12 +52,18 @@ const SurveyPage = () => {
 
   const handleClickAnswer = (answerVal, idx) => {
     const key = currentQuestion.questionType;
-    setSelectedAnswer(idx);
+    setCurrentSelectedAnswer(idx);
     if (currentQuestion.questionType) {
       setResult({
         ...result,
         [key]: answerVal
       });
+    }
+    const updatedSelectedAnswers = [...selectedAnswers];
+    updatedSelectedAnswers[currentQuestionIdx] = idx; //
+    setSelectedAnswers(updatedSelectedAnswers);
+    if (currentQuestionIdx === surveys.length - 1) {
+      increaseProgress();
     }
   };
 
@@ -78,14 +88,14 @@ const SurveyPage = () => {
   };
 
   useEffect(() => {
-    if (selectedAnswer === null) {
+    if (selectedAnswers[currentQuestionIdx] === undefined) {
       setIsActiveNext(false);
     } else {
       setIsActiveNext(true);
     }
-  }, [selectedAnswer]);
+  }, [selectedAnswers, currentQuestionIdx]);
   const handleClickNext = () => {
-    if (selectedAnswer === null) {
+    if (selectedAnswers[currentQuestionIdx] === undefined) {
       return;
     }
 
@@ -96,29 +106,40 @@ const SurveyPage = () => {
         return prev;
       }
     });
-    setSelectedAnswer(null);
+    setCurrentSelectedAnswer(null);
+    increaseProgress();
   };
 
+  useEffect(() => {
+    console.log('selectedAnswers', selectedAnswers);
+  }, [selectedAnswers]);
   const handleClickResult = () => {
     const filteredGift = getfilteredGifts(transformedGifts, result);
     if (filteredGift) {
       dispatch(setGift(filteredGift));
       dispatch(setSurveyResult(result));
-      navigate('/surveyResult'); // 결과 페이지로 이동
+      //navigate('/surveyResult'); // 결과 페이지로 이동
+    }
+  };
+  const [progress, setProgress] = useState(0);
+  const increaseProgress = () => {
+    if (progress < 100) {
+      setProgress(progress + 100 / surveys.length);
     }
   };
   return (
     <>
       <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
         <div className='flex h-full w-full flex-col items-center'>
-          <p className=' mb-5 text-4xl text-gray-400'>
+          <ProgressBar progress={progress} />
+          <p className=' mb-5 mt-3 text-4xl text-gray-400'>
             Q{currentQuestion.order}.
           </p>
           <p className='pb-5 text-2xl'>{currentQuestion.question}</p>
           <div className='my-0 flex flex-col flex-wrap items-start'>
             {currentQuestion.answers.map((answer, index) => (
               <button
-                className={`mx-auto my-5 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswer === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
+                className={`mx-auto my-4 rounded-full border-2 border-gray-300 px-40 py-6 text-lg ${selectedAnswers[currentQuestionIdx] === index ? 'border-transparent bg-main text-black' : 'bg-white text-black'}`}
                 onClick={() => {
                   handleClickAnswer(answer.value, index);
                 }}
@@ -128,28 +149,30 @@ const SurveyPage = () => {
             ))}
           </div>
           <div className='absolute bottom-10'>
-            {currentQuestionIdx === surveys.length - 1 ? (
+            <>
               <button
-                onClick={handleClickResult}
-                className='mx-1 rounded-full border-2 border-black bg-black px-20 py-5 text-lg text-white'>
-                결과보기
+                className={twMerge(
+                  `mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500 ${currentQuestionIdx !== 0 ? 'bg-gray-500 text-white' : 'text-gray-500'}`
+                )}
+                onClick={handleClickPrev}>
+                이전으로
               </button>
-            ) : (
-              <>
+              {currentQuestionIdx === surveys.length - 1 ? (
                 <button
-                  className='mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500'
-                  onClick={handleClickPrev}>
-                  이전으로
+                  onClick={handleClickResult}
+                  className='mx-1 rounded-full  border-black bg-black px-20 py-5 text-lg text-white'>
+                  결과보기
                 </button>
+              ) : (
                 <button
                   className={twMerge(
-                    `mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500 ${isActiveNext ? 'bg-black text-white' : 'text-gray-500'}`
+                    `mx-1 rounded-full bg-gray-200 px-20 py-5 text-lg text-gray-500 ${isActiveNext ? 'bg-black text-white' : 'bg-gray-200 text-gray-500'}`
                   )}
                   onClick={handleClickNext}>
                   다음으로
                 </button>
-              </>
-            )}
+              )}
+            </>
           </div>
         </div>
       </div>
