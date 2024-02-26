@@ -2,9 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import arrow from '../../assets/images/arrow.png';
 import logo from '../../assets/images/takeit_logo.png';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 const Header = () => {
+  const isLoggined = localStorage.getItem('accessToken');
+  const nickname = localStorage.getItem('nickname');
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const menuRef = useRef(null);
@@ -18,6 +19,7 @@ const Header = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       handleMenuOnblur();
@@ -30,27 +32,38 @@ const Header = () => {
     navigate('/mypage');
     setIsOpen(!isOpen);
   };
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
+    navigate('/login'); // 로그인 페이지로 이동
+    setIsOpen(false); // 로그아웃 후 메뉴 닫기
+  };
   const handleMenuOnblur = () => {
     setTimeout(() => {
       setIsOpen(false);
     }, 200);
   };
-  const { data } = useQuery({
-    queryKey: ['loginStatus']
-  });
+  const handleHomeBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className='flex h-[70px] items-center justify-between bg-main px-4'>
       <div className='w-[200px]'>
-        <img src={logo} alt='로고' className='cursor-pointer' />
+        <img
+          src={logo}
+          alt='로고'
+          className='cursor-pointer'
+          onClick={handleHomeBack}
+        />
       </div>
       <div>
-        {data ? (
+        {isLoggined ? (
           <>
             <div
               ref={menuRef}
-              className={`${isOpen ? 'bg-white' : ''} relative flex w-[200px] justify-around rounded-t-md py-2`}>
-              <span className='text-xl font-bold'>{data.user.nickname}</span>
+              onClick={handleInfoClick}
+              className={`${isOpen ? 'bg-white' : ''} relative flex w-[200px] cursor-pointer justify-around rounded-t-md py-2`}>
+              <span className='text-xl font-bold'>{nickname}</span>
               {isOpen && (
                 <div className='absolute top-11 w-[100%] rounded-b-md bg-white shadow-md'>
                   <div>
@@ -67,11 +80,7 @@ const Header = () => {
                   </div>
                 </div>
               )}
-              <img
-                src={arrow}
-                onClick={handleInfoClick}
-                className='w-[20px] cursor-pointer'
-              />
+              <img src={arrow} className='w-[20px]' />
             </div>
           </>
         ) : (

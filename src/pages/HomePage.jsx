@@ -19,24 +19,32 @@ const HomePage = () => {
   };
   return (
     <>
-      <div className='mx-auto mt-10 flex max-w-main justify-center gap-8'>
+      <div className='mx-auto mt-[60px] flex max-w-main justify-center gap-8'>
         <div
           onClick={clickSurvey}
-          className='flex h-[600px] w-[480px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
-          <h3 className='text-2xl font-bold'>이거 받어 ㅋㅋ</h3>
+          className='homepage-container flex h-[560px] w-[440px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
+          <h3 className='text-2xl font-bold text-[#333]'>이거 받어 ㅋㅋ</h3>
           <div>
             <img src={present} className='mx-auto' />
           </div>
-          <span className='text-2xl font-bold'>설문조사</span>
+          <div>
+            <span className='rounded-xl bg-main px-10 py-3 text-2xl font-bold text-white'>
+              설문조사
+            </span>
+          </div>
         </div>
         <div
           onClick={clickRoulette}
-          className='flex h-[600px] w-[480px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
-          <h3 className='text-2xl font-bold'>못고르겠어? 돌려</h3>
-          <div>
+          className='homepage-container flex h-[560px] w-[440px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
+          <h3 className='text-2xl font-bold text-[#333]'>못고르겠어? 돌려</h3>
+          <div className='flex h-[280px] items-center'>
             <img src={roulette} className='mx-auto' />
           </div>
-          <span className='text-2xl font-bold'>랜덤선물</span>
+          <div>
+            <span className='rounded-xl bg-main px-10 py-3 text-2xl font-bold text-white'>
+              랜덤선물
+            </span>
+          </div>
         </div>
       </div>
     </>
