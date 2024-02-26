@@ -8,18 +8,30 @@ import SurveyResultPage from '../pages/SurveyResultPage';
 import Layout from '../components/common/layout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { authCheckToken } from '../apis/auth';
 
 export default function Router() {
   const { data, error, isLoading } = useQuery({
     queryKey: ['loginStatus'],
+    queryFn: async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      const userData = await authCheckToken(accessToken);
+      return { isLoggedIn: true, user: userData.data };
+    },
     onSuccess: (fetchedData) => {
       console.log('Data fetched successfully:', fetchedData);
+    },
+    onError: (error) => {
+      console.error('Error occurred:', error);
+      alert('토큰없음 다시하셈;;');
+      localStorage.clear();
     }
   });
 
   console.log('Data:', data);
   console.log('Error:', error);
   console.log('Loading:', isLoading);
+
   return (
     <BrowserRouter>
       <Layout>

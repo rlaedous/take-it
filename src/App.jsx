@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
 function App() {
+  //새로고침시 로그아웃을 막는 함수
   const fetchData = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const avatar = localStorage.getItem('avatar');
@@ -30,9 +31,9 @@ function App() {
   };
 
   // 컴포넌트가 마운트될 때 fetchData 함수 실행
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
