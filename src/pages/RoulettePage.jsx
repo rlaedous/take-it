@@ -3,15 +3,20 @@ import { useState } from 'react';
 import JSConfetti from 'js-confetti';
 import RouletteModal from '../components/roulette/RouletteModal';
 import heart from '../assets/images/heart.png';
+import gifts from '/public/gifts.json';
+import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 
 const RoulettePage = () => {
-  //룰렛 데이터.. 나온 선물들 받아와서 랜덤 10?개 정도?
-  const data = [{ option: '0' }, { option: '1' }, { option: '2' }];
-
   const [mustSpin, setMustSpin] = useState(false); //룰렛회전
   const [prizeNumber, setPrizeNumber] = useState(0); //회전멈추면 선택항목 저장
+  const [prize, setPrize] = useState(''); // 모달에 전달할 prize 업데이트
+  const [imgUrl, setImgUrl] = useState(); // 모달에 전달할 prize 업데이트
   const jsConfetti = new JSConfetti();
   const [isOpen, setIsOpen] = useState(false);
+  /*뽑은 선물 저장하려고만든 state
+  const [selectedGifts, setSelectedGifts] = useState([]);
+*/
   const handleConfetti = () => {
     jsConfetti.addConfetti({
       confettiColors: [
@@ -26,15 +31,44 @@ const RoulettePage = () => {
       confettiNumber: 600
     });
   };
+
+  // 랜덤으로 10개의 선물 이름 선택
+  const selectRandomGifts = () => {
+    const allGifts = gifts; // 선물 데이터 그 자체를 사용합니다.
+    const selected = [];
+    while (selected.length < 10) {
+      const randomIndex = Math.floor(Math.random() * allGifts.length);
+      const randomGift = allGifts[randomIndex];
+      if (!selected.includes(randomGift)) {
+        selected.push(randomGift);
+      }
+    }
+    return selected;
+  };
+
+  const data = useMemo(() => {
+    const randomGifts = selectRandomGifts();
+    return randomGifts.map((gift) => ({
+      option: gift.name,
+      name: gift.name,
+      imageUrl: gift.imageUrl
+    }));
+  }, []);
+
   const handleSpinClick = () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
+      const newPrizeNumber = Math.floor(Math.random() * data.length); //당첨번호
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
   };
   const closeModal = () => {
     setIsOpen(false); // 모달 닫기
+    /* 선택된 선물을 저장하는 함수 (일단 안함)
+    setSelectedGifts((prevSelectedGifts) => [
+      ...prevSelectedGifts,
+      data[prizeNumber].option
+    ]);*/
   };
 
   const pointerProps = {
@@ -48,9 +82,10 @@ const RoulettePage = () => {
   };
 
   return (
-    <div className='flex h-screen items-center justify-center'>
+    <div className='mt-20 flex items-center justify-center'>
       <div className='flex flex-col items-center'>
         <Wheel
+          fontSize={18}
           spinDuration={0.2}
           mustStartSpinning={mustSpin}
           prizeNumber={prizeNumber}
@@ -58,12 +93,14 @@ const RoulettePage = () => {
           onStopSpinning={() => {
             setMustSpin(false);
             handleConfetti();
+            setPrize(data[prizeNumber].option);
+            setImgUrl(data[prizeNumber].imageUrl);
             setIsOpen(true);
             //alert(data[prizeNumber].option + '이 당첨되셨습니다');
           }}
           backgroundColors={['#FAF7FA', '#F2CBF2', '#DDA0DD']}
           outerBorderColor='#020000'
-          outerBorderWidth={16}
+          outerBorderWidth={10}
           innerBorderColor='#020000'
           innerBorderWidth={8}
           radiusLineColor='#020000'
@@ -78,8 +115,9 @@ const RoulettePage = () => {
       </div>
       <RouletteModal
         isOpen={isOpen}
-        prize={data[prizeNumber].option}
+        prize={prize}
         closeModal={closeModal}
+        prizeImageUrl={imgUrl}
       />
     </div>
   );
