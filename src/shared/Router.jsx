@@ -9,6 +9,8 @@ import Layout from '../components/common/layout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
+import useFetchData from '../utils/useFetchData';
+import { useEffect } from 'react';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -38,6 +40,13 @@ export default function Router() {
   // console.log('Data:', data);
   // console.log('Error:', error);
   // console.log('Loading:', isLoading);
+
+  const fetchData = useFetchData();
+
+  useEffect(() => {
+    console.log('app마운트');
+    fetchData();
+  }, []);
 
   return (
     <BrowserRouter>
