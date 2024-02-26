@@ -15,7 +15,7 @@ const SurveyResultPage = () => {
   };
   return (
     <div className='mx-auto max-w-main'>
-      <h3 className='my-3 text-center text-2xl font-bold'>제 추천은요..</h3>
+      <h3 className='my-3 text-center text-2xl font-bold'>너가 줄 선물은</h3>
       <div className='mx-auto my-8 h-[100px] w-1/2 border border-black'>
         추천설명
       </div>
