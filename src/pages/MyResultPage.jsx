@@ -27,35 +27,37 @@ const MyResultPage = () => {
             id: item.id,
             gifts: item.gifts[0]
           }));
-        console.log(response.data);
-        console.log(filteredGiftList);
         setFilteredData(filteredGiftList); // 상태 업데이트
       } catch (error) {
-        console.error('Error sending results to server:', error);
+        alert(error);
       }
     };
 
     sendResultsToServer();
   }, [data, isLoading]);
-
   return (
-    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      {filteredData?.map((item, index) => (
-        <div
-          onClick={() => navigate(`/myResult/${item.id}`)}
-          key={index}
-          className='rounded border border-gray-300 p-4'>
-          <div className='text-lg font-bold'>{item?.gifts.name}</div>
-          <div className='text-lg font-bold'>현재 1등</div>
-          <img
-            src={item?.gifts.imageUrl}
-            className='mt-2 rounded-2xl'
-            alt={item?.name}
-          />
-        </div>
-      ))}
+    <div className='flex h-full justify-center'>
+      <div
+        className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+        style={{ maxWidth: '75%', margin: '20px auto', maxWidth: '1440px' }}>
+        {filteredData?.map((item, index) => (
+          <div
+            onClick={() => navigate(`/myResult/${item.id}`)}
+            key={index}
+            className='flex flex-col items-center justify-center rounded border border-gray-300 p-4'>
+            <div className='text-lg font-bold'>{item?.gifts.name}</div>
+            <div className='text-lg font-bold'>현재 1등</div>
+            <div className='flex items-center justify-center'>
+              <img
+                src={item?.gifts.imageUrl}
+                className='mt-2 rounded-2xl'
+                alt={item?.name}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
-
 export default MyResultPage;

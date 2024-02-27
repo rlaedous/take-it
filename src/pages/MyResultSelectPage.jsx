@@ -7,9 +7,10 @@ const MyResultSelectPage = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['loginStatus']
   });
+
   const params = useParams();
   const [resultData, setResultData] = useState(null);
-  console.log('params', params);
+
   useEffect(() => {
     const sendResultsToServer = async () => {
       try {
@@ -20,16 +21,15 @@ const MyResultSelectPage = () => {
         const response = await axios.get(
           `https://tungsten-flossy-van.glitch.me/surveyResults`
         );
-        console.log(response);
+
         const filteredData = response.data.filter(
           (item) => item.id === parseInt(params.id)
         );
         setResultData(filteredData[0].gifts);
       } catch (error) {
-        console.error('Error fetching result data:', error);
+        alert(error);
       }
     };
-
     sendResultsToServer();
   }, [data]);
   return (
