@@ -18,7 +18,7 @@ const SurveyResultPage = () => {
   console.log(data);
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
-  //const gender = results.gender === 'F' ? '여자' : '남자';
+
   useEffect(() => {
     if (results && results.gender) {
       const gender = results.gender === 'F' ? '여자' : '남자';
