@@ -11,7 +11,6 @@ const MyResultPage = () => {
   });
 
   const navigate = useNavigate();
-
   useEffect(() => {
     const sendResultsToServer = async () => {
       try {
@@ -26,14 +25,17 @@ const MyResultPage = () => {
         const filteredUserId = response.data
           .filter((x) => x.userId === data.user.id)
           .map((x) => x.gifts);
+        console.log('filteredUserId', filteredUserId);
+
         const filteredData = filteredUserId.map((x) => x[0]);
+        console.log('filteredData', filteredData);
+
         setFilteredData(filteredData); // 상태 업데이트
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
     };
 
-    // 함수 호출
     sendResultsToServer();
   }, [data, isLoading]);
 
@@ -41,10 +43,11 @@ const MyResultPage = () => {
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {filteredData?.map((item, index) => (
         <div
-          onClick={() => navigate('/surveyResult')}
+          onClick={() => navigate(`/myResult/${item.id}`)}
           key={index}
           className='rounded border border-gray-300 p-4'>
           <div className='text-lg font-bold'>{item?.name}</div>
+          <div className='text-lg font-bold'>현재 1등</div>
           <img
             src={item?.imageUrl}
             className='mt-2 rounded-2xl'
