@@ -21,7 +21,7 @@ const MyResultPage = () => {
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
-
+        console.log('response', response);
         const filteredUserId = response.data
           .filter((x) => x.userId === data.user.id)
           .map((x) => x.gifts);
@@ -43,7 +43,7 @@ const MyResultPage = () => {
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {filteredData?.map((item, index) => (
         <div
-          onClick={() => navigate(`/myResult/${item.id}`)}
+          onClick={() => navigate(`/myResult/${response.data[index].id}`)} // 여기 수정
           key={index}
           className='rounded border border-gray-300 p-4'>
           <div className='text-lg font-bold'>{item?.name}</div>
