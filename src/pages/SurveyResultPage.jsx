@@ -10,6 +10,8 @@ const SurveyResultPage = () => {
   console.log('gifts', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
   console.log('surveyResult', results);
+  const money = results.money[1];
+  console.log(money);
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
@@ -19,6 +21,7 @@ const SurveyResultPage = () => {
   useEffect(() => {
     if (results && results.gender) {
       const gender = results.gender === 'F' ? '여자' : '남자';
+
       const searchId = encodeURIComponent(
         `${gender}, ${results.age}대 선물 추천`
       );
@@ -108,7 +111,7 @@ const SurveyResultPage = () => {
               src={`https://www.youtube.com/embed/${video.id.videoId}`}
               title={video.snippet.title}
               frameBorder='0'
-              allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen></iframe>
             <h3>{video.snippet.title}</h3>
           </div>
