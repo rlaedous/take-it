@@ -10,17 +10,6 @@ const SurveyResultPage = () => {
   const results = useSelector((state) => state.surveyResult.surveyResult);
   console.log('surveyResult', results);
 
-  /*
-  let money;
-  if (results.money[0] === 0) {
-    money = `${results.money[1] / 10000}만원 이하`;
-  } else if (results.money[1] === 1000000) {
-    money = `${results.money[0] / 10000}만원 이상`;
-  } else {
-    money = `${results.money[0] / 10000}만원 이상 ${results.money[1] / 10000}만원 이하`;
-  }
-  console.log(money);
-*/
   const [hasAccessToken, setHasAccessToken] = useState(false); // accessToken이 있는지 여부를 추적하는 상태값 추가
   const at = localStorage.getItem('accessToken');
   const { data } = useQuery({
