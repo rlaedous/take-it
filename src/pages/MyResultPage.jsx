@@ -1,29 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 const MyResultPage = () => {
-  const selectedGifts = useSelector((state) => state.surveyResult.gifts);
-  console.log('selectedGifts', selectedGifts);
-  const results = useSelector((state) => state.surveyResult.surveyResult);
-  console.log('results', results);
-
-  const aa = useSelector((state) => state);
-  console.log('aa', aa);
   const { data, isLoading } = useQuery({
     queryKey: ['loginStatus']
   });
-  console.log('data', data);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (selectedGifts === null || selectedGifts.length === 0) {
-      alert('저장된 결과가 없습니다!');
-      navigate('/');
-    }
-  }, [selectedGifts]);
 
   useEffect(() => {
     const sendResultsToServer = async () => {
@@ -43,7 +25,7 @@ const MyResultPage = () => {
           response.data.filter((x) => x.userId === data.user.id)
         );
         const a = response.data.filter((x) => x.userId === data.user.id);
-        console.log('a.gifts', a.gifts);
+        console.log('a.gifts', a);
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
@@ -51,23 +33,9 @@ const MyResultPage = () => {
 
     // 함수 호출
     sendResultsToServer();
-  }, [selectedGifts, data, isLoading]);
+  }, [data, isLoading]);
 
-  return (
-    <>
-      {selectedGifts?.length > 0 && (
-        <div className='w-1/6'>
-          <div>{selectedGifts[0].name}</div>
-          <div>{selectedGifts[0].price}</div>
-          <img
-            src={selectedGifts[0].imageUrl}
-            className='rounded-2xl'
-            alt='사진'
-          />
-        </div>
-      )}
-    </>
-  );
+  return <></>;
 };
 
 export default MyResultPage;

@@ -12,6 +12,8 @@ import { authCheckToken } from '../apis/auth';
 import useFetchData from '../utils/useFetchData';
 import { useEffect } from 'react';
 import MyResultPage from '../pages/MyResultPage';
+import Community from '../pages/Community';
+import CommunityDetail from '../pages/CommunityDetail';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -61,6 +63,8 @@ export default function Router() {
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
           <Route path='/' element={<MainPage />} />
+          <Route path='/community' element={<Community />} />
+          <Route path='/communityDetail/:id' element={<CommunityDetail />} />
         </Routes>
       </Layout>
     </BrowserRouter>
