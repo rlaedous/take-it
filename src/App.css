@@ -13,7 +13,6 @@ section > .mainContent {
   transform: rotateY(180deg);
   background: red;
 }
-
 .homepage-container:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
