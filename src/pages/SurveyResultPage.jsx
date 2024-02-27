@@ -75,7 +75,7 @@ const SurveyResultPage = () => {
       )}
 
       <button
-        className='rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
+        className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
         onClick={handleResultSave}
         disabled={isResultSaved}>
         {isResultSaved === true ? '저장 완료!' : '결과 저장'}
