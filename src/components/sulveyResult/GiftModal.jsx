@@ -1,8 +1,73 @@
+import {
+  addGiftComments,
+  getGiftComments,
+  deleteGiftComments
+} from '../../apis/giftComments';
 import gifts from '../../../public/gifts.json';
 import { IoClose } from 'react-icons/io5';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
   const gift = gifts.find((item) => item.id === selectedGift);
+  const queryClient = useQueryClient();
+
+  const [newComment, setNewComment] = useState('');
+
+  const { data } = useQuery({
+    queryKey: ['loginStatus']
+  });
+
+  const {
+    isLoading,
+    isError,
+    data: giftComments
+  } = useQuery({
+    queryKey: ['giftComments'],
+    queryFn: getGiftComments
+  });
+
+  const filteredGiftComments = giftComments?.data
+    ? giftComments.data.filter((item) => item.giftId === selectedGift)
+    : [];
+
+  const addGiftCommentMutation = useMutation({
+    mutationFn: addGiftComments,
+    onSuccess: () => {
+      queryClient.invalidateQueries('giftComments');
+    },
+    onError: (error) => {
+      console.error(error);
+    }
+  });
+
+  const deleteGiftCommentMutation = useMutation({
+    mutationFn: deleteGiftComments,
+    onSuccess: () => {
+      queryClient.invalidateQueries('giftComments');
+    },
+    onError: (error) => {
+      console.error(error);
+    }
+  });
+
+  const handleAddGiftComments = () => {
+    const newGiftComments = {
+      userId: data.user.id,
+      comment: newComment,
+      avatar: data.user.avatar,
+      nickname: data.user.nickname,
+      giftId: gift.id
+    };
+    addGiftCommentMutation.mutate(newGiftComments);
+  };
+
+  const handleDeleteGiftComments = (id, userId) => {
+    if (userId === data.userId) {
+      deleteGiftCommentMutation.mutate(id);
+    }
+  };
+  if (isLoading) return;
 
   return (
     <>
@@ -28,12 +93,38 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
               />
               <div className='bg-red w-full border-t-2 border-black'>
                 <div className='mb-7 ml-1 flex h-80 border-b-2 border-black'>
-                  <label>aa</label>
+                  {filteredGiftComments.length > 0 ? (
+                    filteredGiftComments.map((item) => (
+                      <div key={item.userId}>
+                        <img
+                          className='h-7 w-7'
+                          src={item.avatar}
+                          alt='프로필'
+                        />
+                        <label>{item.nickname}</label>
+                        <p>{item.comment}</p>
+                        <button
+                          onClick={() =>
+                            handleDeleteGiftComments(item.id, item.userId)
+                          }>
+                          삭제
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <label>의견을 달아보겠니</label>
+                  )}
                 </div>
                 <input
                   className='h-12 w-80 border-gray-300 px-2'
-                  placeholder='댓글 입력'></input>
-                <button className='h-12 rounded bg-main px-4 py-2 text-white'>
+                  placeholder='댓글 입력'
+                  value={newComment}
+                  onChange={(e) => {
+                    setNewComment(e.target.value);
+                  }}></input>
+                <button
+                  onClick={handleAddGiftComments}
+                  className='h-12 rounded bg-main px-4 py-2 text-white'>
                   등록
                 </button>
               </div>
