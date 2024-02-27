@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 
 const SurveyResultPage = () => {
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
-  console.log('선택', selectedGifts);
+  console.log('gifts', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
+  console.log('surveyResult', results);
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
@@ -22,10 +23,14 @@ const SurveyResultPage = () => {
     try {
       if (!isResultSaved) {
         const currentTime = new Date();
+        const surveyResults = {
+          gifts: selectedGifts,
+          surveyResult: results
+        };
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
-            selectedGifts,
+            selectedGifts: surveyResults,
             userId: data.user.id,
             createdAt: currentTime.toISOString()
           }
@@ -57,7 +62,7 @@ const SurveyResultPage = () => {
             </div>
           ))
         ) : (
-          <div>결과가 없습니다</div>
+          <div>마땅한게 없네..</div>
         )}
       </div>
       {selectedGifts && (
@@ -65,7 +70,7 @@ const SurveyResultPage = () => {
           {`#${results.gender === 'F' ? '여자' : '남자'} 
  #${results.age.replace('s', '대')}
  #${results.whom}선물
- #${results.isT === 'false' ? '감성적' : '실용적'}
+ #${results.isT === 'false' ? '실용적' : '감성적'}
  `}
         </div>
       )}
