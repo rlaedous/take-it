@@ -1,5 +1,4 @@
 import MainPage from '../pages/HomePage';
-import JoinPage from '../pages/JoinPage';
 import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import RoulettePage from '../pages/RoulettePage';
@@ -44,7 +43,7 @@ export default function Router() {
 
   // console.log('Data:', data);
   // console.log('Error:', error);
-  // console.log('Loading:', isLoading);
+  // console.log('Loading:', isLoading);d
 
   const fetchData = useFetchData();
 
@@ -61,7 +60,6 @@ export default function Router() {
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/myResult' element={<MyResultPage />} />
           <Route path='/myResult/:id' element={<MyResultSelectPage />} />
-          <Route element={<JoinPage />} />
           <Route path='/roulette' element={<RoulettePage />} />
           <Route path='/map' element={<MapPage />} />
           <Route path='/survey' element={<SurveyPage />} />

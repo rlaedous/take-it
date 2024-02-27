@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
+import GiftModal from '../components/sulveyResult/GiftModal';
 
 const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
@@ -73,6 +74,16 @@ const SurveyResultPage = () => {
       console.log(error);
     }
   };
+
+  //모달 관리
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedGift, setSelectedGift] = useState('');
+
+  const handleModalOpen = (data) => {
+    setSelectedGift(data);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className='mx-auto max-w-main text-center'>
       <h3 className='my-3 mt-7 text-center text-2xl font-bold'>
@@ -87,7 +98,12 @@ const SurveyResultPage = () => {
               <div>
                 <h3 className='my-4 text-center text-3xl'>{index + 1}위</h3>
                 <p className='mx-auto flex h-[300px] w-2/3 items-center overflow-hidden bg-gray-50'>
-                  <img src={gift.imageUrl} className='rounded-2xl' alt='사진' />
+                  <img
+                    src={gift.imageUrl}
+                    className='rounded-2xl'
+                    alt='사진'
+                    onClick={() => handleModalOpen(gift.id)}
+                  />
                 </p>
                 <span className='mt-4 block text-center'>{gift.name}</span>
               </div>
@@ -114,6 +130,7 @@ const SurveyResultPage = () => {
           {isResultSaved === true ? '저장 완료!' : '결과 저장'}
         </button>
       )}
+
       {/*비디오 부분*/}
       <div className='mb-4 mt-4 text-left text-xl font-bold'>
         <h2 className=' mb-2 text-xl font-bold'>관련 유튜브 영상</h2>
@@ -134,6 +151,16 @@ const SurveyResultPage = () => {
           ))}
         </div>
       </div>
+
+      {isModalOpen ? (
+        <GiftModal
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
+          selectedGift={selectedGift}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
