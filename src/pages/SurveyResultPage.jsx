@@ -47,14 +47,11 @@ const SurveyResultPage = () => {
     try {
       if (!isResultSaved) {
         const currentTime = new Date();
-        const surveyResults = {
-          gifts: selectedGifts,
-          surveyResult: results
-        };
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
-            surveyResults,
+            gifts: selectedGifts,
+            surveyResult: results,
             userId: data.user.id,
             createdAt: currentTime.toISOString()
           }
