@@ -1,12 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addComment, deleteComment, getComments } from '../apis/comments';
-import React, { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
-import { getPosts, getPostsById } from '../apis/posts';
+import { getPostsById } from '../apis/posts';
 
 const CommunityDetail = () => {
   const { id } = useParams();
-  console.log(id);
   const [comment, setComment] = useState('');
   const { data } = useQuery({
     queryKey: ['loginStatus']
@@ -26,12 +25,9 @@ const CommunityDetail = () => {
     queryFn: () => getPostsById(id)
   });
 
-  console.log('posts', posts);
-
-  //   console.log('posts', selectedPosts);
-
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+
+  const mutationAdd = useMutation({
     mutationFn: addComment,
     onSuccess: () => {
       queryClient.invalidateQueries('comments');
@@ -70,7 +66,7 @@ const CommunityDetail = () => {
       postId: id,
       nickname: data.user.nickname
     };
-    mutation.mutate(newComment);
+    mutationAdd.mutate(newComment);
   };
 
   const handleDeleteComment = (commentId) => {
