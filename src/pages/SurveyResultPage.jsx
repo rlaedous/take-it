@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
-  console.log('gifts', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
+
   console.log('surveyResult', results);
   /*
   let money;
@@ -21,9 +21,12 @@ const SurveyResultPage = () => {
   }
   console.log(money);
   */
+  const [hasAccessToken, setHasAccessToken] = useState(false); // accessToken이 있는지 여부를 추적하는 상태값 추가
+  const at = localStorage.getItem('accessToken');
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
+  console.log(data);
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
   //const gender = results.gender === 'F' ? '여자' : '남자';
@@ -53,6 +56,14 @@ const SurveyResultPage = () => {
       navigate('/survey'); // 선택된 선물이 없으면 /survey 페이지로 이동
     }
   }, [selectedGifts, navigate]);
+  useEffect(() => {
+    // data가 존재하면 accessToken이 있으므로 hasAccessToken을 true로 설정
+    if (at) {
+      setHasAccessToken(true);
+    } else {
+      setHasAccessToken(false);
+    }
+  }, [at]);
   const handleResultSave = async () => {
     try {
       if (!isResultSaved) {
@@ -120,13 +131,14 @@ const SurveyResultPage = () => {
           </div>
         ))}
       </div>
-      <button
-        className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
-        onClick={handleResultSave}
-        disabled={isResultSaved}>
-        {isResultSaved === true ? '저장 완료!' : '결과 저장'}
-      </button>
-      {}
+      {hasAccessToken && (
+        <button
+          className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
+          onClick={handleResultSave}
+          disabled={isResultSaved}>
+          {isResultSaved === true ? '저장 완료!' : '결과 저장'}
+        </button>
+      )}
     </div>
   );
 };
