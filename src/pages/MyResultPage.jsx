@@ -1,29 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useEffect } from 'react';
-
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const MyResultPage = () => {
-  const selectedGifts = useSelector((state) => state.surveyResult.gifts);
-  console.log('selectedGifts', selectedGifts);
-  const results = useSelector((state) => state.surveyResult.surveyResult);
-  console.log('results', results);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const aa = useSelector((state) => state);
-  console.log('aa', aa);
   const { data, isLoading } = useQuery({
     queryKey: ['loginStatus']
   });
-  console.log('data', data);
+
   const navigate = useNavigate();
-  useEffect(() => {
-    if (selectedGifts === null || selectedGifts.length === 0) {
-      alert('저장된 결과가 없습니다!');
-      navigate('/');
-    }
-  }, [selectedGifts]);
 
   useEffect(() => {
     const sendResultsToServer = async () => {
@@ -32,18 +19,14 @@ const MyResultPage = () => {
         if (isLoading || !data) {
           return;
         }
-
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
-        // console.log('response', response);
-        console.log('response.data', response.data);
-        console.log(
-          'response.data.filter',
-          response.data.filter((x) => x.userId === data.user.id)
-        );
-        const a = response.data.filter((x) => x.userId === data.user.id);
-        console.log('a.gifts', a.gifts);
+        const filteredUserId = response.data
+          .filter((x) => x.userId === data.user.id)
+          .map((x) => x.gifts);
+        const filteredData = filteredUserId.map((x) => x[0]);
+        setFilteredData(filteredData); // 상태 업데이트
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
@@ -51,22 +34,24 @@ const MyResultPage = () => {
 
     // 함수 호출
     sendResultsToServer();
-  }, [selectedGifts, data, isLoading]);
+  }, [data, isLoading]);
 
   return (
-    <>
-      {selectedGifts?.length > 0 && (
-        <div className='w-1/6'>
-          <div>{selectedGifts[0].name}</div>
-          <div>{selectedGifts[0].price}</div>
+    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      {filteredData?.map((item, index) => (
+        <div
+          onClick={() => navigate('/surveyResult')}
+          key={index}
+          className='rounded border border-gray-300 p-4'>
+          <div className='text-lg font-bold'>{item?.name}</div>
           <img
-            src={selectedGifts[0].imageUrl}
-            className='rounded-2xl'
-            alt='사진'
+            src={item?.imageUrl}
+            className='mt-2 rounded-2xl'
+            alt={item?.name}
           />
         </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 
