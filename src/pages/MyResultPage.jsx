@@ -43,7 +43,9 @@ const MyResultPage = () => {
           response.data.filter((x) => x.userId === data.user.id)
         );
         const a = response.data.filter((x) => x.userId === data.user.id);
+        const gift = a.gifts;
         console.log('a.gifts', a.gifts);
+        console.log(gift);
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
@@ -66,6 +68,11 @@ const MyResultPage = () => {
           />
         </div>
       )}
+      {/* {gift.map((x, index) => {
+        <div key={index}>
+          <div>{x.name}</div>
+        </div>;
+      })} */}
     </>
   );
 };
