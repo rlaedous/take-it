@@ -26,6 +26,7 @@ const Community = () => {
     queryFn: getPosts
   });
 
+  //포스트를 날짜 순서대로 정렬
   const sortedPosts = posts
     ? [...posts.data].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -50,14 +51,14 @@ const Community = () => {
   const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
 
   const navigate = useNavigate();
-  const mutation = useMutation({
+
+  const mutationAdd = useMutation({
     mutationFn: addPost,
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      console.log('성공하였습니다');
     },
     onError: (error) => {
-      console.error('Mutation error:', error);
+      alert(error.message);
     }
   });
 
@@ -67,7 +68,7 @@ const Community = () => {
       queryClient.invalidateQueries('posts');
     },
     onError: (error) => {
-      console.error('mutation error', error);
+      alert(error.message);
     }
   });
 
@@ -79,22 +80,19 @@ const Community = () => {
       userId: data.user.id,
       nickname: data.user.nickname
     };
-    mutation.mutate(newPost);
+    mutationAdd.mutate(newPost);
     setIsOpenModal(false); // 작성 모달 닫기
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { title, content } = e.target;
-    console.log(title.value);
-    console.log(content.value);
     if (title.value === '' || content.value === '') {
       return;
     }
     if (!data) {
       return;
     }
-
     handleAddPost(title.value, content.value);
     title.value = '';
     content.value = '';
