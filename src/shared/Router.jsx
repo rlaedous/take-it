@@ -1,5 +1,4 @@
 import MainPage from '../pages/HomePage';
-import JoinPage from '../pages/JoinPage';
 import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import RoulettePage from '../pages/RoulettePage';
@@ -11,7 +10,6 @@ import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 import useFetchData from '../utils/useFetchData';
 import { useEffect } from 'react';
-import MyResultPage from '../pages/MyResultPage';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -40,7 +38,7 @@ export default function Router() {
 
   // console.log('Data:', data);
   // console.log('Error:', error);
-  // console.log('Loading:', isLoading);
+  // console.log('Loading:', isLoading);d
 
   const fetchData = useFetchData();
 
@@ -55,8 +53,6 @@ export default function Router() {
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/mypage' element={<MyPage />} />
-          <Route path='/myResult' element={<MyResultPage />} />
-          <Route element={<JoinPage />} />
           <Route path='/roulette' element={<RoulettePage />} />
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
