@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import CustomModal from '../components/common/CustomModal';
-import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getPosts, addPost } from '../apis/posts';
+import { getPosts, addPost, deletePost } from '../apis/posts';
 import { useNavigate } from 'react-router';
+import { getTimeDifferenceString } from '../utils/time';
 
 const Community = () => {
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // 페이지당 항목 수
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const {
     isLoading,
@@ -21,17 +26,49 @@ const Community = () => {
     queryFn: getPosts
   });
 
+  //포스트를 날짜 순서대로 정렬
+  const sortedPosts = posts
+    ? [...posts.data].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      )
+    : [];
+
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return sortedPosts.slice(startIndex, endIndex);
+  };
+  // 표시할 데이터
+  const paginatedData = getPaginatedData();
+
+  // 페이지 수 계산
+  const totalPages = Math.ceil(sortedPosts.length / itemsPerPage);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const queryClient = useQueryClient();
 
+  const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
+
   const navigate = useNavigate();
-  const mutation = useMutation({
+
+  const mutationAdd = useMutation({
     mutationFn: addPost,
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      console.log('성공하였습니다');
     },
     onError: (error) => {
-      console.error('Mutation error:', error);
+      alert(error.message);
+    }
+  });
+
+  const mutationDelete = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+    onError: (error) => {
+      alert(error.message);
     }
   });
 
@@ -40,55 +77,111 @@ const Community = () => {
       title: title,
       content: content,
       createdAt: new Date(),
-      userId: data.user.id
+      userId: data.user.id,
+      nickname: data.user.nickname
     };
-    mutation.mutate(newPost);
+    mutationAdd.mutate(newPost);
     setIsOpenModal(false); // 작성 모달 닫기
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { title, content } = e.target;
-    console.log(title.value);
-    console.log(content.value);
-    if (title === '' || content === '') {
+    if (title.value === '' || content.value === '') {
       return;
     }
     if (!data) {
       return;
     }
-
     handleAddPost(title.value, content.value);
+    title.value = '';
+    content.value = '';
   };
 
+  const handleDeletePost = (postId) => {
+    mutationDelete.mutate(postId);
+  };
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <div className='mb-8'>
+    <div className='mx-auto h-full max-w-3xl px-4 py-8'>
+      <div className='mb-8 text-right'>
         <button
           onClick={() => setIsOpenModal(true)}
-          className='rounded bg-blue-500 px-4 py-2 font-semibold text-white'>
+          className='rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
           새 글 작성하기
         </button>
       </div>
-      <div className='grid grid-cols-1 gap-4'>
+      <div className='grid grid-cols-1'>
         {isLoading ? (
           <div>로딩 중...</div>
         ) : isError ? (
           <div>에러 발생</div>
         ) : (
           posts &&
-          posts.data.map((post) => (
+          paginatedData.map((post) => (
             <div
               onClick={() => {
                 navigate(`/communityDetail/${post.id}`);
               }}
               key={post.id}
-              className='cursor-pointer rounded bg-gray-100 p-4 shadow'>
-              <h2 className='mb-2 text-xl font-semibold'>{post.title}</h2>
-              <p className='text-gray-700'>{post.content}</p>
+              className='flex cursor-pointer justify-between border-b border-b-gray-300 bg-white p-7 shadow'>
+              <h2 className='s mb-2 flex-1 text-xl font-semibold'>
+                {post.title}
+              </h2>
+              <p className='mr-10 text-gray-700'>
+                {getTimeDifferenceString(new Date(post.createdAt))}
+              </p>
+              <p className='mr-5 text-gray-700'>{post.nickname}</p>
+              {post.userId === data.user.id && (
+                <p
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDeleteModalOpen(true);
+                    setCurrentDeleteTargetId(post.id);
+                    //handleDeletePost(post.id, e);
+                  }}>
+                  삭제
+                </p>
+              )}
             </div>
           ))
         )}
+      </div>
+      <div className='mt-4 flex justify-between'>
+        {/* 이전 페이지 버튼 */}
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+          className='cursor-pointer rounded bg-black px-4 py-2 font-bold text-white hover:bg-main hover:text-fuchsia-800'>
+          이전
+        </button>
+
+        {/* 페이지 번호 버튼들 */}
+        <div className='flex'>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              disabled={currentPage === index + 1}
+              className={`mx-1 ${
+                currentPage === index + 1
+                  ? 'bg-main text-white'
+                  : 'bg-gray-300 text-gray-700'
+              } cursor-pointer rounded px-4 py-2 font-bold hover:bg-main hover:text-fuchsia-800`}>
+              {index + 1}
+            </button>
+          ))}
+        </div>
+
+        {/* 다음 페이지 버튼 */}
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+          className='cursor-pointer rounded bg-black px-4 py-2 font-bold text-white hover:bg-main hover:text-fuchsia-800'>
+          다음
+        </button>
       </div>
       <CustomModal
         isOpen={isOpenModal}
@@ -101,17 +194,32 @@ const Community = () => {
               name='title'
             />
             <textarea
-              className='h-40 w-full rounded-lg border border-gray-300 px-4 py-2'
+              className='h-40 w-full resize-none rounded-lg border border-gray-300 px-4 py-2'
               placeholder='글 내용을 입력하세요.'
               name='content'
             />
           </div>
           <input
             type='submit'
-            className='mx-auto mt-5 cursor-pointer rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white'
+            className='mx-auto mt-5 cursor-pointer rounded-lg bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'
             value='작성하기'
           />
         </form>
+      </CustomModal>
+      <CustomModal
+        closeModal={() => setIsDeleteModalOpen(false)}
+        isOpen={isDeleteModalOpen}>
+        진짜 삭제할 거임?
+        <div>
+          <button
+            onClick={() => {
+              setIsDeleteModalOpen(false);
+              handleDeletePost(currentDeleteTargetId);
+            }}
+            className='mt-5 rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
+            ㅇㅇ
+          </button>
+        </div>
       </CustomModal>
     </div>
   );

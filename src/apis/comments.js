@@ -1,19 +1,19 @@
-import axios from 'axios';
+import { jsonServerAPI } from './posts';
 
 //조회
 
 const getComments = async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_GLITCH_SERVER_API_URL}/comments`
-  );
+  const response = await jsonServerAPI.get('/comments');
   return response;
 };
 
 const addComment = async (newComment) => {
-  await axios.post(
-    `${import.meta.env.VITE_APP_GLITCH_SERVER_API_URL}/comments`,
-    newComment
-  );
+  await jsonServerAPI.post('/comments', newComment);
 };
 
-export { getComments, addComment };
+const deleteComment = async (id) => {
+  const response = await jsonServerAPI.delete(`/comments/${id}`);
+  return response.data;
+};
+
+export { getComments, addComment, deleteComment };

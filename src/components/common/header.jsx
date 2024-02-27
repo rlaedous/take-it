@@ -59,7 +59,7 @@ const Header = () => {
     navigate('/community');
   };
   return (
-    <div className='flex h-[70px] items-center justify-between bg-main px-4'>
+    <div className='flex min-h-[70px] items-center justify-between bg-main px-4'>
       <div className='flex items-center'>
         <div className='w-[200px]'>
           <img
