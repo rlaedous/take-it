@@ -9,7 +9,6 @@ Modal.setAppElement('#root');
 const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  // 모달이 열리거나 닫힐 때 초기화
   useEffect(() => {
     setIsClicked(false);
   }, [isOpen]);
@@ -22,7 +21,7 @@ const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
       overlayClassName='fixed inset-0 bg-black bg-opacity-70'
       style={{
         content: {
-          zIndex: 1000 // 모달이 룰렛 위에 올라가도록 설정
+          zIndex: 1000
         },
         overlay: {
           zIndex: 999
@@ -47,7 +46,7 @@ const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
                 repeat: Infinity
               }
             }}
-            onTap={() => setIsClicked(true)} // 이미지 클릭 시 동작
+            onTap={() => setIsClicked(true)}
           />
         ) : (
           <>
