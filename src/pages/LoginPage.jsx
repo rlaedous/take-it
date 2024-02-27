@@ -63,10 +63,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+    <div className='flex h-full items-center justify-center bg-gray-50'>
       <div className='w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md'>
         <div className='text-center text-3xl font-extrabold'>
-          {isRegister ? 'Sign Up' : 'Log In'}
+          {isRegister ? '회원가입' : '로그인'}
         </div>
         <form className='space-y-6' onSubmit={handleSubmit}>
           <div>
@@ -133,17 +133,15 @@ const LoginPage = () => {
           )}
           <button
             type='submit'
-            className='w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-            {isRegister ? 'Sign Up' : 'Log In'}
+            className='w-full rounded-md border border-transparent bg-black px-4 py-2 text-white shadow-sm hover:bg-main focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+            {isRegister ? '가입해' : '로그인해'}
           </button>
         </form>
         <div className='text-center'>
           <button
-            className='cursor-pointer text-indigo-500 hover:underline'
+            className='cursor-pointer text-black hover:underline'
             onClick={() => setIsRegister(!isRegister)}>
-            {isRegister
-              ? 'Already have an account? Log In'
-              : "Don't have an account? Sign Up"}
+            {isRegister ? '로그인 해' : '없음 가입해;'}
           </button>
         </div>
       </div>
