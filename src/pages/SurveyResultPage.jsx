@@ -9,14 +9,13 @@ const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
-  console.log('surveyResult', results);
 
-  const [hasAccessToken, setHasAccessToken] = useState(false); // accessToken이 있는지 여부를 추적하는 상태값 추가
+  const [hasAccessToken, setHasAccessToken] = useState(false);
   const at = localStorage.getItem('accessToken');
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
-  console.log(data);
+
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
 
@@ -30,24 +29,21 @@ const SurveyResultPage = () => {
           const response = await axios.get(
             `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=${searchId}&type=video&key=${import.meta.env.VITE_APP_YOUTUBE_API_KEY}`
           );
-          console.log(response.data);
           setVideos(response.data.items);
         } catch (error) {
           console.log(error);
         }
       };
-
       fetchVideos();
     }
   }, []);
 
   useEffect(() => {
     if (selectedGifts === null) {
-      navigate('/survey'); // 선택된 선물이 없으면 /survey 페이지로 이동
+      navigate('/survey');
     }
   }, [selectedGifts, navigate]);
   useEffect(() => {
-    // data가 존재하면 accessToken이 있으므로 hasAccessToken을 true로 설정
     if (at) {
       setHasAccessToken(true);
     } else {
@@ -67,7 +63,7 @@ const SurveyResultPage = () => {
             createdAt: currentTime.toISOString()
           }
         );
-        setIsResultSaved(true); // 결과 저장 후 상태 업데이트
+        setIsResultSaved(true);
         return response.data;
       }
     } catch (error) {
@@ -75,7 +71,6 @@ const SurveyResultPage = () => {
     }
   };
 
-  //모달 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedGift, setSelectedGift] = useState('');
 
@@ -131,26 +126,26 @@ const SurveyResultPage = () => {
         </button>
       )}
 
-      {/*비디오 부분*/}
       <div className='mb-4 mt-4 text-left text-xl font-bold'>
         <h2 className=' mb-2 text-xl font-bold'>관련 유튜브 영상</h2>
         <hr className='my-2 border-gray-300' />
-        <div className='youtubeVideos mt-3 flex'>
+        <div className='youtubeVideos mt-3 flex overflow-x-auto'>
           {videos.map((video, index) => (
             <div key={index} className='videoContainer  mr-4 flex-shrink-0'>
               <iframe
-                width='460'
+                width='500'
                 height='300'
                 src={`https://www.youtube.com/embed/${video.id.videoId}`}
                 frameBorder='0'
                 allowFullScreen></iframe>
-              <h3 className='mt-2 h-16 max-w-[460px] overflow-hidden text-lg font-medium'>
+              <h3 className='mt-2 h-16 max-w-[500px] overflow-hidden text-lg font-medium'>
                 {video.snippet.title}
               </h3>
             </div>
           ))}
         </div>
       </div>
+
       {isModalOpen ? (
         <GiftModal
           setIsModalOpen={setIsModalOpen}

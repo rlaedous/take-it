@@ -4,36 +4,25 @@ import JSConfetti from 'js-confetti';
 import RouletteModal from '../components/roulette/RouletteModal';
 import heart from '../assets/images/heart.png';
 import gifts from '/public/gifts.json';
-import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
 const RoulettePage = () => {
-  const [mustSpin, setMustSpin] = useState(false); //룰렛회전
-  const [prizeNumber, setPrizeNumber] = useState(0); //회전멈추면 선택항목 저장
-
+  const [mustSpin, setMustSpin] = useState(false);
+  const [prizeNumber, setPrizeNumber] = useState(0);
   const jsConfetti = new JSConfetti();
   const [isOpen, setIsOpen] = useState(false);
-  /*뽑은 선물 저장하려고만든 state
-  const [selectedGifts, setSelectedGifts] = useState([]);
-*/
+
   const handleConfetti = () => {
     jsConfetti.addConfetti({
-      confettiColors: [
-        '#FF0000', // 빨간색
-        '#00FF00', // 초록색
-        '#0000FF', // 파란색
-        '#FFFF00', // 노란색
-        '#FF00FF' // 분홍색
-      ],
-      zIndex: 1000, // 다른 요소 위에 표시되도록 zIndex 설정
+      confettiColors: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF'],
+      zIndex: 1000,
       confettiRadius: 6.5,
       confettiNumber: 600
     });
   };
 
-  // 랜덤으로 10개의 선물 이름 선택
   const selectRandomGifts = () => {
-    const allGifts = gifts; // 선물 데이터 그 자체를 사용합니다.
+    const allGifts = gifts;
     const selected = [];
     while (selected.length < 10) {
       const randomIndex = Math.floor(Math.random() * allGifts.length);
@@ -56,27 +45,21 @@ const RoulettePage = () => {
 
   const handleSpinClick = () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * data.length); //당첨번호
+      const newPrizeNumber = Math.floor(Math.random() * data.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
   };
   const closeModal = () => {
-    setIsOpen(false); // 모달 닫기
-    /* 선택된 선물을 저장하는 함수 (일단 안함)
-    setSelectedGifts((prevSelectedGifts) => [
-      ...prevSelectedGifts,
-      data[prizeNumber].option
-    ]);*/
+    setIsOpen(false);
   };
 
   const pointerProps = {
-    src: heart, // 포인터 이미지 소스
-    width: '50px', // 포인터 이미지 너비
-    height: '50px', // 포인터 이미지 높이
+    src: heart,
+    width: '50px',
+    height: '50px',
     style: {
-      // 포인터 이미지의 CSS 스타일
-      transform: 'translate(-70%, -50%) rotate(390deg)' // 예시로 회전 및 위치 이동
+      transform: 'translate(-70%, -50%) rotate(390deg)'
     }
   };
 
@@ -92,10 +75,7 @@ const RoulettePage = () => {
           onStopSpinning={() => {
             setMustSpin(false);
             handleConfetti();
-            //setPrize(data[prizeNumber].option);
-            //setImgUrl(data[prizeNumber].imageUrl);
             setIsOpen(true);
-            //alert(data[prizeNumber].option + '이 당첨되셨습니다');
           }}
           backgroundColors={['#FAF7FA', '#F2CBF2', '#DDA0DD']}
           outerBorderColor='#020000'
