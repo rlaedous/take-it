@@ -39,7 +39,7 @@ const MyResultPage = () => {
     <div className='flex h-full justify-center'>
       <div
         className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-        style={{ maxWidth: '75%', margin: '20px auto', maxWidth: '1440px' }}>
+        style={{ margin: '20px auto', maxWidth: '1440px' }}>
         {filteredData?.map((item, index) => (
           <div
             onClick={() => navigate(`/myResult/${item.id}`)}
