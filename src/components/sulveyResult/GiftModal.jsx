@@ -63,8 +63,12 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
   };
 
   const handleDeleteGiftComments = (id, userId) => {
-    if (userId === data.userId) {
+    console.log(userId);
+    console.log(data);
+    if (userId === data.user.id) {
       deleteGiftCommentMutation.mutate(id);
+    } else {
+      alert('내 댓글만 삭제 가능합니다');
     }
   };
   if (isLoading) return;
@@ -95,7 +99,7 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
                 <div className='mb-7 ml-1 flex h-80 border-b-2 border-black'>
                   {filteredGiftComments.length > 0 ? (
                     filteredGiftComments.map((item) => (
-                      <div key={item.userId}>
+                      <div key={item.id}>
                         <img
                           className='h-7 w-7'
                           src={item.avatar}
