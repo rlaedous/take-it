@@ -37,13 +37,18 @@ const MyResultPage = () => {
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
         console.log('response.data', response.data);
+        console.log(
+          'response.data.filter',
+          response.data.filter((x) => x.userId === data.user.id)
+        );
+
         const firstElement = response.data[0];
         const selectedGiftsOfFirstElement = firstElement.selectedGifts;
 
-        console.log(selectedGiftsOfFirstElement);
+        console.log('selectedGiftsOfFirstElement', selectedGiftsOfFirstElement);
         console.log(
-          'response.data',
-          response.data.map((x) => x.selectedGifts)
+          'response.data.gifts',
+          response.data.map((x) => x.selectedGifts.gifts)
         );
       } catch (error) {
         console.error('Error sending results to server:', error);
