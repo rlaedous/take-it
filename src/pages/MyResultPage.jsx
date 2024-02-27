@@ -21,16 +21,15 @@ const MyResultPage = () => {
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
-        console.log('response', response);
-        const filteredUserId = response.data
-          .filter((x) => x.userId === data.user.id)
-          .map((x) => x.gifts);
-        console.log('filteredUserId', filteredUserId);
-
-        const filteredData = filteredUserId.map((x) => x[0]);
-        console.log('filteredData', filteredData);
-
-        setFilteredData(filteredData); // 상태 업데이트
+        const filteredGiftList = response.data
+          .filter((item) => item.userId === data.user.id)
+          .map((item) => ({
+            id: item.id,
+            gifts: item.gifts[0]
+          }));
+        console.log(response.data);
+        console.log(filteredGiftList);
+        setFilteredData(filteredGiftList); // 상태 업데이트
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
@@ -46,10 +45,10 @@ const MyResultPage = () => {
           onClick={() => navigate(`/myResult/${item.id}`)}
           key={index}
           className='rounded border border-gray-300 p-4'>
-          <div className='text-lg font-bold'>{item?.name}</div>
+          <div className='text-lg font-bold'>{item?.gifts.name}</div>
           <div className='text-lg font-bold'>현재 1등</div>
           <img
-            src={item?.imageUrl}
+            src={item?.gifts.imageUrl}
             className='mt-2 rounded-2xl'
             alt={item?.name}
           />
