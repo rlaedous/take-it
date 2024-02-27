@@ -10,8 +10,17 @@ const SurveyResultPage = () => {
   console.log('gifts', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
   console.log('surveyResult', results);
-  const money = results.money[1];
+  /*
+  let money;
+  if (results.money[0] === 0) {
+    money = `${results.money[1]}원대`;
+  } else if (results.money[1] === 1000000) {
+    money = `${results.money[0]}원 이상`;
+  } else {
+    money = `${results.money[0]}원 이상 ${results.money[1]}원대`;
+  }
   console.log(money);
+  */
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
@@ -21,10 +30,8 @@ const SurveyResultPage = () => {
   useEffect(() => {
     if (results && results.gender) {
       const gender = results.gender === 'F' ? '여자' : '남자';
-
-      const searchId = encodeURIComponent(
-        `${gender}, ${results.age}대 선물 추천`
-      );
+      const age = results.age.replace('s', '대');
+      const searchId = encodeURIComponent(`${gender}, ${age} 선물 추천`);
       const fetchVideos = async () => {
         try {
           const response = await axios.get(
