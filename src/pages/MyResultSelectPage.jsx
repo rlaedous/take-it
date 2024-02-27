@@ -21,67 +21,11 @@ const MyResultSelectPage = () => {
         const response = await axios.get(
           `https://tungsten-flossy-van.glitch.me/surveyResults`
         );
-
-        const filteredUserId = response.data
-          .filter((x) => x.userId === data.user.id)
-          .map((x) => x.gifts);
-        console.log('filteredUserId', filteredUserId);
-
-        const filteredData = filteredUserId.map((x) => x);
-        console.log('filteredData', filteredData);
-        // const filteredUserId = response.data
-        //   .filter((x) => x.userId === data.user.id)
-        //   .map((x) => x.gifts);
-        // console.log('filteredUserId', filteredUserId);
-
-        // const filteredUserId = response.data
-        //   .filter((x) => x.userId === data.user.id)
-        //   .map((x) => x.gifts)
-        //   .flat();
-        // console.log('filteredUserId', filteredUserId);
-
-        // const currentPageArray = filteredUserId[params.id - 1]; // params.id는 문자열이므로 숫자로 변환하고 1을 빼줍니다.
-        // console.log('currentPageArray', currentPageArray);
-        // const filteredFirstData = currentPageArray.find(
-        //   (x) => x.id === parseInt(params.id)
-        // );
-        // console.log('filteredFirstData', filteredFirstData);
-
-        // console.log('response', response);
-        // const filteredUserId = response.data.filter((x) => x.gifts);
-
-        // console.log('filteredUserId', filteredUserId);
-
-        // const filteredData = filteredUserId.map((x) => x[0]);
-
-        // console.log('filteredData', filteredData);
-        //   .find((x) => x.id === parseInt(params.id));
-        // console.log(
-        //   'response.data',
-        //   response.data.filter((x) => x.gifts).map((x) => x.gifts)
-        // );
-
-        // const filteredUserId = response.data
-        //   .filter((x) => x.userId === data.user.id)
-        //   .map((x) => x.gifts);
-        // console.log('filteredUserId', filteredUserId);
-        // const filteredUserId = response.data
-        //   .filter((x) => x.userId === data.user.id)
-        //   .map((x) => x.gifts)
-
-        //   .flat();
-
-        // console.log('filteredUserId', filteredUserId);
-
-        // const filteredData = filteredUserId.find(
-        //   (x) => x.userId === parseInt(params.id)
-        // );
-        // console.log('filteredData', filteredData);
-        // const filteredFirstData = filteredData.find(
-        //   (x) => x.id === parseInt(params.id)
-        // );
-        // console.log('filteredFirstData', filteredFirstData);
-        setResultData(filteredData);
+        console.log(response);
+        const filteredData = response.data.filter(
+          (item) => item.id === parseInt(params.id)
+        );
+        setResultData(filteredData[0].gifts);
       } catch (error) {
         console.error('Error fetching result data:', error);
       }
