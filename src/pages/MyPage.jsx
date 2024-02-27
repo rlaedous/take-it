@@ -106,10 +106,7 @@ const MyPage = () => {
                   onChange={handleNicknameChange}
                   defaultValue={newNickname}
                 />
-                {/* 프로필 이미지 변경 입력 필드 */}
-                <label className='mt-4 block text-sm font-medium text-gray-800'>
-                  프로필 이미지 변경:
-                </label>
+
                 <input
                   type='file'
                   accept='image/*'
