@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 
 const SurveyResultPage = () => {
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
-  console.log('선택', selectedGifts);
+  console.log('gifts', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
+  console.log('surveyResult', results);
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
@@ -22,10 +23,14 @@ const SurveyResultPage = () => {
     try {
       if (!isResultSaved) {
         const currentTime = new Date();
+        const surveyResults = {
+          gifts: selectedGifts,
+          surveyResult: results
+        };
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
-            selectedGifts,
+            selectedGifts: surveyResults,
             userId: data.user.id,
             createdAt: currentTime.toISOString()
           }
