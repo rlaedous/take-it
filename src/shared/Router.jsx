@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import MyResultPage from '../pages/MyResultPage';
 import Community from '../pages/Community';
 import CommunityDetail from '../pages/CommunityDetail';
+import MapPage from '../pages/MapPage';
+import MyResultSelectPage from '../pages/MyResultSelectPage';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -58,8 +60,10 @@ export default function Router() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/myResult' element={<MyResultPage />} />
+          <Route path='/myResult/:id' element={<MyResultSelectPage />} />
           <Route element={<JoinPage />} />
           <Route path='/roulette' element={<RoulettePage />} />
+          <Route path='/map' element={<MapPage />} />
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
           <Route path='/' element={<MainPage />} />

@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const MyResultPage = () => {
+  const [filteredData, setFilteredData] = useState([]);
+
   const { data, isLoading } = useQuery({
     queryKey: ['loginStatus']
   });
 
+  const navigate = useNavigate();
   useEffect(() => {
     const sendResultsToServer = async () => {
       try {
@@ -14,28 +18,45 @@ const MyResultPage = () => {
         if (isLoading || !data) {
           return;
         }
-
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
-        // console.log('response', response);
-        console.log('response.data', response.data);
-        console.log(
-          'response.data.filter',
-          response.data.filter((x) => x.userId === data.user.id)
-        );
-        const a = response.data.filter((x) => x.userId === data.user.id);
-        console.log('a.gifts', a);
+        console.log('response', response);
+        const filteredUserId = response.data
+          .filter((x) => x.userId === data.user.id)
+          .map((x) => x.gifts);
+        console.log('filteredUserId', filteredUserId);
+
+        const filteredData = filteredUserId.map((x) => x[0]);
+        console.log('filteredData', filteredData);
+
+        setFilteredData(filteredData); // 상태 업데이트
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
     };
 
-    // 함수 호출
     sendResultsToServer();
   }, [data, isLoading]);
 
-  return <></>;
+  return (
+    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+      {filteredData?.map((item, index) => (
+        <div
+          onClick={() => navigate(`/myResult/${response.data[index].id}`)} // 여기 수정
+          key={index}
+          className='rounded border border-gray-300 p-4'>
+          <div className='text-lg font-bold'>{item?.name}</div>
+          <div className='text-lg font-bold'>현재 1등</div>
+          <img
+            src={item?.imageUrl}
+            className='mt-2 rounded-2xl'
+            alt={item?.name}
+          />
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default MyResultPage;
