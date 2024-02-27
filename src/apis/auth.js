@@ -29,10 +29,15 @@ export const profileChange = async (formData) => {
     const accessToken = localStorage.getItem('accessToken');
     const { data } = await authAPI.patch(`/profile`, formData, {
       headers: {
-        // 'Content-Type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${accessToken}`
       }
     });
+    // const editingObj = {};
+    // const { nickname, avatar } = data;
+    // if (nickname) editingObj.nickname = nickname;
+    // if (avatar) editingObj.avatar = avatar;
+
     console.log('server-data:', data);
     return data;
   } catch (error) {

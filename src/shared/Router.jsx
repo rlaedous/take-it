@@ -9,7 +9,8 @@ import Layout from '../components/common/layout';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
-import BarChart from '../components/BarChart';
+import useFetchData from '../utils/useFetchData';
+import { useEffect } from 'react';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -40,6 +41,13 @@ export default function Router() {
   // console.log('Error:', error);
   // console.log('Loading:', isLoading);
 
+  const fetchData = useFetchData();
+
+  useEffect(() => {
+    console.log('app마운트');
+    fetchData();
+  }, []);
+
   return (
     <BrowserRouter>
       <Layout>
@@ -51,7 +59,6 @@ export default function Router() {
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
           <Route path='/' element={<MainPage />} />
-          <Route path='/chart' element={<BarChart />} />
         </Routes>
       </Layout>
     </BrowserRouter>

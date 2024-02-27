@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 
 const SurveyResultPage = () => {
+  const [videos, setVideos] = useState([]);
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
   console.log('선택', selectedGifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
@@ -13,6 +14,29 @@ const SurveyResultPage = () => {
   });
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
+  //const gender = results.gender === 'F' ? '여자' : '남자';
+  useEffect(() => {
+    if (results && results.gender) {
+      const gender = results.gender === 'F' ? '여자' : '남자';
+      const searchId = encodeURIComponent(
+        `${gender}, ${results.age}대 선물 추천`
+      );
+      const fetchVideos = async () => {
+        try {
+          const response = await axios.get(
+            `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=${searchId}&type=video&key=${import.meta.env.VITE_APP_YOUTUBE_API_KEY}`
+          );
+          console.log(response.data);
+          setVideos(response.data.items);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchVideos();
+    }
+  }, [results]);
+
   useEffect(() => {
     if (selectedGifts === null) {
       navigate('/survey'); // 선택된 선물이 없으면 /survey 페이지로 이동
@@ -61,20 +85,37 @@ const SurveyResultPage = () => {
         )}
       </div>
       {selectedGifts && (
-        <div className='mx-auto my-8  w-1/2'>
+        <div className='mx-auto my-8  w-1/2 font-bold'>
           {`#${results.gender === 'F' ? '여자' : '남자'} 
  #${results.age.replace('s', '대')}
  #${results.whom}선물
+ #${results.isT === 'false' ? '감성적' : '실용적'}
  `}
         </div>
       )}
-
+      {/*비디오 부분*/}
+      <div className='youtubeVideos'>
+        {videos.map((video, index) => (
+          <div key={index} className='videoContainer'>
+            <iframe
+              width='560'
+              height='315'
+              src={`https://www.youtube.com/embed/${video.id.videoId}`}
+              title={video.snippet.title}
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen></iframe>
+            <h3>{video.snippet.title}</h3>
+          </div>
+        ))}
+      </div>
       <button
         className='rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
         onClick={handleResultSave}
         disabled={isResultSaved}>
         {isResultSaved === true ? '저장 완료!' : '결과 저장'}
       </button>
+      {}
     </div>
   );
 };
