@@ -54,6 +54,10 @@ const Header = () => {
   const handleMapPage = () => {
     navigate('/map');
   };
+
+  const handleCommunity = () => {
+    navigate('/community');
+  };
   return (
     <div className='flex h-[70px] items-center justify-between bg-main px-4'>
       <div className='flex items-center'>
@@ -71,7 +75,11 @@ const Header = () => {
             className='mr-10 cursor-pointer hover:text-white'>
             가까운 가게
           </div>
-          <div className='cursor-pointer hover:text-white '>커뮤니티</div>
+          <div
+            onClick={handleCommunity}
+            className='cursor-pointer hover:text-white '>
+            커뮤니티
+          </div>
         </div>
       </div>
       <div>
