@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { authCheckToken } from '../apis/auth';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { profileChange } from '../apis/auth';
-import { useNavigate } from 'react-router';
 import useFetchData from '../utils/useFetchData';
+import { useNavigate } from 'react-router';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const fetchData = useFetchData();
-  const { data, error, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['loginStatus']
-    // queryFn: async () => {
-    //   const accessToken = localStorage.getItem('accessToken');
-    //   const userData = await authCheckToken(accessToken);
-    //   console.log('data', data);
-    //   console.log('userData', userData);
-
-    //   return { isLoggedIn: true, user: userData.data };
-    // }
   });
-  const queryClient = useQueryClient();
-  // const { mutate: mutateToProfile } = useMutation({
-  //   mutationFn: profileChange,
-  //   onSuccess: async () => {
-  //     await queryClient.invalidateQueries(['loginStatus']);
-  //   }
-  // });
-
   const [isEditing, setIsEditing] = useState(false);
   const [newNickname, setNewNickname] = useState(data?.user?.nickname || '');
   const [newProfileImage, setNewProfileImage] = useState(null);
@@ -63,19 +46,14 @@ const MyPage = () => {
       formData.append('nickname', newNickname);
       formData.append('avatar', newProfileImage);
     }
-
     try {
       localStorage.setItem('nickname', newNickname);
-
       await profileChange(formData);
-      navigate('/');
       alert('변경이 완료되었습니다.');
       fetchData();
-      // await queryClient.invalidateQueries(['loginStatus']);
     } catch (error) {
       console.error(error);
     }
-
     setIsEditing(false);
   };
 
@@ -83,23 +61,13 @@ const MyPage = () => {
     return <div>Loading...</div>;
   }
 
-  // if (error) {
-  //   return (
-  //     <div>
-  //       <p>Error fetching user data</p>
-  //       <p>Error details: {error.message}</p>
-  //     </div>
-  //   );
-  // }
-
   return (
-    <div className='flex h-screen items-center justify-center'>
-      <div className='rounded-lg bg-gray-500 p-4'>
+    <div className='bg-gray-50" flex min-h-screen items-center justify-center'>
+      <div className='w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md'>
         <h1 className='mb-4 text-4xl font-bold'>마이페이지</h1>
         {data ? (
           <>
             <p className='mb-2 text-lg'>유저 아이디: {data.user.id}</p>
-
             {/* 프로필 이미지 표시 */}
             {previewImage ? (
               <img
@@ -126,7 +94,6 @@ const MyPage = () => {
                   onChange={handleNicknameChange}
                   defaultValue={newNickname}
                 />
-
                 {/* 프로필 이미지 변경 입력 필드 */}
                 <label className='mt-4 block text-sm font-medium text-gray-600'>
                   프로필 이미지 변경:
@@ -157,11 +124,14 @@ const MyPage = () => {
                   </button>
                 </>
               ) : (
-                <button
-                  className='rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
-                  onClick={handleToggleEditing}>
-                  변경하기
-                </button>
+                <>
+                  <button
+                    className='rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+                    onClick={handleToggleEditing}>
+                    변경하기
+                  </button>
+                  <button onClick={() => navigate('/myResult')}>dddd</button>
+                </>
               )}
             </div>
           </>

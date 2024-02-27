@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 import useFetchData from '../utils/useFetchData';
 import { useEffect } from 'react';
+import MyResultPage from '../pages/MyResultPage';
 
 export default function Router() {
   // const userAuth = async () => {
@@ -54,6 +55,7 @@ export default function Router() {
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/mypage' element={<MyPage />} />
+          <Route path='/myResult' element={<MyResultPage />} />
           <Route element={<JoinPage />} />
           <Route path='/roulette' element={<RoulettePage />} />
           <Route path='/survey' element={<SurveyPage />} />
