@@ -8,19 +8,19 @@ const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
-
   console.log('surveyResult', results);
+
   /*
   let money;
   if (results.money[0] === 0) {
-    money = `${results.money[1]}원대`;
+    money = `${results.money[1] / 10000}만원 이하`;
   } else if (results.money[1] === 1000000) {
-    money = `${results.money[0]}원 이상`;
+    money = `${results.money[0] / 10000}만원 이상`;
   } else {
-    money = `${results.money[0]}원 이상 ${results.money[1]}원대`;
+    money = `${results.money[0] / 10000}만원 이상 ${results.money[1] / 10000}만원 이하`;
   }
   console.log(money);
-  */
+*/
   const [hasAccessToken, setHasAccessToken] = useState(false); // accessToken이 있는지 여부를 추적하는 상태값 추가
   const at = localStorage.getItem('accessToken');
   const { data } = useQuery({
@@ -49,7 +49,7 @@ const SurveyResultPage = () => {
 
       fetchVideos();
     }
-  }, [results]);
+  }, []);
 
   useEffect(() => {
     if (selectedGifts === null) {
@@ -86,8 +86,10 @@ const SurveyResultPage = () => {
   };
   return (
     <div className='mx-auto max-w-main text-center'>
-      <h3 className='my-3 text-center text-2xl font-bold'>너가 줄 선물은</h3>
-      <div className='surveyResultBox flex justify-center gap-4'>
+      <h3 className='my-3 mt-7 text-center text-2xl font-bold'>
+        너가 줄 선물은
+      </h3>
+      <div className='surveyResultBox mt-5 flex justify-center gap-4'>
         {selectedGifts && selectedGifts.length ? (
           selectedGifts.map((gift, index) => (
             <div
@@ -115,22 +117,6 @@ const SurveyResultPage = () => {
  `}
         </div>
       )}
-      {/*비디오 부분*/}
-      <div className='youtubeVideos'>
-        {videos.map((video, index) => (
-          <div key={index} className='videoContainer'>
-            <iframe
-              width='560'
-              height='315'
-              src={`https://www.youtube.com/embed/${video.id.videoId}`}
-              title={video.snippet.title}
-              frameBorder='0'
-              allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
-              allowFullScreen></iframe>
-            <h3>{video.snippet.title}</h3>
-          </div>
-        ))}
-      </div>
       {hasAccessToken && (
         <button
           className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
@@ -139,6 +125,26 @@ const SurveyResultPage = () => {
           {isResultSaved === true ? '저장 완료!' : '결과 저장'}
         </button>
       )}
+      {/*비디오 부분*/}
+      <div className='mb-4 mt-4 text-left text-xl font-bold'>
+        <h2 className=' mb-2 text-xl font-bold'>관련 유튜브 영상</h2>
+        <hr className='my-2 border-gray-300' />
+        <div className='youtubeVideos mt-3 flex overflow-x-auto'>
+          {videos.map((video, index) => (
+            <div key={index} className='videoContainer  mr-4 flex-shrink-0'>
+              <iframe
+                width='500'
+                height='300'
+                src={`https://www.youtube.com/embed/${video.id.videoId}`}
+                frameBorder='0'
+                allowFullScreen></iframe>
+              <h3 className='mt-2 h-16 max-w-[500px] overflow-hidden text-lg font-medium'>
+                {video.snippet.title}
+              </h3>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

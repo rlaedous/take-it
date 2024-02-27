@@ -8,7 +8,10 @@ export default defineConfig({
     react()
     /*
     ViteFaviconsPlugin({
-      logo: 'src/assets/take_it_favicon.png'
+      logo: 'src/assets/take_it_favicon.png',
+      favicons: {
+        path: 'assets/'
+      }
     })*/
   ]
 });
