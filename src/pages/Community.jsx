@@ -76,7 +76,8 @@ const Community = () => {
       title: title,
       content: content,
       createdAt: new Date(),
-      userId: data.user.id
+      userId: data.user.id,
+      nickname: data.user.nickname
     };
     mutation.mutate(newPost);
     setIsOpenModal(false); // 작성 모달 닫기
@@ -134,7 +135,7 @@ const Community = () => {
               <p className='mr-10 text-gray-700'>
                 {getTimeDifferenceString(new Date(post.createdAt))}
               </p>
-              <p className='mr-5 text-gray-700'>{post.userId}</p>
+              <p className='mr-5 text-gray-700'>{post.nickname}</p>
               {post.userId === data.user.id && (
                 <p
                   onClick={(e) => {
@@ -180,7 +181,7 @@ const Community = () => {
         <button
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className='rounded bg-black px-4 py-2 font-bold text-white hover:text-fuchsia-800'>
+          className='cursor-pointer rounded bg-black px-4 py-2 font-bold text-white hover:bg-main hover:text-fuchsia-800'>
           다음
         </button>
       </div>
