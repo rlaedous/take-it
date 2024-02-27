@@ -1,19 +1,27 @@
 import axios from 'axios';
 
+export const jsonServerAPI = axios.create({
+  baseURL: `${import.meta.env.VITE_APP_GLITCH_SERVER_API_URL}`
+});
+
 //조회
 
 const getPosts = async () => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_APP_GLITCH_SERVER_API_URL}/posts`
-  );
+  const response = await jsonServerAPI.get('/posts');
   return response;
 };
 
+const getPostsById = async (id) => {
+  const response = await jsonServerAPI.get(`/posts/${id}`);
+  return response;
+};
 const addPost = async (newPost) => {
-  await axios.post(
-    `${import.meta.env.VITE_APP_GLITCH_SERVER_API_URL}/posts`,
-    newPost
-  );
+  await jsonServerAPI.post('/posts', newPost);
 };
 
-export { getPosts, addPost };
+const deletePost = async (id) => {
+  const response = await jsonServerAPI.delete(`/posts/${id}`);
+  return response.data;
+};
+
+export { deletePost, getPosts, addPost, getPostsById };

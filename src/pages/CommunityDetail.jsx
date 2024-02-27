@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addComment, getComments } from '../apis/comments';
 import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router';
-import { getPosts } from '../apis/posts';
+import { getPosts, getPostsById } from '../apis/posts';
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -22,16 +22,11 @@ const CommunityDetail = () => {
   });
 
   const { data: posts } = useQuery({
-    queryKey: ['posts'],
-    queryFn: getPosts
+    queryKey: ['posts', id],
+    queryFn: () => getPostsById(id)
   });
 
-  const selectedPosts = useMemo(() => {
-    if (posts) {
-      console.log('post', posts);
-      return posts.data.find((post) => post.id === parseInt(id));
-    }
-  }, [posts, id]);
+  console.log('posts', posts);
 
   //   console.log('posts', selectedPosts);
 
@@ -71,37 +66,41 @@ const CommunityDetail = () => {
   };
 
   return (
-    <div className='container mx-auto mt-5 bg-white p-8 shadow'>
+    <div className='container mx-auto mt-5 max-w-3xl bg-white p-8 shadow'>
       <div className='mx-auto rounded '>
-        <h2 className='mb-4 text-2xl font-bold'>{selectedPosts?.title}</h2>
-        <p className='text-gray-700'>{selectedPosts?.content}</p>
+        <h2 className='mb-4 text-2xl font-bold'>{posts?.data.title}</h2>
+        <p className='text-gray-700'>{posts?.data.content}</p>
       </div>
-      <div className='mb-5 mt-10 rounded bg-gray-200'>
-        {comments &&
-          comments.data
-            .filter((comment) => comment.postId === id)
-            .map((comment) => (
-              <div className='border-b-black' key={comment.id}>
-                <div className='flex'>
-                  <p>{comment.writer}:</p>
-                  <p>{comment.comment}</p>
+      <div className='mt-40 rounded-md bg-gray-100 px-5 py-5'>
+        <div className='mb-2'>
+          {comments &&
+            comments.data
+              .filter((comment) => comment.postId === id)
+              .map((comment) => (
+                <div
+                  className='border-b border-b-gray-300 py-2'
+                  key={comment.id}>
+                  <div className='flex'>
+                    <p>{comment.writer}:</p>
+                    <p>{comment.comment}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+        </div>
+        <form onSubmit={handleSubmit} className='mb-2 text-center'>
+          <textarea
+            value={comment}
+            onChange={handleChange}
+            className='h-16 w-full resize-none rounded-md border p-2 '
+            placeholder='댓글을 입력하세요...'
+            required></textarea>
+          <button
+            type='submit'
+            className='font-semibol mt-2 rounded-md bg-main px-4 py-2 text-white hover:text-fuchsia-800'>
+            댓글 작성
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleSubmit} className='mb-4'>
-        <textarea
-          value={comment}
-          onChange={handleChange}
-          className='h-32 w-full rounded-md border p-2'
-          placeholder='댓글을 입력하세요...'
-          required></textarea>
-        <button
-          type='submit'
-          className='mt-2 rounded-md bg-blue-500 px-4 py-2 text-white'>
-          댓글 작성
-        </button>
-      </form>
     </div>
   );
 };
