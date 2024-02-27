@@ -40,7 +40,7 @@ export default function MapPage() {
       kakao.maps.event.addListener(marker, 'click', function () {
         const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
         infowindow.setContent(
-          '<div classname="p-2 text-[12px]">' +
+          '<div style="padding:5px;font-size:12px;">' +
             '<div>' +
             place.place_name +
             '</div>' +
@@ -64,7 +64,7 @@ export default function MapPage() {
 
   return (
     <div className='mt-5'>
-      <div className='mx-auto w-[350px]'>
+      <div className='mx-auto mb-5 w-[350px]'>
         <input
           type='text'
           id='keyword'
