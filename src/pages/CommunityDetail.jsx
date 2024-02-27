@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addComment, getComments } from '../apis/comments';
+import { addComment, deleteComment, getComments } from '../apis/comments';
 import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { getPosts, getPostsById } from '../apis/posts';
@@ -35,14 +35,21 @@ const CommunityDetail = () => {
     mutationFn: addComment,
     onSuccess: () => {
       queryClient.invalidateQueries('comments');
-      console.log('성공하였습니다');
     },
     onError: (error) => {
-      console.log('Mutation error : ', error);
+      alert(error.message);
     }
   });
 
-  console.log(comments);
+  const mutationDelete = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries('comments');
+    },
+    onError: (error) => {
+      alert(error.message);
+    }
+  });
 
   const handleChange = (e) => {
     setComment(e.target.value);
@@ -65,6 +72,14 @@ const CommunityDetail = () => {
     mutation.mutate(newComment);
   };
 
+  const handleDeleteComment = (commentId) => {
+    mutationDelete.mutate(commentId);
+  };
+
+  if (isLoading) return <div>로딩중</div>;
+
+  if (isError) return <div>에러</div>;
+
   return (
     <div className='container mx-auto mt-5 max-w-3xl bg-white p-8 shadow'>
       <div className='mx-auto rounded '>
@@ -80,9 +95,20 @@ const CommunityDetail = () => {
                 <div
                   className='border-b border-b-gray-300 py-2'
                   key={comment.id}>
-                  <div className='flex'>
-                    <p>{comment.writer}:</p>
-                    <p>{comment.comment}</p>
+                  <div className='flex justify-between'>
+                    <div className='flex'>
+                      <p>{comment.writer}:</p>
+                      <p>{comment.comment}</p>
+                    </div>
+                    {data.user.id === comment.writer && (
+                      <p
+                        className='cursor-pointer'
+                        onClick={() => {
+                          handleDeleteComment(comment.id);
+                        }}>
+                        삭제
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}

@@ -47,6 +47,8 @@ const Community = () => {
 
   const queryClient = useQueryClient();
 
+  const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
+
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: addPost,
@@ -85,7 +87,7 @@ const Community = () => {
     const { title, content } = e.target;
     console.log(title.value);
     console.log(content.value);
-    if (title === '' || content === '') {
+    if (title.value === '' || content.value === '') {
       return;
     }
     if (!data) {
@@ -93,12 +95,15 @@ const Community = () => {
     }
 
     handleAddPost(title.value, content.value);
+    title.value = '';
+    content.value = '';
   };
 
-  const handleDeletePost = (postId, e) => {
-    e.stopPropagation();
+  const handleDeletePost = (postId) => {
     mutationDelete.mutate(postId);
   };
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <div className='mx-auto h-full max-w-3xl px-4 py-8'>
@@ -133,7 +138,10 @@ const Community = () => {
               {post.userId === data.user.id && (
                 <p
                   onClick={(e) => {
-                    handleDeletePost(post.id, e);
+                    e.stopPropagation();
+                    setIsDeleteModalOpen(true);
+                    setCurrentDeleteTargetId(post.id);
+                    //handleDeletePost(post.id, e);
                   }}>
                   삭제
                 </p>
@@ -198,6 +206,21 @@ const Community = () => {
             value='작성하기'
           />
         </form>
+      </CustomModal>
+      <CustomModal
+        closeModal={() => setIsDeleteModalOpen(false)}
+        isOpen={isDeleteModalOpen}>
+        진짜 삭제할 거임?
+        <div>
+          <button
+            onClick={() => {
+              setIsDeleteModalOpen(false);
+              handleDeletePost(currentDeleteTargetId);
+            }}
+            className='mt-5 rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
+            ㅇㅇ
+          </button>
+        </div>
       </CustomModal>
     </div>
   );
