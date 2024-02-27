@@ -9,6 +9,8 @@ const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
   const selectedGifts = useSelector((state) => state.surveyResult.gifts);
   const results = useSelector((state) => state.surveyResult.surveyResult);
+  console.log('surveyResult', results);
+
   const [hasAccessToken, setHasAccessToken] = useState(false); // accessToken이 있는지 여부를 추적하는 상태값 추가
   const at = localStorage.getItem('accessToken');
   const { data } = useQuery({
@@ -17,13 +19,12 @@ const SurveyResultPage = () => {
   console.log(data);
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
-  //const gender = results.gender === 'F' ? '여자' : '남자';
+
   useEffect(() => {
     if (results && results.gender) {
       const gender = results.gender === 'F' ? '여자' : '남자';
-      const searchId = encodeURIComponent(
-        `${gender}, ${results.age}대 선물 추천`
-      );
+      const age = results.age.replace('s', '대');
+      const searchId = encodeURIComponent(`${gender}, ${age} 선물 추천`);
       const fetchVideos = async () => {
         try {
           const response = await axios.get(
@@ -38,7 +39,7 @@ const SurveyResultPage = () => {
 
       fetchVideos();
     }
-  }, [results]);
+  }, []);
 
   useEffect(() => {
     if (selectedGifts === null) {
@@ -85,8 +86,10 @@ const SurveyResultPage = () => {
 
   return (
     <div className='mx-auto max-w-main text-center'>
-      <h3 className='my-3 text-center text-2xl font-bold'>너가 줄 선물은</h3>
-      <div className='surveyResultBox flex justify-center gap-4'>
+      <h3 className='my-3 mt-7 text-center text-2xl font-bold'>
+        너가 줄 선물은
+      </h3>
+      <div className='surveyResultBox mt-5 flex justify-center gap-4'>
         {selectedGifts && selectedGifts.length ? (
           selectedGifts.map((gift, index) => (
             <div
@@ -119,22 +122,6 @@ const SurveyResultPage = () => {
  `}
         </div>
       )}
-      {/*비디오 부분*/}
-      <div className='youtubeVideos'>
-        {videos.map((video, index) => (
-          <div key={index} className='videoContainer'>
-            <iframe
-              width='560'
-              height='315'
-              src={`https://www.youtube.com/embed/${video.id.videoId}`}
-              title={video.snippet.title}
-              frameBorder='0'
-              allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              allowFullScreen></iframe>
-            <h3>{video.snippet.title}</h3>
-          </div>
-        ))}
-      </div>
       {hasAccessToken && (
         <button
           className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
@@ -143,6 +130,28 @@ const SurveyResultPage = () => {
           {isResultSaved === true ? '저장 완료!' : '결과 저장'}
         </button>
       )}
+
+      {/*비디오 부분*/}
+      <div className='mb-4 mt-4 text-left text-xl font-bold'>
+        <h2 className=' mb-2 text-xl font-bold'>관련 유튜브 영상</h2>
+        <hr className='my-2 border-gray-300' />
+        <div className='youtubeVideos mt-3 flex overflow-x-auto'>
+          {videos.map((video, index) => (
+            <div key={index} className='videoContainer  mr-4 flex-shrink-0'>
+              <iframe
+                width='500'
+                height='300'
+                src={`https://www.youtube.com/embed/${video.id.videoId}`}
+                frameBorder='0'
+                allowFullScreen></iframe>
+              <h3 className='mt-2 h-16 max-w-[500px] overflow-hidden text-lg font-medium'>
+                {video.snippet.title}
+              </h3>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {isModalOpen ? (
         <GiftModal
           setIsModalOpen={setIsModalOpen}
