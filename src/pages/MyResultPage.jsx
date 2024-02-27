@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const MyResultPage = () => {
@@ -43,7 +43,7 @@ const MyResultPage = () => {
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
       {filteredData?.map((item, index) => (
         <div
-          onClick={() => navigate(`/myResult/${response.data[index].id}`)} // 여기 수정
+          onClick={() => navigate(`/myResult/${item.id}`)}
           key={index}
           className='rounded border border-gray-300 p-4'>
           <div className='text-lg font-bold'>{item?.name}</div>
