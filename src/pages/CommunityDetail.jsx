@@ -67,7 +67,8 @@ const CommunityDetail = () => {
       comment,
       createdAt: new Date(),
       writer: data.user.id,
-      postId: id
+      postId: id,
+      nickname: data.user.nickname
     };
     mutation.mutate(newComment);
   };
@@ -97,7 +98,7 @@ const CommunityDetail = () => {
                   key={comment.id}>
                   <div className='flex justify-between'>
                     <div className='flex'>
-                      <p>{comment.writer}:</p>
+                      <p>{comment.nickname}:</p>
                       <p>{comment.comment}</p>
                     </div>
                     {data.user.id === comment.writer && (

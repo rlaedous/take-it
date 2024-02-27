@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { jsonServerAPI } from './posts';
 
 //조회
