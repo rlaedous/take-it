@@ -30,12 +30,11 @@ const SurveyResultPage = () => {
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
-            selectedGifts: surveyResults,
+            surveyResults,
             userId: data.user.id,
             createdAt: currentTime.toISOString()
           }
         );
-        console.log(response.data);
         setIsResultSaved(true); // 결과 저장 후 상태 업데이트
         return response.data;
       }
