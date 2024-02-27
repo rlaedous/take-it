@@ -36,20 +36,14 @@ const MyResultPage = () => {
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
+        // console.log('response', response);
         console.log('response.data', response.data);
         console.log(
           'response.data.filter',
           response.data.filter((x) => x.userId === data.user.id)
         );
-
-        const firstElement = response.data[0];
-        const selectedGiftsOfFirstElement = firstElement.selectedGifts;
-
-        console.log('selectedGiftsOfFirstElement', selectedGiftsOfFirstElement);
-        console.log(
-          'response.data.gifts',
-          response.data.map((x) => x.selectedGifts.gifts)
-        );
+        const a = response.data.filter((x) => x.userId === data.user.id);
+        console.log('a.gifts', a.gifts);
       } catch (error) {
         console.error('Error sending results to server:', error);
       }
