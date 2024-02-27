@@ -135,23 +135,22 @@ const SurveyResultPage = () => {
       <div className='mb-4 mt-4 text-left text-xl font-bold'>
         <h2 className=' mb-2 text-xl font-bold'>관련 유튜브 영상</h2>
         <hr className='my-2 border-gray-300' />
-        <div className='youtubeVideos mt-3 flex overflow-x-auto'>
+        <div className='youtubeVideos mt-3 flex'>
           {videos.map((video, index) => (
             <div key={index} className='videoContainer  mr-4 flex-shrink-0'>
               <iframe
-                width='500'
+                width='460'
                 height='300'
                 src={`https://www.youtube.com/embed/${video.id.videoId}`}
                 frameBorder='0'
                 allowFullScreen></iframe>
-              <h3 className='mt-2 h-16 max-w-[500px] overflow-hidden text-lg font-medium'>
+              <h3 className='mt-2 h-16 max-w-[460px] overflow-hidden text-lg font-medium'>
                 {video.snippet.title}
               </h3>
             </div>
           ))}
         </div>
       </div>
-
       {isModalOpen ? (
         <GiftModal
           setIsModalOpen={setIsModalOpen}

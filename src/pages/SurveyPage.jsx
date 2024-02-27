@@ -3,9 +3,8 @@ import { surveys } from '../shared/surveys';
 import { getfilteredGifts } from '../utils/filterGift';
 import { stringToArray } from '../utils/transformJson';
 import gifts from '/public/gifts.json';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setGift, setSurveyResult } from '../redux/modules/surveyResultSlice';
-// import CustomButton from '../components/common/CustomButton';
 import { twMerge } from 'tailwind-merge';
 import { useNavigate } from 'react-router';
 import ProgressBar from '../components/common/ProgressBar';
@@ -26,10 +25,6 @@ const SurveyPage = () => {
     isT: false
   });
   const dispatch = useDispatch();
-
-  const selectedGifts = useSelector((state) => state.surveyResult);
-
-  const [currentSelectedAnswer, setCurrentSelectedAnswer] = useState(null);
 
   const [isActiveNext, setIsActiveNext] = useState(false);
 
@@ -52,7 +47,6 @@ const SurveyPage = () => {
 
   const handleClickAnswer = (answerVal, idx) => {
     const key = currentQuestion.questionType;
-    setCurrentSelectedAnswer(idx);
     if (currentQuestion.questionType) {
       setResult({
         ...result,
@@ -63,19 +57,13 @@ const SurveyPage = () => {
     updatedSelectedAnswers[currentQuestionIdx] = idx; //
     setSelectedAnswers(updatedSelectedAnswers);
     if (currentQuestionIdx === surveys.length - 1) {
-      increaseProgress();
+      console.log('progress', progress);
+    }
+    if (progress < 100) {
+      const nextProgress = ((currentQuestionIdx + 1) / surveys.length) * 100;
+      setProgress(nextProgress);
     }
   };
-
-  useEffect(() => {
-    console.log('results', result);
-  }, [result]);
-
-  useEffect(() => {
-    if (selectedGifts) {
-      console.log(selectedGifts);
-    }
-  }, [selectedGifts]);
 
   const handleClickPrev = () => {
     setCurrentQuestionNum((prev) => {
@@ -106,13 +94,8 @@ const SurveyPage = () => {
         return prev;
       }
     });
-    setCurrentSelectedAnswer(null);
-    increaseProgress();
   };
 
-  useEffect(() => {
-    console.log('selectedAnswers', selectedAnswers);
-  }, [selectedAnswers]);
   const handleClickResult = () => {
     const filteredGift = getfilteredGifts(transformedGifts, result);
     if (filteredGift) {
@@ -122,11 +105,7 @@ const SurveyPage = () => {
     }
   };
   const [progress, setProgress] = useState(0);
-  const increaseProgress = () => {
-    if (progress < 100) {
-      setProgress(progress + 100 / surveys.length);
-    }
-  };
+
   return (
     <>
       <div className='py-5-sm relative mx-auto my-5 flex h-full max-w-screen-sm items-center justify-center'>
