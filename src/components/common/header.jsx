@@ -6,12 +6,18 @@ import { useQuery } from '@tanstack/react-query';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 추적하는 상태값 추가
   const navigate = useNavigate();
   const menuRef = useRef(null);
 
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
+
+  useEffect(() => {
+    // 'data'가 존재하면 로그인된 상태로 설정
+    setIsLoggedIn(data !== undefined && data !== null);
+  }, [data]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -33,9 +39,9 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
   const handleLogout = () => {
-    localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
+    localStorage.clear(); // 로컬 스토리지에서 토큰 제거
+    setIsLoggedIn(false); // 로그아웃 시 로그인 상태를 false로 설정
     navigate('/login'); // 로그인 페이지로 이동
-    setIsOpen(false); // 로그아웃 후 메뉴 닫기
   };
   const handleMenuOnblur = () => {
     setTimeout(() => {
@@ -57,7 +63,7 @@ const Header = () => {
         />
       </div>
       <div>
-        {data ? (
+        {isLoggedIn ? (
           <>
             <div
               ref={menuRef}

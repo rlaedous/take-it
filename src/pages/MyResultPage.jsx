@@ -22,6 +22,7 @@ const MyResultPage = () => {
         const response = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults'
         );
+
         const filteredUserId = response.data
           .filter((x) => x.userId === data.user.id)
           .map((x) => x.gifts);
