@@ -47,14 +47,11 @@ const SurveyResultPage = () => {
     try {
       if (!isResultSaved) {
         const currentTime = new Date();
-        const surveyResults = {
-          gifts: selectedGifts,
-          surveyResult: results
-        };
         const response = await axios.post(
           'https://tungsten-flossy-van.glitch.me/surveyResults',
           {
-            surveyResults,
+            gifts: selectedGifts,
+            surveyResult: results,
             userId: data.user.id,
             createdAt: currentTime.toISOString()
           }
@@ -114,7 +111,7 @@ const SurveyResultPage = () => {
         ))}
       </div>
       <button
-        className='rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
+        className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
         onClick={handleResultSave}
         disabled={isResultSaved}>
         {isResultSaved === true ? '저장 완료!' : '결과 저장'}
