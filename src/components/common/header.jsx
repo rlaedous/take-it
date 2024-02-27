@@ -51,16 +51,28 @@ const Header = () => {
   const handleHomeBack = () => {
     navigate('/');
   };
-
+  const handleMapPage = () => {
+    navigate('/map');
+  };
   return (
     <div className='flex h-[70px] items-center justify-between bg-main px-4'>
-      <div className='w-[200px]'>
-        <img
-          src={logo}
-          alt='로고'
-          className='cursor-pointer'
-          onClick={handleHomeBack}
-        />
+      <div className='flex items-center'>
+        <div className='w-[200px]'>
+          <img
+            src={logo}
+            alt='로고'
+            className='cursor-pointer'
+            onClick={handleHomeBack}
+          />
+        </div>
+        <div className='ml-10 flex font-bold'>
+          <div
+            onClick={handleMapPage}
+            className='mr-10 cursor-pointer hover:text-white'>
+            가까운 가게
+          </div>
+          <div className='cursor-pointer hover:text-white '>커뮤니티</div>
+        </div>
       </div>
       <div>
         {isLoggedIn ? (
