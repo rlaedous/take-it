@@ -3,8 +3,10 @@ import notion from '../../assets/images/notion.png';
 const Footer = () => {
   const handleClick = () => {
     // 노션 주소로 이동합니다.
-    window.location.href =
-      'https://teamsparta.notion.site/782eec878742460fbc2937f122f25478';
+    window.open(
+      'https://teamsparta.notion.site/782eec878742460fbc2937f122f25478',
+      '_blank'
+    );
   };
 
   return (

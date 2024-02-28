@@ -20,7 +20,9 @@ const HomePage = () => {
   };
   return (
     <>
-      <h2 className='mx-auto mt-[30px]'>선물 추천사이트</h2>
+      <h2 className='mt-[30px] text-center text-4xl font-bold text-[#333]'>
+        선물 추천사이트
+      </h2>
       <div className='mx-auto mt-[30px] flex max-w-main justify-center gap-8'>
         <div
           onClick={clickSurvey}

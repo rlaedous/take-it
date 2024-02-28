@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
 body {
   background: #faf7fa;
+  font-family: 'Single Day', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
 }
 section {
   height: 100vh;
