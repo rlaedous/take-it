@@ -28,9 +28,7 @@ const RouletteModal = ({ isOpen, prize, closeModal, prizeImageUrl }) => {
         }
       }}>
       <div className='w-96 rounded-md bg-white p-8'>
-        <h2 className='mb-4 text-center text-2xl font-bold'>
-          Congratulations!
-        </h2>
+        <h2 className='mb-4 text-center text-2xl font-bold'>너가 줄 선물</h2>
         {!isClicked ? (
           <motion.img
             src={giftImg}
