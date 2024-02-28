@@ -67,6 +67,7 @@ const RoulettePage = () => {
     <div className='mt-20 flex items-center justify-center'>
       <div className='flex flex-col items-center'>
         <Wheel
+          fontFamily="'Single Day', cursive" // 폰트 스타일 적용
           fontSize={18}
           spinDuration={0.2}
           mustStartSpinning={mustSpin}
