@@ -41,12 +41,21 @@ const MyPage = () => {
     }
   };
 
-  const handleUpdateNickname = async () => {
+  const handleUpdateProfile = async () => {
     const formData = new FormData();
 
     if (isEditing) {
       formData.append('nickname', newNickname);
       formData.append('avatar', newProfileImage);
+    }
+    // 이전 상태와 현재 상태를 비교하여 변경사항 여부 확인
+    const nicknameChanged = data?.user?.nickname !== newNickname;
+    const avatarChanged = isEditing && newProfileImage !== null;
+
+    if (!nicknameChanged && !avatarChanged) {
+      // 변경사항이 없다면 알림 표시 후 함수 종료
+      toast.error('변경사항이 없습니다');
+      return;
     }
     try {
       localStorage.setItem('nickname', newNickname);
@@ -54,8 +63,9 @@ const MyPage = () => {
       toast.success('변경이 완료되었습니다.');
       fetchData();
     } catch (error) {
-      toast.error(error);
+      toast.error('다시 입력하거나 프로필 이미지를 선택해주세요');
     }
+    setNewNickname('');
     setIsEditing(false);
   };
 
@@ -103,7 +113,7 @@ const MyPage = () => {
                   type='text'
                   className='mt-1 w-full rounded-md border border-gray-300 p-2'
                   onChange={handleNicknameChange}
-                  defaultValue={newNickname}
+                  value={newNickname}
                 />
 
                 <input
@@ -125,7 +135,7 @@ const MyPage = () => {
                 <>
                   <button
                     className='rounded-xl bg-main px-10 py-3 text-white hover:text-purple-800'
-                    onClick={handleUpdateNickname}>
+                    onClick={handleUpdateProfile}>
                     저장
                   </button>
                   <button

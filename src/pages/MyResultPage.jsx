@@ -1,8 +1,10 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 const MyResultPage = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const loginStatus = queryClient.getQueryData(['loginStatus']);
   const { data, isLoading } = useQuery({
@@ -40,31 +42,31 @@ const MyResultPage = () => {
 
   return (
     <div className='flex min-h-full items-center justify-center'>
-      {filteredGiftList?.length > 0 ? (
+      {filteredGiftList.length > 0 ? (
         <div className='my-5 grid max-w-screen-xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5'>
           {filteredGiftList.map((item, index) => (
             <div
               onClick={() => navigate(`/myResult/${item.id}`)}
               key={index}
               className='flex cursor-pointer flex-col items-center justify-center rounded border border-gray-300 p-4 transition-transform hover:scale-105 hover:bg-main'>
-              <div className='mb-5 text-3xl font-bold'>{item?.gifts.name}</div>
+              <div className='mb-5 text-3xl font-bold'>{item.gifts.name}</div>
               <div className='text-lg font-bold'>내가 선택한 선물 1등</div>
               <div className='flex items-center justify-center'>
                 <img
-                  src={item?.gifts.imageUrl}
+                  src={item.gifts.imageUrl}
                   className='mt-2 rounded-2xl'
-                  alt={item?.name}
+                  alt={item.name}
                 />
               </div>
               <div className='mt-2 text-base font-bold'>
                 설문한 날짜 <br />
-                {item?.createdAt}
+                {item.createdAt}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className='text-xl font-bold'>현재 작성한 추천이 없습니다.</p>
+        <p className='text-xl font-bold'>설문 작성하러가셈ㅋㅋ</p>
       )}
     </div>
   );
