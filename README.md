@@ -134,11 +134,13 @@ yarn dev
 ### 가까운 가게 보기 페이지
 
 <img src="https://github.com/cheolgyun7/deve11og/assets/97039528/5b601353-9794-4021-8cb0-81b30d1c802b" width="800px" height="400px"/>
+
 - 내 위치를 설정하고 원하는 가게를 선택하면 내 위치 근처에 있는 가게를 검색해서 표시해줍니다.
 
 ### 커뮤니티 페이지
 
 <img src="https://github.com/cheolgyun7/deve11og/assets/97039528/01a776b8-df86-4116-932a-5e01080c7213" width="800px" height="400px"/>
+
 - 비로그인시 커뮤니티 리스트만 확인할수 있게 해줍니다.
 - 로그인시 커뮤니티페이지에서 등록, 수정, 삭제가능합니다
 - Pagination기능 구현하였고, 상대방의 게시물은 삭제가 불가능하도록 구현하였습니다
