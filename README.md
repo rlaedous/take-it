@@ -18,15 +18,13 @@
 
 -Environment : vscode, github
 
--Development : React, Javascript
+-Development : react, javascript
 
--Database : Firebase Firestore, Firebase Storage
+-Database : json server
 
--Library : redux, react-router-dom, styled-components
+-Library : redux, react-router-dom, tailwindcss
 
--Design : Figma
-
--Login : Firebase Authentication
+-Design : figma
 
 -Deployment : Vercel
 
