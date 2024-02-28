@@ -55,22 +55,97 @@ export default function Router() {
 
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/mypage' element={<MyPage />} />
-          <Route path='/myResult' element={<MyResultPage />} />
-          <Route path='/myResult/:id' element={<MyResultSelectPage />} />
-          <Route path='/roulette' element={<RoulettePage />} />
-          <Route path='/map' element={<MapPage />} />
-          <Route path='/survey' element={<SurveyPage />} />
-          <Route path='/surveyResult' element={<SurveyResultPage />} />
-          <Route path='/' element={<MainPage />} />
-          <Route path='/community' element={<Community />} />
-          <Route path='/communityDetail/:id' element={<CommunityDetail />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route
+          path='/login'
+          element={
+            <Layout>
+              <LoginPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/mypage'
+          element={
+            <Layout>
+              <MyPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/myResult'
+          element={
+            <Layout>
+              <MyResultPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/myResult/:id'
+          element={
+            <Layout>
+              <MyResultSelectPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/roulette'
+          element={
+            <Layout>
+              <RoulettePage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/map'
+          element={
+            <Layout>
+              <MapPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/survey'
+          element={
+            <Layout>
+              <SurveyPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/surveyResult'
+          element={
+            <Layout>
+              <SurveyResultPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/'
+          element={
+            <Layout>
+              <MainPage />
+            </Layout>
+          }
+        />
+        <Route
+          path='/community'
+          element={
+            <Layout>
+              <Community />
+            </Layout>
+          }
+        />
+        <Route
+          path='/communityDetail/:id'
+          element={
+            <Layout>
+              <CommunityDetail />
+            </Layout>
+          }
+        />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }
