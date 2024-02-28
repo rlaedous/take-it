@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const { kakao } = window;
@@ -47,6 +47,7 @@ export default function MapPage() {
         position: new kakao.maps.LatLng(place.y, place.x)
       });
       markers.push(marker); // markers 배열에 추가
+
       const infowindow = new kakao.maps.InfoWindow(
         {
           content:
@@ -58,14 +59,14 @@ export default function MapPage() {
             place.x +
             ',' +
             place.y +
-            '" style="color:#DDA0DD" margin-right:5px; target="_blank">큰지도보기</a>' +
-            '<br><a href="https://map.kakao.com/link/to/' +
+            '" class="kakao-link" style="color:#DDA0DD; margin-right:5px;" target="_blank">큰지도보기</a>' +
+            '<a href="https://map.kakao.com/link/to/' +
             place.place_name +
             ',' +
             place.x +
             ',' +
             place.y +
-            '" style="color:#DDA0DD" target="_blank">길찾기</a></div>',
+            '" class="kakao-link route-link" style="color:#DDA0DD;" target="_blank">길찾기</a></div>',
           zIndex: 1,
           removable: true
         } // 창 닫기 버튼 표시 여부
@@ -114,6 +115,26 @@ export default function MapPage() {
     } else {
       toast.error('당신의 위치 정보를 허용해 주세요.');
     }
+  }, []);
+
+  useEffect(() => {
+    // '큰지도보기'와 '길찾기' 링크 클릭 시 주소 정보 출력
+    const handleClick = (event) => {
+      const kakaoLink = event.target.closest('.kakao-link');
+      if (kakaoLink) {
+        event.preventDefault();
+        const address = kakaoLink.getAttribute('href').split('/').pop();
+        console.log('주소 정보:', address);
+        if (kakaoLink.classList.contains('route-link')) {
+          window.open(kakaoLink.getAttribute('href'), '_blank');
+        }
+      }
+    };
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
   }, []);
 
   return (
