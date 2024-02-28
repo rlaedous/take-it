@@ -33,11 +33,6 @@ export const profileChange = async (formData) => {
         Authorization: `Bearer ${accessToken}`
       }
     });
-    // const editingObj = {};
-    // const { nickname, avatar } = data;
-    // if (nickname) editingObj.nickname = nickname;
-    // if (avatar) editingObj.avatar = avatar;
-
     console.log('server-data:', data);
     return data;
   } catch (error) {

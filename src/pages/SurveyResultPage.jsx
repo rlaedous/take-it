@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import GiftModal from '../components/sulveyResult/GiftModal';
+import GiftModal from '../components/surveyResult/GiftModal';
 
 const SurveyResultPage = () => {
   const [videos, setVideos] = useState([]);
