@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const { kakao } = window;
 
 export default function MapPage() {
   const [keyword, setKeyword] = useState('');
+  const [currentPosition, setCurrentPosition] = useState(null);
+  let markers = [];
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -23,11 +26,18 @@ export default function MapPage() {
     }
 
     function placesSearchCB(data, status) {
+      removeMarker();
       if (status === kakao.maps.services.Status.OK) {
         for (let i = 0; i < data.length; i++) {
           displayMarker(data[i]);
         }
         setKeyword('');
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        toast.error('검색 결과가 존재하지 않습니다');
+        return;
+      } else if (status === kakao.maps.services.Status.ERROR) {
+        toast.error('검색 결과 중 오류가 발생했습니다');
+        return;
       }
     }
 
@@ -36,19 +46,46 @@ export default function MapPage() {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x)
       });
+      markers.push(marker); // markers 배열에 추가
+      const infowindow = new kakao.maps.InfoWindow(
+        {
+          content:
+            '<div style="padding:5px;font-size:15px;">' +
+            place.place_name +
+            '<br><a href="https://map.kakao.com/link/map/' +
+            place.place_name +
+            ',' +
+            place.x +
+            ',' +
+            place.y +
+            '" style="color:#DDA0DD" margin-right:5px; target="_blank">큰지도보기</a>' +
+            '<br><a href="https://map.kakao.com/link/to/' +
+            place.place_name +
+            ',' +
+            place.x +
+            ',' +
+            place.y +
+            '" style="color:#DDA0DD" target="_blank">길찾기</a></div>',
+          zIndex: 1,
+          removable: true
+        } // 창 닫기 버튼 표시 여부
+      );
 
       kakao.maps.event.addListener(marker, 'click', function () {
-        const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-        infowindow.setContent(
-          '<div style="padding:5px;font-size:12px;">' +
-            '<div>' +
-            place.place_name +
-            '</div>' +
-            '<button id="reviewButton">리뷰 쓰러 가기>></button>' +
-            '</div>'
-        );
         infowindow.open(map, marker);
       });
+
+      // infoWindow 외부를 클릭할 때 infoWindow를 닫도록 이벤트 핸들러 추가
+      kakao.maps.event.addListener(map, 'click', function () {
+        infowindow.close();
+      });
+    }
+    // 모든 마커를 제거하는 함수
+    function removeMarker() {
+      for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+      }
+      markers = []; // markers 배열 비우기
     }
 
     const searchButton = document.getElementById('searchButton');
@@ -60,6 +97,23 @@ export default function MapPage() {
         searchPlaces();
       }
     });
+    //내 위치 설정..
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const currentPosition = new kakao.maps.LatLng(lat, lng);
+          map.setCenter(currentPosition);
+          setCurrentPosition(currentPosition);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      toast.error('당신의 위치 정보를 허용해 주세요.');
+    }
   }, []);
 
   return (
