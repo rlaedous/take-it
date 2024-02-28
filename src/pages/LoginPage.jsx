@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { authLogin, authRegister } from '../apis/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom/dist';
-import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -23,11 +22,6 @@ const LoginPage = () => {
           id: data.data.userId
         }
       });
-<<<<<<< HEAD
-=======
-      console.log(data.data);
-      toast.success('로그인 성공');
->>>>>>> 7de2e8245b09c78fd836d9219c13fc77a132e7a6
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('avatar', data.data.avatar);
       localStorage.setItem('id', data.data.userId);
@@ -35,7 +29,6 @@ const LoginPage = () => {
       navigate('/');
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
       console.error('Mutation error:', error);
     }
   });
@@ -44,13 +37,11 @@ const LoginPage = () => {
     mutationFn: authRegister,
     onSuccess: (data) => {
       alert(data);
-      toast.success('회원가입 성공');
-      //alert('로그인 하러가');
+      alert('로그인 하러가');
       setIsRegister(false);
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
-      //alert(error.request.response);
+      alert(error.request.response);
     }
   });
 
@@ -58,12 +49,7 @@ const LoginPage = () => {
     e.preventDefault();
     if (isRegister) {
       if (password !== passwordConfirm) {
-<<<<<<< HEAD
         alert('비밀번호를 확인해주세요');
-=======
-        toast.error('비밀번호가 서로 달라요.');
-        console.error('Passwords do not match');
->>>>>>> 7de2e8245b09c78fd836d9219c13fc77a132e7a6
         return;
       }
       registerMutation.mutate({ id, password, nickname });
