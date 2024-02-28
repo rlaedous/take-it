@@ -27,16 +27,14 @@ const MyResultPage = () => {
           .filter((item) => item.userId === data.user.id)
           .map((item) => ({
             id: item.id,
-            createdAt: item.createdAt
-              ? new Date(item.createdAt).toLocaleString('ko-KR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  hour12: true
-                })
-              : null,
+            createdAt: new Date(item.createdAt).toLocaleString('ko-KR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+              hour12: true
+            }),
             gifts: item.gifts[0]
           }));
         console.log('filteredGiftList', filteredGiftList);
