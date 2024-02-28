@@ -27,8 +27,19 @@ const MyResultPage = () => {
           .filter((item) => item.userId === data.user.id)
           .map((item) => ({
             id: item.id,
+            createdAt: item.createdAt
+              ? new Date(item.createdAt).toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+                })
+              : null,
             gifts: item.gifts[0]
           }));
+        console.log('filteredGiftList', filteredGiftList);
 
         setFilteredData(filteredGiftList);
       } catch (error) {
@@ -55,6 +66,10 @@ const MyResultPage = () => {
                   className='mt-2 rounded-2xl'
                   alt={item?.name}
                 />
+              </div>
+              <div className='mt-2 text-base font-bold'>
+                설문한 날짜 <br />
+                {item?.createdAt}
               </div>
             </div>
           ))}
