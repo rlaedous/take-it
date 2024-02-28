@@ -5,7 +5,7 @@ import RoulettePage from '../pages/RoulettePage';
 import SurveyPage from '../pages/SurveyPage';
 import SurveyResultPage from '../pages/SurveyResultPage';
 import Layout from '../components/common/layout';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import useFetchData from '../utils/useFetchData';
 import { useEffect } from 'react';
 import MyResultPage from '../pages/MyResultPage';
@@ -26,93 +26,23 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         <Route
-          path='/login'
           element={
             <Layout>
-              <LoginPage />
+              <Outlet />
             </Layout>
-          }
-        />
-        <Route
-          path='/mypage'
-          element={
-            <Layout>
-              <MyPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/myResult'
-          element={
-            <Layout>
-              <MyResultPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/myResult/:id'
-          element={
-            <Layout>
-              <MyResultSelectPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/roulette'
-          element={
-            <Layout>
-              <RoulettePage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/map'
-          element={
-            <Layout>
-              <MapPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/survey'
-          element={
-            <Layout>
-              <SurveyPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/surveyResult'
-          element={
-            <Layout>
-              <SurveyResultPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/'
-          element={
-            <Layout>
-              <MainPage />
-            </Layout>
-          }
-        />
-        <Route
-          path='/community'
-          element={
-            <Layout>
-              <Community />
-            </Layout>
-          }
-        />
-        <Route
-          path='/communityDetail/:id'
-          element={
-            <Layout>
-              <CommunityDetail />
-            </Layout>
-          }
-        />
+          }>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/mypage' element={<MyPage />} />
+          <Route path='/myResult' element={<MyResultPage />} />
+          <Route path='/myResult/:id' element={<MyResultSelectPage />} />
+          <Route path='/roulette' element={<RoulettePage />} />
+          <Route path='/map' element={<MapPage />} />
+          <Route path='/survey' element={<SurveyPage />} />
+          <Route path='/surveyResult' element={<SurveyResultPage />} />
+          <Route path='/' element={<MainPage />} />
+          <Route path='/community' element={<Community />} />
+          <Route path='/communityDetail/:id' element={<CommunityDetail />} />
+        </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>

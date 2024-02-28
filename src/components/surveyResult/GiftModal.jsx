@@ -76,8 +76,6 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
   };
 
   const handleDeleteGiftComments = (id, userId) => {
-    console.log(userId);
-    console.log(data);
     if (userId === data.user.id) {
       deleteGiftCommentMutation.mutate(id);
     } else {
