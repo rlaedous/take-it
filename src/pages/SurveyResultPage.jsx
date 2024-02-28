@@ -115,7 +115,7 @@ const SurveyResultPage = () => {
           {`#${results.gender === 'F' ? '여자' : '남자'} 
  #${results.age.replace('s', '대')}
  #${results.whom}선물
- #${results.isT === 'false' ? '실용적' : '감성적'}
+ #${results.isT === 'false' ? '감성적' : '실용적'}
  `}
         </div>
       )}
