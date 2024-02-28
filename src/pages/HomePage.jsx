@@ -20,7 +20,8 @@ const HomePage = () => {
   };
   return (
     <>
-      <div className='mx-auto mt-[60px] flex max-w-main justify-center gap-8'>
+      <h2 className='mx-auto mt-[30px]'>선물 추천사이트</h2>
+      <div className='mx-auto mt-[30px] flex max-w-main justify-center gap-8'>
         <div
           onClick={clickSurvey}
           className='homepage-container flex h-[560px] w-[440px] cursor-pointer flex-col justify-around rounded-3xl bg-[#fff] text-center shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
