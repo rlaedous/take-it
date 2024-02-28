@@ -3,6 +3,7 @@ import { addComment, deleteComment, getComments } from '../apis/comments';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { getPostsById } from '../apis/posts';
+import CustomModal from '../components/common/CustomModal';
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -73,6 +74,10 @@ const CommunityDetail = () => {
     mutationDelete.mutate(commentId);
   };
 
+  const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   if (isLoading) return <div>로딩중</div>;
 
   if (isError) return <div>에러</div>;
@@ -101,7 +106,8 @@ const CommunityDetail = () => {
                       <p
                         className='cursor-pointer'
                         onClick={() => {
-                          handleDeleteComment(comment.id);
+                          setIsDeleteModalOpen(true);
+                          setCurrentDeleteTargetId(comment.id);
                         }}>
                         삭제
                       </p>
@@ -124,6 +130,21 @@ const CommunityDetail = () => {
           </button>
         </form>
       </div>
+      <CustomModal
+        closeModal={() => setIsDeleteModalOpen(false)}
+        isOpen={isDeleteModalOpen}>
+        진짜 삭제할 거임?
+        <div>
+          <button
+            onClick={() => {
+              setIsDeleteModalOpen(false);
+              handleDeleteComment(currentDeleteTargetId);
+            }}
+            className='mt-5 rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
+            ㅇㅇ
+          </button>
+        </div>
+      </CustomModal>
     </div>
   );
 };
