@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { profileChange } from '../apis/auth';
 import useFetchData from '../utils/useFetchData';
 import { useNavigate } from 'react-router';
+import defaultAvatar from '../assets/images/defaultAvatar.jpg';
+import { toast } from 'react-toastify';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -34,7 +36,6 @@ const MyPage = () => {
   const handleToggleEditing = () => {
     setIsEditing((prev) => !prev);
 
-    // 취소를 눌렀을 때 이미지 미리보기 초기화
     if (!isEditing) {
       setPreviewImage(null);
     }
@@ -50,17 +51,16 @@ const MyPage = () => {
     try {
       localStorage.setItem('nickname', newNickname);
       await profileChange(formData);
-      alert('변경이 완료되었습니다.');
+      toast.success('변경이 완료되었습니다.');
       fetchData();
     } catch (error) {
-      alert(error);
+      toast.error(error);
     }
     setIsEditing(false);
   };
 
   const handleImageClick = () => {
     if (isEditing) {
-      // 이미지를 클릭하면 파일 선택 창 열기
       fileInputRef.current.click();
     }
   };
@@ -75,10 +75,9 @@ const MyPage = () => {
         <h1 className='mb-4 text-center text-4xl font-bold'>마이페이지</h1>
         {data ? (
           <>
-            <p className='mb-2 text-center text-xl'>
+            <p className='mb-2 text-center text-xl font-bold'>
               유저 아이디: {data.user.id}
             </p>
-            {/* 프로필 이미지 표시 */}
             {previewImage ? (
               <img
                 src={previewImage}
@@ -88,7 +87,7 @@ const MyPage = () => {
               />
             ) : (
               <img
-                src={data.user.avatar}
+                src={defaultAvatar}
                 alt='프로필 이미지'
                 className={`h-30 w-30 mx-auto mb-4 rounded-full object-cover ${isEditing && 'cursor-pointer'}`}
                 onClick={handleImageClick}
@@ -97,7 +96,7 @@ const MyPage = () => {
 
             {isEditing ? (
               <>
-                <label className='block text-sm font-medium text-gray-800'>
+                <label className='block text-sm font-bold  text-gray-800'>
                   새로운 닉네임:
                 </label>
                 <input
@@ -116,7 +115,7 @@ const MyPage = () => {
                 />
               </>
             ) : (
-              <p className='mb-2 text-center text-lg'>
+              <p className='mb-2 text-center text-lg font-bold'>
                 닉네임: {data.user.nickname}
               </p>
             )}

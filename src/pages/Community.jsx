@@ -107,11 +107,13 @@ const Community = () => {
   return (
     <div className='mx-auto h-full max-w-3xl px-4 py-8'>
       <div className='mb-8 text-right'>
-        <button
-          onClick={() => setIsOpenModal(true)}
-          className='rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
-          새 글 작성하기
-        </button>
+        {data && data.user && (
+          <button
+            onClick={() => setIsOpenModal(true)}
+            className='rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
+            새 글 작성하기
+          </button>
+        )}
       </div>
       <div className='grid grid-cols-1'>
         {isLoading ? (
@@ -123,7 +125,11 @@ const Community = () => {
           paginatedData.map((post) => (
             <div
               onClick={() => {
-                navigate(`/communityDetail/${post.id}`);
+                if (data && data.user) {
+                  navigate(`/communityDetail/${post.id}`);
+                } else {
+                  navigate('/login');
+                }
               }}
               key={post.id}
               className='flex cursor-pointer justify-between border-b border-b-gray-300 bg-white p-7 shadow'>
@@ -134,7 +140,7 @@ const Community = () => {
                 {getTimeDifferenceString(new Date(post.createdAt))}
               </p>
               <p className='mr-5 text-gray-700'>{post.nickname}</p>
-              {post.userId === data.user.id && (
+              {data && post.userId === data.user.id && (
                 <p
                   onClick={(e) => {
                     e.stopPropagation();
