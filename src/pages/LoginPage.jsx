@@ -54,6 +54,8 @@ const LoginPage = () => {
         return;
       }
       registerMutation.mutate({ id, password, nickname });
+      setId('');
+      setPassword('');
     } else {
       loginMutation.mutate({ id, password });
     }
