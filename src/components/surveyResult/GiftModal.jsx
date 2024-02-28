@@ -61,14 +61,18 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
   const [newComment, setNewComment] = useState('');
 
   const handleAddGiftComments = () => {
-    const newGiftComments = {
-      userId: data.user.id,
-      comment: newComment,
-      avatar: data.user.avatar,
-      nickname: data.user.nickname,
-      giftId: gift.id
-    };
-    addGiftCommentMutation.mutate(newGiftComments);
+    if (data) {
+      const newGiftComments = {
+        userId: data.user.id,
+        comment: newComment,
+        avatar: data.user.avatar,
+        nickname: data.user.nickname,
+        giftId: gift.id
+      };
+      addGiftCommentMutation.mutate(newGiftComments);
+    } else {
+      toast.error('로그인 한 사용자만 가능합니다');
+    }
   };
 
   const handleDeleteGiftComments = (id, userId) => {
