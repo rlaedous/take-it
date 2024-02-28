@@ -109,10 +109,10 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
                 className='mb-4 max-h-full max-w-96 rounded'
               />
               <div className='bg-red w-full border-t-2 border-black'>
-                <div className='mb-7 ml-1 flex h-80 border-b-2 border-black'>
+                <div className='mb-7 ml-1 flex h-80 flex-col items-center border-b-2 border-black'>
                   {filteredGiftComments.length > 0 ? (
                     filteredGiftComments.map((item) => (
-                      <div key={item.id} className='flex flex-col py-2'>
+                      <div key={item.id} className='flex flex-row py-2'>
                         <div className='flex items-start'>
                           <div className='flex items-center space-x-4'>
                             <img
@@ -142,6 +142,7 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
                   )}
                 </div>
                 <input
+                  maxLength={23}
                   className='h-12 w-80 border-gray-300 px-2'
                   placeholder='댓글 입력'
                   value={newComment}
