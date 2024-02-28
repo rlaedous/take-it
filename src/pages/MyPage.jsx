@@ -52,11 +52,9 @@ const MyPage = () => {
       localStorage.setItem('nickname', newNickname);
       await profileChange(formData);
       toast.success('변경이 완료되었습니다.');
-      //alert('변경이 완료되었습니다.');
       fetchData();
     } catch (error) {
       toast.error(error);
-      //alert(error);
     }
     setIsEditing(false);
   };

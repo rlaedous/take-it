@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const MyResultPage = () => {
   const { data, isLoading } = useQuery({
@@ -31,7 +32,7 @@ const MyResultPage = () => {
 
         setFilteredData(filteredGiftList);
       } catch (error) {
-        alert(error);
+        toast(error);
       }
     };
     sendResultsToServer();
