@@ -20,7 +20,7 @@
 
 -Development : react, javascript
 
--Database : json server
+-Database : json server
 
 -Library : redux, react-router-dom, tailwindcss
 
