@@ -4,14 +4,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getPosts, addPost, deletePost } from '../apis/posts';
 import { useNavigate } from 'react-router';
 import { getTimeDifferenceString } from '../utils/time';
+import Pagination from '../components/common/Pagination';
 
 const Community = () => {
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
 
+  //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // 페이지당 항목 수
+  const itemsPerPage = 5;
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -155,40 +157,11 @@ const Community = () => {
           ))
         )}
       </div>
-      <div className='mt-4 flex justify-between'>
-        {/* 이전 페이지 버튼 */}
-        <button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-          className='cursor-pointer rounded bg-black px-4 py-2 font-bold text-white hover:bg-main hover:text-fuchsia-800'>
-          이전
-        </button>
-
-        {/* 페이지 번호 버튼들 */}
-        <div className='flex'>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageChange(index + 1)}
-              disabled={currentPage === index + 1}
-              className={`mx-1 ${
-                currentPage === index + 1
-                  ? 'bg-main text-white'
-                  : 'bg-gray-300 text-gray-700'
-              } cursor-pointer rounded px-4 py-2 font-bold hover:bg-main hover:text-fuchsia-800`}>
-              {index + 1}
-            </button>
-          ))}
-        </div>
-
-        {/* 다음 페이지 버튼 */}
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-          className='cursor-pointer rounded bg-black px-4 py-2 font-bold text-white hover:bg-main hover:text-fuchsia-800'>
-          다음
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
       <CustomModal
         isOpen={isOpenModal}
         closeModal={() => setIsOpenModal(false)}>
