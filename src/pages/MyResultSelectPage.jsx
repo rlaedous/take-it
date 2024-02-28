@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,14 +9,13 @@ const MyResultSelectPage = () => {
   });
 
   const params = useParams();
-  const navigate = useNavigate();
   const [resultData, setResultData] = useState();
 
   useEffect(() => {
     const sendResultsToServer = async () => {
       try {
         if (isLoading || !data) {
-          return navigate('/myResult');
+          return;
         }
 
         const response = await axios.get(
