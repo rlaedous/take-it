@@ -3,6 +3,7 @@ import arrow from '../../assets/images/arrow.png';
 import logo from '../../assets/images/takeit_logo.png';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +43,7 @@ const Header = () => {
     localStorage.clear(); // 로컬 스토리지에서 토큰 제거
     setIsLoggedIn(false); // 로그아웃 시 로그인 상태를 false로 설정
     navigate('/login'); // 로그인 페이지로 이동
+    toast.success('로그아웃 성공!!!');
   };
   const handleMenuOnblur = () => {
     setTimeout(() => {
