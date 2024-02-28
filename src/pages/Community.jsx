@@ -7,17 +7,9 @@ import { getTimeDifferenceString } from '../utils/time';
 import Pagination from '../components/common/Pagination';
 
 const Community = () => {
-  const { data } = useQuery({
+  const { data: userData } = useQuery({
     queryKey: ['loginStatus']
   });
-
-  //pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   const {
     isLoading,
@@ -27,6 +19,14 @@ const Community = () => {
     queryKey: ['posts'],
     queryFn: getPosts
   });
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   //포스트를 날짜 순서대로 정렬
   const sortedPosts = posts
@@ -46,26 +46,10 @@ const Community = () => {
   // 페이지 수 계산
   const totalPages = Math.ceil(sortedPosts.length / itemsPerPage);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
   const queryClient = useQueryClient();
-
-  const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
-
-  const navigate = useNavigate();
 
   const mutationAdd = useMutation({
     mutationFn: addPost,
-    onSuccess: () => {
-      queryClient.invalidateQueries('posts');
-    },
-    onError: (error) => {
-      alert(error.message);
-    }
-  });
-
-  const mutationDelete = useMutation({
-    mutationFn: deletePost,
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
     },
@@ -79,8 +63,8 @@ const Community = () => {
       title: title,
       content: content,
       createdAt: new Date(),
-      userId: data.user.id,
-      nickname: data.user.nickname
+      userId: userData.user.id,
+      nickname: userData.user.nickname
     };
     mutationAdd.mutate(newPost);
     setIsOpenModal(false); // 작성 모달 닫기
@@ -92,7 +76,7 @@ const Community = () => {
     if (title.value === '' || content.value === '') {
       return;
     }
-    if (!data) {
+    if (!userData) {
       return;
     }
     handleAddPost(title.value, content.value);
@@ -100,16 +84,32 @@ const Community = () => {
     content.value = '';
   };
 
+  const mutationDelete = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+    onError: (error) => {
+      alert(error.message);
+    }
+  });
+
   const handleDeletePost = (postId) => {
     mutationDelete.mutate(postId);
   };
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const [currentDeleteTargetId, setCurrentDeleteTargetId] = useState('');
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <div className='mx-auto h-full max-w-3xl px-4 py-8'>
       <div className='mb-8 text-right'>
-        {data && data.user && (
+        {userData && userData.user && (
           <button
             onClick={() => setIsOpenModal(true)}
             className='rounded bg-main px-4 py-2 font-semibold text-white hover:text-fuchsia-800'>
@@ -127,7 +127,7 @@ const Community = () => {
           paginatedData.map((post) => (
             <div
               onClick={() => {
-                if (data && data.user) {
+                if (userData && userData.user) {
                   navigate(`/communityDetail/${post.id}`);
                 } else {
                   navigate('/login');
@@ -142,7 +142,7 @@ const Community = () => {
                 {getTimeDifferenceString(new Date(post.createdAt))}
               </p>
               <p className='mr-5 text-gray-700'>{post.nickname}</p>
-              {data && post.userId === data.user.id && (
+              {userData && post.userId === userData.user.id && (
                 <p
                   onClick={(e) => {
                     e.stopPropagation();
