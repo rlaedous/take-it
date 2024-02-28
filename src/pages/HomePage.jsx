@@ -15,7 +15,6 @@ const HomePage = () => {
       navigate('/roulette');
     } else {
       toast.error('로그인이 필요합니다.');
-      //alert('로그인이 필요합니다.');
       navigate('/login');
     }
   };

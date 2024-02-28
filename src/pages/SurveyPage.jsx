@@ -56,14 +56,24 @@ const SurveyPage = () => {
     const updatedSelectedAnswers = [...selectedAnswers];
     updatedSelectedAnswers[currentQuestionIdx] = idx; //
     setSelectedAnswers(updatedSelectedAnswers);
-    if (currentQuestionIdx === surveys.length - 1) {
-      console.log('progress', progress);
-    }
+
+    updateProgress();
+  };
+
+  const updateProgress = () => {
     if (progress < 100) {
       const nextProgress = ((currentQuestionIdx + 1) / surveys.length) * 100;
       setProgress(nextProgress);
     }
   };
+
+  useEffect(() => {
+    if (selectedAnswers[currentQuestionIdx] === undefined) {
+      setIsActiveNext(false);
+    } else {
+      setIsActiveNext(true);
+    }
+  }, [selectedAnswers, currentQuestionIdx]);
 
   const handleClickPrev = () => {
     setCurrentQuestionNum((prev) => {
@@ -75,13 +85,6 @@ const SurveyPage = () => {
     });
   };
 
-  useEffect(() => {
-    if (selectedAnswers[currentQuestionIdx] === undefined) {
-      setIsActiveNext(false);
-    } else {
-      setIsActiveNext(true);
-    }
-  }, [selectedAnswers, currentQuestionIdx]);
   const handleClickNext = () => {
     if (selectedAnswers[currentQuestionIdx] === undefined) {
       return;
