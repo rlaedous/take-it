@@ -73,6 +73,7 @@ const LoginPage = () => {
               ID
             </label>
             <input
+              placeholder='5자 이상 12자 미만'
               required
               id='id'
               type='text'
@@ -89,6 +90,7 @@ const LoginPage = () => {
             </label>
             <input
               required
+              placeholder='5자 이상 12자 미만'
               id='password'
               type='password'
               className='mt-1 w-full rounded-md border p-2'
@@ -104,6 +106,7 @@ const LoginPage = () => {
                 Confirm Password
               </label>
               <input
+                placeholder='5자 이상 12자 미만'
                 id='password-confirm'
                 type='password'
                 className='mt-1 w-full rounded-md border p-2'
@@ -120,6 +123,7 @@ const LoginPage = () => {
                 Nickname
               </label>
               <input
+                placeholder='3자 이상 12자 미만'
                 id='nickname'
                 type='text'
                 className='mt-1 w-full rounded-md border p-2'
