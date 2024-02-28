@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { authLogin, authRegister } from '../apis/auth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom/dist';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const LoginPage = () => {
           id: data.data.userId
         }
       });
+      toast.success('로그인 성공');
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('avatar', data.data.avatar);
       localStorage.setItem('id', data.data.userId);
@@ -29,19 +31,18 @@ const LoginPage = () => {
       navigate('/');
     },
     onError: (error) => {
-      console.error('Mutation error:', error);
+      toast.error('로그인 실패: 아이디, 비밀번호를 확인해주세요.');
     }
   });
 
   const registerMutation = useMutation({
     mutationFn: authRegister,
-    onSuccess: (data) => {
-      alert(data);
-      alert('로그인 하러가');
+    onSuccess: () => {
+      toast.success('회원가입 성공');
       setIsRegister(false);
     },
     onError: (error) => {
-      alert(error.request.response);
+      toast.error(error.request.response);
     }
   });
 
@@ -49,7 +50,7 @@ const LoginPage = () => {
     e.preventDefault();
     if (isRegister) {
       if (password !== passwordConfirm) {
-        alert('비밀번호를 확인해주세요');
+        toast.error('비밀번호가 서로 달라요');
         return;
       }
       registerMutation.mutate({ id, password, nickname });

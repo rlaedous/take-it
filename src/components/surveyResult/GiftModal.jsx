@@ -7,17 +7,20 @@ import gifts from '../../../public/gifts.json';
 import { IoClose } from 'react-icons/io5';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
-  const gift = gifts.find((item) => item.id === selectedGift);
   const queryClient = useQueryClient();
 
-  const [newComment, setNewComment] = useState('');
+  //giftDb 정보 get
+  const gift = gifts.find((item) => item.id === selectedGift);
 
+  //로그인 유저 정보 get
   const { data } = useQuery({
     queryKey: ['loginStatus']
   });
 
+  //giftComments 데이터 로딩
   const {
     isLoading,
     isError,
@@ -31,13 +34,16 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
     ? giftComments.data.filter((item) => item.giftId === selectedGift)
     : [];
 
+  //댓글 관련 함수(스로틀링 넣자)
   const addGiftCommentMutation = useMutation({
     mutationFn: addGiftComments,
     onSuccess: () => {
       queryClient.invalidateQueries('giftComments');
+      toast.success('댓글 작성 완료');
     },
     onError: (error) => {
       console.error(error);
+      toast.error('댓글 작성 에러 발생');
     }
   });
 
@@ -45,11 +51,14 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
     mutationFn: deleteGiftComments,
     onSuccess: () => {
       queryClient.invalidateQueries('giftComments');
+      toast.error('댓글 삭제 완료');
     },
     onError: (error) => {
       console.error(error);
     }
   });
+
+  const [newComment, setNewComment] = useState('');
 
   const handleAddGiftComments = () => {
     const newGiftComments = {
@@ -68,7 +77,7 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
     if (userId === data.user.id) {
       deleteGiftCommentMutation.mutate(id);
     } else {
-      alert('내 댓글만 삭제 가능합니다');
+      toast.error('내 댓글만 삭제 가능합니다');
     }
   };
   if (isLoading) return;

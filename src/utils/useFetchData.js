@@ -20,7 +20,7 @@ const useFetchData = () => {
       } catch (error) {
         console.error('Error checking token:', error);
         localStorage.clear();
-        alert('로그인 토큰이 만료되었습니다. 다시 로그인해주세요');
+        toast.error('로그인 토큰이 만료되었습니다. 다시 로그인해주세요');
       }
     }
   };
