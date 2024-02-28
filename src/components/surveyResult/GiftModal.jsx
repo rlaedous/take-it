@@ -112,20 +112,29 @@ const GiftModal = ({ isModalOpen, setIsModalOpen, selectedGift }) => {
                 <div className='mb-7 ml-1 flex h-80 border-b-2 border-black'>
                   {filteredGiftComments.length > 0 ? (
                     filteredGiftComments.map((item) => (
-                      <div key={item.id}>
-                        <img
-                          className='h-7 w-7'
-                          src={item.avatar}
-                          alt='프로필'
-                        />
-                        <label>{item.nickname}</label>
-                        <p>{item.comment}</p>
-                        <button
-                          onClick={() =>
-                            handleDeleteGiftComments(item.id, item.userId)
-                          }>
-                          삭제
-                        </button>
+                      <div key={item.id} className='flex flex-col py-2'>
+                        <div className='flex items-start'>
+                          <div className='flex items-center space-x-4'>
+                            <img
+                              className='h-10 w-10 rounded-full'
+                              src={item.avatar}
+                              alt='프로필'
+                            />
+                            <div className='flex flex-col'>
+                              <label className='font-semibold text-gray-700'>
+                                {item.nickname}
+                              </label>
+                              <p className='text-gray-800'>{item.comment}</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() =>
+                              handleDeleteGiftComments(item.id, item.userId)
+                            }
+                            className='text-red-600 hover:text-red-800 focus:outline-none'>
+                            삭제
+                          </button>
+                        </div>
                       </div>
                     ))
                   ) : (
