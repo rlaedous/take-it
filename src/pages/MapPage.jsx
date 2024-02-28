@@ -124,7 +124,6 @@ export default function MapPage() {
       if (kakaoLink) {
         event.preventDefault();
         const address = kakaoLink.getAttribute('href').split('/').pop();
-        console.log('주소 정보:', address);
         if (kakaoLink.classList.contains('route-link')) {
           window.open(kakaoLink.getAttribute('href'), '_blank');
         }
