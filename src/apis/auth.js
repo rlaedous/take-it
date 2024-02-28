@@ -33,10 +33,9 @@ export const profileChange = async (formData) => {
         Authorization: `Bearer ${accessToken}`
       }
     });
-    console.log('server-data:', data);
+
     return data;
   } catch (error) {
-    console.error('error-profileChange', error.response?.data || error.message);
     throw error;
   }
 };
