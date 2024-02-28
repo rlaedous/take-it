@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { profileChange } from '../apis/auth';
 import useFetchData from '../utils/useFetchData';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -50,10 +51,12 @@ const MyPage = () => {
     try {
       localStorage.setItem('nickname', newNickname);
       await profileChange(formData);
-      alert('변경이 완료되었습니다.');
+      toast.success('변경이 완료되었습니다.');
+      //alert('변경이 완료되었습니다.');
       fetchData();
     } catch (error) {
-      alert(error);
+      toast.error(error);
+      //alert(error);
     }
     setIsEditing(false);
   };

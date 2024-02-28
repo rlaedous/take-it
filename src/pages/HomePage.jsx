@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import present from '../assets/images/present.png';
 import roulette from '../assets/images/roulette.png';
+import { toast } from 'react-toastify';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ const HomePage = () => {
     if (accessToken) {
       navigate('/roulette');
     } else {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다.');
+      //alert('로그인이 필요합니다.');
       navigate('/login');
     }
   };
