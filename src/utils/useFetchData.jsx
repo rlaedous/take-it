@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 
@@ -25,10 +24,6 @@ const useFetchData = () => {
       }
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []); // 빈 의존성 배열로 설정하여 컴포넌트가 마운트될 때 한 번만 실행
 
   return fetchData;
 };

@@ -22,7 +22,6 @@ const LoginPage = () => {
           id: data.data.userId
         }
       });
-      console.log(data.data);
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('avatar', data.data.avatar);
       localStorage.setItem('id', data.data.userId);
@@ -49,15 +48,12 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isRegister) {
-      // 회원가입
-      // 패스워드 일치 여부 확인
       if (password !== passwordConfirm) {
-        console.error('Passwords do not match');
+        alert('비밀번호를 확인해주세요');
         return;
       }
       registerMutation.mutate({ id, password, nickname });
     } else {
-      // 로그인
       loginMutation.mutate({ id, password });
     }
   };

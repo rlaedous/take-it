@@ -3,12 +3,14 @@ import arrow from '../../assets/images/arrow.png';
 import logo from '../../assets/images/takeit_logo.png';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import useLogout from '../../utils/useLogout';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 추적하는 상태값 추가
   const navigate = useNavigate();
   const menuRef = useRef(null);
+  const logout = useLogout();
 
   const { data } = useQuery({
     queryKey: ['loginStatus']
@@ -40,8 +42,8 @@ const Header = () => {
   };
   const handleLogout = () => {
     localStorage.clear(); // 로컬 스토리지에서 토큰 제거
-    setIsLoggedIn(false); // 로그아웃 시 로그인 상태를 false로 설정
-    navigate('/login'); // 로그인 페이지로 이동
+    setIsLoggedIn(null);
+    logout();
   };
   const handleMenuOnblur = () => {
     setTimeout(() => {
