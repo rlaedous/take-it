@@ -18,6 +18,7 @@ const SurveyResultPage = () => {
 
   const navigate = useNavigate();
   const [isResultSaved, setIsResultSaved] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
     if (results && results.gender) {
@@ -64,6 +65,7 @@ const SurveyResultPage = () => {
           }
         );
         setIsResultSaved(true);
+        setIsEnabled(false);
         return response.data;
       }
     } catch (error) {
@@ -89,13 +91,13 @@ const SurveyResultPage = () => {
           selectedGifts.map((gift, index) => (
             <div
               key={index}
-              className='w-[30%] rounded-3xl bg-[#fff] shadow-[3.0px_6.0px_8.0px_rgba(0,0,0,0.38)]'>
+              className='w-[30%] cursor-pointer rounded-3xl bg-[#fff] shadow-[3.0px_6.0px_8.0px_rgba(0,0,0,0.38)]'>
               <div>
                 <h3 className='my-4 text-center text-3xl'>{index + 1}위</h3>
-                <p className='mx-auto flex h-[300px] w-2/3 items-center overflow-hidden bg-gray-50'>
+                <p className=' mx-auto flex h-[300px] w-2/3 items-center overflow-hidden bg-gray-50'>
                   <img
                     src={gift.imageUrl}
-                    className='rounded-2xl'
+                    className='resultImg rounded-2xl'
                     alt='사진'
                     onClick={() => handleModalOpen(gift.id)}
                   />
@@ -119,7 +121,11 @@ const SurveyResultPage = () => {
       )}
       {hasAccessToken && (
         <button
-          className='cursor-pointer rounded-3xl bg-[#A260A2] px-10 py-3 text-white hover:text-black'
+          className={`rounded-3xl px-10 py-3 text-white ${
+            isEnabled
+              ? 'cursor-pointer bg-gray-400 hover:text-black'
+              : 'bg-[#A260A2] '
+          }`}
           onClick={handleResultSave}
           disabled={isResultSaved}>
           {isResultSaved === true ? '저장 완료!' : '결과 저장'}
