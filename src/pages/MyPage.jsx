@@ -87,7 +87,7 @@ const MyPage = () => {
               />
             ) : (
               <img
-                src={defaultAvatar}
+                src={data.user.avatar ?? defaultAvatar}
                 alt='프로필 이미지'
                 className={`h-30 w-30 mx-auto mb-4 rounded-full object-cover ${isEditing && 'cursor-pointer'}`}
                 onClick={handleImageClick}

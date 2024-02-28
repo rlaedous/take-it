@@ -23,7 +23,6 @@ const LoginPage = () => {
           id: data.data.userId
         }
       });
-      console.log(data.data);
       toast.success('로그인 성공');
       localStorage.setItem('accessToken', data.data.accessToken);
       localStorage.setItem('avatar', data.data.avatar);
@@ -32,38 +31,30 @@ const LoginPage = () => {
       navigate('/');
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
-      console.error('Mutation error:', error);
+      toast.error('로그인 실패: 아이디, 비밀번호를 확인해주세요.');
     }
   });
 
   const registerMutation = useMutation({
     mutationFn: authRegister,
-    onSuccess: (data) => {
-      alert(data);
+    onSuccess: () => {
       toast.success('회원가입 성공');
-      //alert('로그인 하러가');
       setIsRegister(false);
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
-      //alert(error.request.response);
+      toast.error(error.request.response);
     }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isRegister) {
-      // 회원가입
-      // 패스워드 일치 여부 확인
       if (password !== passwordConfirm) {
-        toast.error('비밀번호가 서로 달라요.');
-        console.error('Passwords do not match');
+        toast.error('비밀번호가 서로 달라요');
         return;
       }
       registerMutation.mutate({ id, password, nickname });
     } else {
-      // 로그인
       loginMutation.mutate({ id, password });
     }
   };

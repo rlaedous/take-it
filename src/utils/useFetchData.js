@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { authCheckToken } from '../apis/auth';
 
@@ -21,14 +20,10 @@ const useFetchData = () => {
       } catch (error) {
         console.error('Error checking token:', error);
         localStorage.clear();
-        alert('로그인 토큰이 만료되었습니다. 다시 로그인해주세요');
+        toast.error('로그인 토큰이 만료되었습니다. 다시 로그인해주세요');
       }
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []); // 빈 의존성 배열로 설정하여 컴포넌트가 마운트될 때 한 번만 실행
 
   return fetchData;
 };
