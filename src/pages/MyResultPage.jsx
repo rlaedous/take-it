@@ -1,57 +1,48 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 const MyResultPage = () => {
+  const queryClient = useQueryClient();
+  const loginStatus = queryClient.getQueryData(['loginStatus']);
   const { data, isLoading } = useQuery({
-    queryKey: ['loginStatus']
-  });
-
-  const [filteredData, setFilteredData] = useState([]);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const sendResultsToServer = async () => {
+    queryKey: ['surveyResults'],
+    queryFn: async () => {
       try {
-        if (isLoading || !data) {
-          return;
-        }
-
-        const response = await axios.get(
-          'https://tungsten-flossy-van.glitch.me/surveyResults'
+        const result = await axios.get(
+          'https://tungsten-flossy-van.glitch.me/surveyResults/'
         );
-        const filteredGiftList = response.data
-          .filter((item) => item.userId === data.user.id)
-          .map((item) => ({
-            id: item.id,
-            createdAt: new Date(item.createdAt).toLocaleString('ko-KR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: 'numeric',
-              hour12: true
-            }),
-            gifts: item.gifts[0]
-          }));
-        console.log('filteredGiftList', filteredGiftList);
 
-        setFilteredData(filteredGiftList);
+        return result.data;
       } catch (error) {
         toast(error);
       }
-    };
-    sendResultsToServer();
-  }, [data, isLoading]);
+    }
+  });
+
+  if (isLoading) return null;
+
+  const newList = data.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    []
+  );
+
+  const filteredGiftList = newList
+    .filter((item) => item.userId === loginStatus.user.id)
+    .map((item) => ({
+      id: item.id,
+      createdAt: new Intl.DateTimeFormat('ko', {
+        dateStyle: 'full',
+        timeStyle: 'medium'
+      }).format(new Date(item.createdAt)),
+      gifts: item.gifts[0]
+    }));
 
   return (
     <div className='flex min-h-full items-center justify-center'>
-      {filteredData?.length > 0 ? (
+      {filteredGiftList?.length > 0 ? (
         <div className='my-5 grid max-w-screen-xl grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5'>
-          {filteredData.map((item, index) => (
+          {filteredGiftList.map((item, index) => (
             <div
               onClick={() => navigate(`/myResult/${item.id}`)}
               key={index}
