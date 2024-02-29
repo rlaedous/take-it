@@ -7,29 +7,28 @@ const MyResultPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const loginStatus = queryClient.getQueryData(['loginStatus']);
-  const { data, isLoading } = useQuery({
+  const { data: responseData, isLoading } = useQuery({
     queryKey: ['surveyResults'],
     queryFn: async () => {
       try {
-        const result = await axios.get(
+        const { data } = await axios.get(
           'https://tungsten-flossy-van.glitch.me/surveyResults/'
         );
-
-        return result.data;
+        return data;
       } catch (error) {
-        toast(error);
+        console.log(error);
       }
     }
   });
 
   if (isLoading) return null;
 
-  const newList = data.sort(
+  const sortedCreatedAtData = responseData.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     []
   );
 
-  const filteredGiftList = newList
+  const filteredGiftList = sortedCreatedAtData
     .filter((item) => item.userId === loginStatus.user.id)
     .map((item) => ({
       id: item.id,

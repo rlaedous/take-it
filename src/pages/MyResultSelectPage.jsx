@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const MyResultSelectPage = () => {
   const params = useParams();
-  const { data, isLoading } = useQuery({
+  const { data: responseData, isLoading } = useQuery({
     queryKey: ['surveyResults'],
     queryFn: async () => {
       try {
@@ -14,12 +14,12 @@ const MyResultSelectPage = () => {
         );
         return data;
       } catch (error) {
-        console(error);
+        console.error(error);
       }
     }
   });
 
-  const filteredData = data?.filter(
+  const filteredData = responseData?.filter(
     (item) => item.id === parseInt(params.id)
   )[0];
 
