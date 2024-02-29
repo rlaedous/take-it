@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
 
 const MyResultPage = () => {
   const navigate = useNavigate();
