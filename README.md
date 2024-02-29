@@ -34,7 +34,7 @@
 |김대연|김예린|김철균|황현미|김승희|
 |---|---|---|---|---|
 |<img src="https://avatars.githubusercontent.com/u/103303516?v=4" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/118904207?v=4" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/97039528?v=4" width="100" height="100"/>|<img src="https://img.cjthemarket.com/images/file/product/166/20230131131750628.jpg?SF=webp" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/154486286?v=4" width="100" height="100"/>|
-|@rlaedous|@yeriniii|@cheolgyun7|@brownrice0916|@HuaHuaChiChi|
+|[@rlaedous](https://github.com/HuaHuaChiChi)|@yeriniii|@cheolgyun7|@brownrice0916|@HuaHuaChiChi|
 |마이페이지(상세)<br />추천선물페이지|룰렛페이지<br />유튜브|설문결과페이지<br />메인페이지|설문조사<br />커뮤니티|로그인<br />선물상세(댓글)|
 
 <br>
