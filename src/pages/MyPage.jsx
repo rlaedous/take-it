@@ -9,11 +9,13 @@ import { toast } from 'react-toastify';
 const MyPage = () => {
   const navigate = useNavigate();
   const fetchData = useFetchData();
-  const { data, isLoading } = useQuery({
+  const { data: loginData, isLoading } = useQuery({
     queryKey: ['loginStatus']
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [newNickname, setNewNickname] = useState(data?.user?.nickname || '');
+  const [newNickname, setNewNickname] = useState(
+    loginData?.user.nickname || ''
+  );
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -41,21 +43,50 @@ const MyPage = () => {
     }
   };
 
-  const handleUpdateNickname = async () => {
+  const handleUpdateProfile = async () => {
     const formData = new FormData();
 
     if (isEditing) {
       formData.append('nickname', newNickname);
       formData.append('avatar', newProfileImage);
     }
+
+    const nicknameChanged = loginData.user.nickname !== newNickname;
+    const avatarChanged = isEditing && newProfileImage !== null;
+
+    if (!nicknameChanged && !avatarChanged) {
+      toast.error('변경사항이 없습니다');
+      return;
+    }
+
+    if (nicknameChanged && !avatarChanged) {
+      if (newNickname.trim() === '') {
+        toast.error('닉네임을 입력하거나 이미지를 변경하세요');
+        return;
+      }
+      toast.success('닉네임만 변경되었습니다');
+    }
+
+    if (!nicknameChanged && avatarChanged) {
+      toast.success('이미지만 변경되었습니다');
+    }
+
+    if (nicknameChanged && avatarChanged) {
+      if (newNickname.trim() === '') {
+        toast.error('닉네임이 비어있습니다 ');
+        return;
+      }
+      toast.success('닉네임과 이미지가 변경되었습니다');
+    }
+
     try {
       localStorage.setItem('nickname', newNickname);
       await profileChange(formData);
-      toast.success('변경이 완료되었습니다.');
       fetchData();
     } catch (error) {
-      toast.error(error);
+      console.error(error);
     }
+
     setIsEditing(false);
   };
 
@@ -65,18 +96,16 @@ const MyPage = () => {
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return null;
 
   return (
     <div className='flex h-full items-center justify-center bg-gray-50'>
       <div className='w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md'>
         <h1 className='mb-4 text-center text-4xl font-bold'>마이페이지</h1>
-        {data ? (
+        {loginData ? (
           <>
             <p className='mb-2 text-center text-xl font-bold'>
-              유저 아이디: {data.user.id}
+              유저 아이디: {loginData.user.id}
             </p>
             {previewImage ? (
               <img
@@ -87,7 +116,7 @@ const MyPage = () => {
               />
             ) : (
               <img
-                src={data.user.avatar ?? defaultAvatar}
+                src={loginData.user.avatar ?? defaultAvatar}
                 alt='프로필 이미지'
                 className={`h-30 w-30 mx-auto mb-4 rounded-full object-cover ${isEditing && 'cursor-pointer'}`}
                 onClick={handleImageClick}
@@ -116,7 +145,7 @@ const MyPage = () => {
               </>
             ) : (
               <p className='mb-2 text-center text-lg font-bold'>
-                닉네임: {data.user.nickname}
+                닉네임: {loginData.user.nickname}
               </p>
             )}
 
@@ -125,7 +154,7 @@ const MyPage = () => {
                 <>
                   <button
                     className='rounded-xl bg-main px-10 py-3 text-white hover:text-purple-800'
-                    onClick={handleUpdateNickname}>
+                    onClick={handleUpdateProfile}>
                     저장
                   </button>
                   <button
