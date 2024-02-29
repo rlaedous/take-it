@@ -7,6 +7,8 @@
 ## vercel 배포 링크
 
 [take_it 배포사이트 바로가기](https://take-it-tawny.vercel.app)
+<a href="https://take-it-tawny.vercel.app" target="_blank">분리수거그만하세요;;</a>
+
 ## 프로젝트 소개
 
 #### 자신과 상대방의 정보를 탐색 후 선물을 추천해주는 사이트입니다
