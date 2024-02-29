@@ -5,8 +5,40 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import useLogout from '../../utils/useLogout';
+import { fetchWeatherData } from '../../apis/weatherAPI';
 
 const Header = () => {
+  const [cities] = useState([
+    'Seoul',
+    'Busan',
+    'Incheon',
+    'Daegu',
+    'Daejeon',
+    'Gwangju',
+    'Ulsan',
+    'Suwon'
+  ]); // 한국 도시들
+  const [currentCityIndex, setCurrentCityIndex] = useState(0);
+  const [weatherData, setWeatherData] = useState(null);
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const data = await fetchWeatherData(cities[currentCityIndex]);
+        setWeatherData(data);
+      } catch (error) {
+        console.error('Failed to fetch weather data:', error);
+      }
+    };
+
+    fetchWeather();
+
+    const timer = setInterval(() => {
+      setCurrentCityIndex((prevIndex) => (prevIndex + 1) % cities.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [cities, currentCityIndex]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 추적하는 상태값 추가
   const navigate = useNavigate();
@@ -62,6 +94,9 @@ const Header = () => {
   const handleCommunity = () => {
     navigate('/community');
   };
+  const handleWeather = () => {
+    navigate('/weather');
+  };
   return (
     <div className='flex min-h-[70px] items-center justify-between bg-main px-4'>
       <div className='flex items-center'>
@@ -73,17 +108,28 @@ const Header = () => {
             onClick={handleHomeBack}
           />
         </div>
-        <div className='ml-10 flex font-bold'>
+        <div className='ml-[60px] flex font-bold'>
           <div
             onClick={handleMapPage}
-            className='mr-10 cursor-pointer hover:text-white'>
+            className='mr-[60px] cursor-pointer hover:text-white'>
             가까운 가게
           </div>
           <div
             onClick={handleCommunity}
-            className='cursor-pointer hover:text-white '>
+            className='mr-[60px] cursor-pointer hover:text-white '>
             커뮤니티
           </div>
+          <div
+            onClick={handleWeather}
+            className='mr-[60px] cursor-pointer hover:text-white '>
+            오늘의 날씨
+          </div>
+          {weatherData && isLoggedIn && (
+            <div className='ml-10 flex'>
+              <h1>{weatherData.name}의</h1>
+              <p>현재 온도: {weatherData.main.temp}°C</p>
+            </div>
+          )}
         </div>
       </div>
       <div>
