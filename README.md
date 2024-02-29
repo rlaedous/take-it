@@ -6,7 +6,7 @@
 
 ## vercel 배포 링크
 
-[take_it 배포사이트 바로가기](https://take-it-tawny.vercel.app)
+[take_it 배포사이트 바로가기](https://take-it-tawny.vercel.app){:target="_blank"}
 
 ## 프로젝트 소개
 
