@@ -14,6 +14,7 @@ import CommunityDetail from '../pages/CommunityDetail';
 import MapPage from '../pages/MapPage';
 import MyResultSelectPage from '../pages/MyResultSelectPage';
 import NotFound from '../pages/NotFound';
+import Weather from '../pages/Weather';
 
 export default function Router() {
   const fetchData = useFetchData();
@@ -39,6 +40,7 @@ export default function Router() {
           <Route path='/map' element={<MapPage />} />
           <Route path='/survey' element={<SurveyPage />} />
           <Route path='/surveyResult' element={<SurveyResultPage />} />
+          <Route path='/weather' element={<Weather />} />
           <Route path='/' element={<MainPage />} />
           <Route path='/community' element={<Community />} />
           <Route path='/communityDetail/:id' element={<CommunityDetail />} />
